@@ -3,6 +3,9 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const Data = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
+const disasterTypeObj = require('../logic/DisasterInterpretation.js');
+const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
+const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
 
 // Add disaster data
 router.post("/add-disaster-data", async (req, res) => {
@@ -44,6 +47,16 @@ router.post("/add-report-data", async (req, res) => {
   }
 });
 
+//input string interpretation
+router.post("/getDisasterResponse", async (req, res) => {
+  const myString = req.body.string;
+  disasterType = disasterTypeObj.interpretDisaster(myString);
+  disasterLocation = disasterLocationObj.interpretDisasterLocation(myString);
+  disasterRadius = disasterLocationObj.interpretDisasterRadius(disasterType, disasterLocation);
+  disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(myString, disasterLocation);
+  res.send({ disasterType, disasterLocation, disasterRadius, disasterImpactedPeopleCount }); 
+});
+
 // get all report data
 router.get("/all-report-data", async (req, res) => {
   try {
@@ -52,6 +65,13 @@ router.get("/all-report-data", async (req, res) => {
   } catch (err) {
     res.json({ message: err });
   }
+});
+
+// get all report data
+router.get("/init-gardi", async (req, res) => {
+  res
+    .status(200)
+    .send({ message: "Gardi notified!" });
 });
 
 module.exports = router;
