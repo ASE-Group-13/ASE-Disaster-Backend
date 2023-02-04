@@ -67,11 +67,4 @@ router.get("/all-report-data", async (req, res) => {
   }
 });
 
-// get all report data
-router.get("/init-gardi", async (req, res) => {
-  res
-    .status(200)
-    .send({ message: "Gardi notified!" });
-});
-
 module.exports = router;
