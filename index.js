@@ -27,7 +27,7 @@ app.get(`${api}/hello`, (req, res) => {
   console.log("hello");
   res
     .status(200)
-    .send({ message: "Hello User!\nHow are you? Welcome to Disastro!" });
+    .send({ message: "Hello User! How are you? Welcome to Disastro!" });
 });
 
 function trainModel(req, res) {
@@ -84,3 +84,5 @@ app.listen(process.env.PORT || 8000, () => {
   console.log("Backend Server in running!");
   console.log(`Server started on PORT: ${process.env.PORT}`);
 });
+
+module.exports = app;
