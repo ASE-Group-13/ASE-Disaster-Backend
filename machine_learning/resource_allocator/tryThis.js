@@ -2,7 +2,7 @@ const {trainModel, allocateResources} = require("C:/myProjects/ASE/ASE-Disaster-
 
 // trainModel()
 console.log("Running Predictions");
-predictions = allocateResources() //['3','4',2000,750]
+predictions = allocateResources(['3','4',2000,750])
 console.log(predictions)
 console.log("Ambulance:", predictions[0])
 console.log("Police:", predictions[1])

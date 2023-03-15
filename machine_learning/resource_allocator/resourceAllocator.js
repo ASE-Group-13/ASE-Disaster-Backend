@@ -30,12 +30,12 @@ module.exports = {
           console.error(`Error running Python script: ${error.message}`);
         });
     },
-    allocateResources : function(){//message){
+    allocateResources : function(message){//message){
       var resultArray;
       scriptPath = "C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/resource_allocator/python_source/resourceAllocator.py"
       const { spawnSync } = require('child_process');
       // Run the Python script using spawnSync
-      const result = spawnSync('python', [scriptPath, '3','4',2000,750]);
+      const result = spawnSync('python', [scriptPath, message]);//'3','4',2000,750]);
       // Check the output of the Python script
       if (result.status === 0) {
         console.log('Python script ran successfully');
