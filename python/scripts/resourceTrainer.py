@@ -10,7 +10,7 @@ current_dir = os.path.dirname(__file__)
 directory = os.path.join(current_dir, "..")
 
 # Load the data from a CSV file
-data = pd.read_csv(os.path.join(directory, "data_source/Main_Data.csv"))
+data = pd.read_csv('./python/datasets/Main_Data.csv')
 
 # Prepare the data
 X = data.drop(["Ambulance", "Police", "FireTruck", "Buses", "Helicopter"], axis=1)
