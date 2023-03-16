@@ -3,7 +3,8 @@ import pickle
 import os
 import pandas as pd
 
-directory = 'C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/resource_allocator/models'
+current_dir = os.path.dirname(__file__)
+directory = os.path.join(current_dir, "..", "models")
 
 pickled_encoder = pickle.load(open(os.path.join(directory,"encoder.pkl"), 'rb'))
 # Make predictions on new data

@@ -1,7 +1,11 @@
+const path = require('path');
+
+const configPath = path.join(__dirname, '..', 'Routes', 'config.json');
+
 module.exports = {
   trainModel : function(){
     const { spawn } = require('child_process');
-    const scriptPath = "C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/spam_detector/python_source/spamDetectionClassifier.py"
+    const scriptPath = path.join(__dirname,"python_source/spamDetectionClassifier.py")
     const scriptPromise = new Promise((resolve, reject) => {
       const pythonProcess = spawn('python', [scriptPath]);
       var result = '';
@@ -33,7 +37,7 @@ module.exports = {
   predictMessage : function(message){
     var predictionResult='';
     var resultArray;
-    scriptPath = "C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/spam_detector/python_source/spamPredictor.py"
+    const scriptPath = path.join(__dirname,"python_source/spamPredictor.py")
     const { spawnSync } = require('child_process');
     // Run the Python script using spawnSync
     const result = spawnSync('python', [scriptPath, message]);
@@ -44,9 +48,7 @@ module.exports = {
       // predictionResult = result.stdout?.toString() || "['0']";
       console.log('Output:', result.stdout.toString());
       predictionResult = result.stdout.toString();
-      console.log(typeof(predictionResult));
       resultArray = Array.from(predictionResult);
-      console.log('Single',resultArray[2]);
       predictionResult=resultArray[2];
       return predictionResult;
     } else {

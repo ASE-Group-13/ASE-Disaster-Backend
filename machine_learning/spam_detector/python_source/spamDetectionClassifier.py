@@ -6,7 +6,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score, train_test_split
 import os
 
-directory = 'C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/spam_detector'
+current_dir = os.path.dirname(__file__)
+directory = os.path.join(current_dir, "..")
 
 df = pd.read_csv(os.path.join(directory, "data_source/tweets.csv"), sep=",", names=['text', 'target'])
 x = df.iloc[:, 0]

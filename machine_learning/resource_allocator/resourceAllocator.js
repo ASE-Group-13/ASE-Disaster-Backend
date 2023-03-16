@@ -1,7 +1,9 @@
+const path = require('path');
+
 module.exports = {
     trainModel : function(){
         const { spawn } = require('child_process');
-        const scriptPath = "C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/resource_allocator/python_source/resourceTrainer.py"
+        const scriptPath = path.join(__dirname,"python_source/resourceTrainer.py")
         const scriptPromise = new Promise((resolve, reject) => {
           const pythonProcess = spawn('python', [scriptPath]);
           var result = '';
@@ -32,7 +34,7 @@ module.exports = {
     },
     allocateResources : function(message){//message){
       var resultArray;
-      scriptPath = "C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/resource_allocator/python_source/resourceAllocator.py"
+      const scriptPath = path.join(__dirname,"python_source/resourceAllocator.py")
       const { spawnSync } = require('child_process');
       // Run the Python script using spawnSync
       const result = spawnSync('python', [scriptPath, message]);//'3','4',2000,750]);

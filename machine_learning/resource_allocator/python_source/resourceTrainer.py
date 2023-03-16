@@ -6,7 +6,8 @@ from sklearn.preprocessing import OneHotEncoder
 import pickle
 import os
 
-directory = 'C:/myProjects/ASE/ASE-Disaster-Backend/machine_learning/resource_allocator/'
+current_dir = os.path.dirname(__file__)
+directory = os.path.join(current_dir, "..")
 
 # Load the data from a CSV file
 data = pd.read_csv(os.path.join(directory, "data_source/Main_Data.csv"))
