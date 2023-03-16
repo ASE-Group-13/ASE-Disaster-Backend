@@ -23,21 +23,21 @@ router.post("/spam-predict", async (req, res) =>{
 // input: report / report-text + target value
 // output: boolean (success/failure)
 router.post("/add-to-pool", async (req, res) =>{
-    //Function call 
+    //function call 
 })
 
 // validate report pool
 // input: disasterID, boolean (validate/unvalidate)
 // output: boolean (success or failure)
 router.post("/validate-pool", async (req, res) =>{
-    //Function call 
+    //function call 
 })
 
 // retrain model
 // input:
 // output: boolean (success/failure)
-router.get("/retrain-model", async (req, res) =>{
-    //Function call 
+router.get("/train-model", async (req, res) =>{
+    //function call 
 })
 
 module.exports = router;
