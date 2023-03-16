@@ -1,0 +1,673 @@
+Impact Place,Disaster Type,Disaster Size in Meters,Impact Size in persons,Ambulance,Police,FireTruck,Buses,Helicopter
+Building,Flood,200,15,2,5,2,1,0
+Library,Explosion,1000,85,10,30,5,5,1
+Hotel,Chemical hazard,700,35,5,10,2,2,0
+Stadium,Terrorist activity,1500,600,30,50,10,5,1
+Restaurant,Flood,500,25,5,5,2,1,0
+School,Fire,1000,40,10,20,5,1,1
+Building,Explosion,1500,85,20,30,10,1,0
+Stadium,Fire,2000,750,30,50,15,10,2
+Library,Fire,500,40,5,10,2,1,0
+Hotel,Terrorist activity,800,45,5,10,2,2,0
+Apartment,Chemical hazard,400,10,2,5,2,1,0
+Stadium,Flood,1500,500,20,30,5,5,1
+Library,Chemical hazard,1000,85,10,20,5,5,1
+School,Fire,1500,65,20,30,10,2,0
+Apartment,Fire,200,5,1,2,1,1,0
+Restaurant,Terrorist activity,800,40,5,10,2,2,0
+Hotel,Flood,500,25,5,10,2,1,0
+Building,Fire,500,25,5,10,2,1,0
+School,Terrorist activity,2000,100,20,30,10,5,1
+Park,Explosion,100,10,2,5,1,1,0
+Stadium,Chemical hazard,2000,1000,50,100,10,5,2
+Building,Fire,1000,65,20,30,10,2,1
+Restaurant,Fire,800,35,5,5,2,1,0
+Library,Terrorist activity,1500,70,10,30,10,2,1
+Hotel,Explosion,700,30,5,5,2,1,0
+Apartment,Fire,200,10,2,5,1,1,0
+Building,Flood,500,20,2,5,2,1,0
+School,Terrorist activity,2000,150,30,50,10,5,1
+Park,Fire,400,20,5,5,2,1,0
+Stadium,Chemical hazard,1500,700,50,100,10,5,2
+Building,Fire,1000,80,10,30,10,2,1
+Apartment,Flood,400,15,2,5,2,1,0
+Library,Explosion,1500,100,20,30,10,5,1
+Hotel,Fire,800,40,5,10,2,2,0
+Restaurant,Terrorist activity,500,30,5,5,2,1,0
+School,Flood,2000,75,20,30,5,5,1
+Building,Chemical Hazard,500,80,10,10,10,5,2
+Library,Terrorist Activity,200,30,5,20,5,2,1
+Stadium,Flood,2000,1000,30,50,20,10,3
+Hotel,Chemical Hazard,500,10,2,2,2,1,0
+Apartment,Terrorist Activity,200,5,1,5,1,1,0
+Restaurant,Fire,800,15,2,5,1,1,0
+Building,Flood,1000,40,5,10,5,2,1
+Park,Chemical Hazard,400,5,2,2,1,1,0
+Stadium,Terrorist Activity,3000,5000,50,100,30,20,5
+Library,Chemical Hazard,1000,40,10,5,5,2,1
+School,Fire,1500,50,5,10,5,2,1
+Building,Terrorist Activity,500,20,2,10,2,1,0
+Restaurant,Chemical Hazard,600,20,5,2,2,1,0
+Park,Terrorist Activity,400,10,2,5,1,1,0
+Library,Flood,500,25,2,5,2,1,0
+School,Terrorist Activity,2000,300,20,30,10,5,2
+Apartment,Chemical Hazard,400,8,2,2,2,1,0
+Building,Fire,1000,25,5,10,2,2,0
+Park,Flood,300,15,2,5,1,1,0
+Library,Terrorist Activity,800,20,5,10,2,1,0
+Stadium,Fire,2500,100,10,20,5,2,1
+School,Chemical Hazard,1500,200,20,20,10,5,2
+Hotel,Terrorist Activity,800,10,2,2,2,1,0
+Apartment,Fire,300,5,1,5,1,1,0
+Restaurant,Flood,400,10,2,5,1,1,0
+Building,Chemical Hazard,800,30,5,5,5,2,1
+Park,Terrorist Activity,600,20,5,10,2,1,0
+Library,Fire,300,10,2,5,1,1,0
+School,Chemical Hazard,2000,250,20,30,10,5,2
+Apartment,Chemical Hazard,300,5,2,2,1,1,0
+Building,Terrorist Activity,800,15,2,5,2,1,0
+Park,Fire,500,5,1,5,1,1,0
+Library,Flood,1000,50,5,10,2,1,0
+Stadium,Chemical Hazard,3500,750,30,50,20,10,3
+School,Flood,2500,500,30,50,20,10,3
+Restaurant,Chemical Hazard,400,15,2,2,2,1,0
+Apartment,Fire,200,5,2,5,1,1,0
+Apartment,Fire,300,10,2,10,1,1,0
+Building,Fire,500,20,2,10,2,1,0
+Building,Fire,800,50,5,15,2,2,0
+School,Fire,1000,100,10,20,3,5,0
+School,Fire,1500,200,20,30,5,10,1
+Library,Fire,300,20,2,10,1,1,0
+Library,Fire,500,50,5,15,2,2,0
+Stadium,Fire,2000,500,20,50,5,10,1
+Stadium,Fire,3000,1000,50,100,10,20,2
+Restaurant,Fire,500,10,2,5,1,1,0
+Restaurant,Fire,800,30,5,10,2,2,0
+Park,Fire,200,5,1,5,1,1,0
+Park,Fire,400,10,5,10,1,1,0
+Hotel,Fire,500,20,2,10,2,1,0
+Hotel,Fire,800,50,5,15,2,2,0
+Apartment,Explosion,500,10,2,10,1,1,0
+Apartment,Explosion,800,20,5,15,2,2,0
+Building,Explosion,1000,50,5,15,3,5,0
+Building,Explosion,1500,100,10,20,5,10,1
+School,Explosion,2000,200,20,30,5,10,1
+School,Explosion,3000,500,50,100,10,20,2
+Library,Explosion,800,30,5,10,2,2,0
+Library,Explosion,1200,50,10,15,3,5,0
+Stadium,Explosion,3000,1000,50,100,10,20,2
+Stadium,Explosion,4000,2000,100,200,20,40,3
+Restaurant,Explosion,800,20,5,10,2,2,0
+Restaurant,Explosion,1200,50,10,15,3,5,0
+Park,Explosion,400,10,5,10,1,1,0
+Park,Explosion,800,30,10,15,2,2,0
+Hotel,Explosion,1000,50,5,15,3,5,0
+Hotel,Explosion,1500,100,10,20,5,10,1
+Apartment,Flood,300,5,1,5,1,1,0
+Apartment,Flood,500,10,2,10,1,1,0
+Building,Flood,800,20,2,10,2,1,0
+Building,Flood,1200,50,5,15,3,5,0
+School,Flood,2000,100,10,20,5,10,1
+Apartment,Flood,200,10,2,5,1,1,0
+Apartment,Flood,200,50,5,10,2,2,0
+Building,Flood,500,5,2,5,1,1,0
+Building,Flood,500,50,5,20,2,5,0
+School,Flood,1000,20,5,10,2,2,0
+School,Flood,1000,150,10,30,5,10,1
+Library,Flood,200,10,2,10,1,1,0
+Library,Flood,200,100,5,20,2,2,0
+Stadium,Flood,2000,500,20,50,5,10,1
+Stadium,Flood,2000,10000,50,100,10,20,1
+Restaurant,Flood,800,20,2,5,2,1,0
+Restaurant,Flood,800,100,5,10,2,2,0
+Park,Flood,400,5,1,5,1,1,0
+Park,Flood,400,20,5,10,1,1,0
+Hotel,Flood,500,5,2,5,2,1,0
+Hotel,Flood,500,50,5,20,2,5,0
+Apartment,Chemical Hazard,200,3,1,2,1,1,0
+Apartment,Chemical Hazard,200,10,2,5,1,1,0
+Building,Chemical Hazard,500,5,2,5,1,1,0
+Building,Chemical Hazard,500,50,5,20,2,5,0
+School,Chemical Hazard,1000,20,5,10,2,2,0
+School,Chemical Hazard,1000,150,10,30,5,10,1
+Library,Chemical Hazard,200,10,2,10,1,1,0
+Library,Chemical Hazard,200,100,5,20,2,2,0
+Stadium,Chemical Hazard,2000,500,20,50,5,10,1
+Stadium,Chemical Hazard,2000,10000,50,100,10,20,1
+Restaurant,Chemical Hazard,800,20,2,5,2,1,0
+Restaurant,Chemical Hazard,800,100,5,10,2,2,0
+Park,Chemical Hazard,400,5,1,5,1,1,0
+Park,Chemical Hazard,400,20,5,10,1,1,0
+Hotel,Chemical Hazard,500,5,2,5,2,1,0
+Hotel,Chemical Hazard,500,50,5,20,2,5,0
+Apartment,Terrorist Activity,200,3,2,5,2,1,0
+Apartment,Terrorist Activity,200,10,5,10,2,2,0
+Building,Terrorist Activity,500,5,2,10,1,1,0
+Building,Terrorist Activity,500,50,5,20,2,5,0
+Apartment,Fire,200,3,1,2,1,1,0
+Apartment,Fire,200,10,2,5,1,1,0
+Building,Fire,500,5,1,2,1,1,0
+Building,Fire,500,50,5,10,2,2,0
+School,Fire,1000,20,2,10,1,1,0
+School,Fire,1000,150,10,20,2,5,0
+Library,Fire,200,10,2,20,1,1,0
+Library,Fire,200,100,2,20,2,5,0
+Stadium,Fire,2000,500,10,20,2,10,1
+Stadium,Fire,2000,10000,20,100,5,20,1
+Restaurant,Fire,800,20,2,5,2,1,0
+Restaurant,Fire,800,100,5,10,2,2,0
+Park,Fire,400,5,1,5,1,1,0
+Park,Fire,400,20,5,10,1,1,0
+Hotel,Fire,500,5,1,5,2,1,0
+Hotel,Fire,500,50,2,10,2,2,0
+Apartment,Explosion,500,3,2,5,1,1,0
+Apartment,Explosion,500,10,5,10,1,1,0
+Building,Explosion,1000,5,2,10,2,1,0
+Building,Explosion,1000,50,5,10,2,2,0
+School,Explosion,2000,20,2,20,2,1,0
+School,Explosion,2000,150,10,20,2,5,0
+Library,Explosion,1000,10,2,20,2,1,0
+Library,Explosion,1000,100,10,30,2,5,0
+Stadium,Explosion,3000,500,10,100,5,5,1
+Stadium,Explosion,3000,10000,30,100,5,20,1
+Apartment,Flood,300,3,2,5,1,1,0
+Apartment,Flood,300,10,5,10,1,1,0
+Building,Flood,800,5,2,10,1,1,0
+Building,Flood,800,50,5,10,2,2,0
+School,Flood,1500,20,5,20,1,1,0
+School,Flood,1500,150,10,20,2,5,0
+Library,Flood,500,10,2,20,1,1,0
+Library,Flood,500,100,10,30,2,5,0
+Stadium,Flood,5000,500,20,100,5,10,1
+Stadium,Flood,5000,10000,30,100,10,20,1
+Apartment,Chemical Hazard,200,3,1,2,1,1,0
+Apartment,Fire,150,20,2,2,2,1,0
+Apartment,Fire,200,5,1,1,1,0,0
+Building,Fire,500,75,5,5,5,2,0
+Building,Fire,700,15,2,2,2,1,0
+School,Fire,1200,100,10,10,10,3,1
+School,Fire,1500,5,1,1,1,0,0
+Library,Fire,250,30,2,2,2,1,0
+Library,Fire,350,10,1,1,1,0,0
+Stadium,Fire,2000,300,20,20,20,5,2
+Stadium,Fire,1500,1500,50,50,50,15,5
+Restaurant,Fire,400,50,5,5,5,2,0
+Restaurant,Fire,600,10,2,2,2,1,0
+Park,Fire,200,10,1,1,1,0,0
+Park,Fire,500,50,5,5,5,2,0
+Hotel,Fire,800,75,5,5,5,2,0
+Hotel,Fire,1000,10,2,2,2,1,0
+Apartment,Explosion,250,10,2,2,2,1,0
+Apartment,Explosion,400,50,5,5,5,2,0
+Building,Explosion,700,75,5,5,5,2,0
+Building,Explosion,1000,5,1,1,1,0,0
+School,Explosion,2000,150,20,20,20,5,1
+School,Explosion,1500,10,2,2,2,1,0
+Library,Explosion,500,30,2,2,2,1,0
+Library,Explosion,800,5,1,1,1,0,0
+Stadium,Explosion,3000,500,50,50,50,15,5
+Stadium,Explosion,2000,3000,100,100,100,30,10
+Restaurant,Explosion,500,50,5,5,5,2,0
+Restaurant,Explosion,800,10,2,2,2,1,0
+Park,Explosion,200,10,1,1,1,0,0
+Park,Explosion,500,50,5,5,5,2,0
+Hotel,Explosion,1000,75,10,10,10,3,1
+Hotel,Explosion,1200,10,2,2,2,1,0
+Apartment,Flood,150,20,2,2,2,1,0
+Apartment,Flood,200,5,1,1,1,0,0
+Building,Flood,500,75,5,5,5,2,0
+Building,Flood,700,15,2,2,2,1,0
+School,Flood,1200,100,10,10,10,3,1
+Apartment,Flood,500,10,2,5,1,1,0
+Apartment,Flood,800,15,2,5,2,1,0
+Building,Flood,1000,20,5,10,2,2,0
+Building,Flood,1500,30,5,10,2,2,0
+School,Flood,2000,50,10,20,5,5,1
+School,Flood,2500,100,15,30,5,5,1
+Library,Flood,500,5,2,5,1,1,0
+Library,Flood,800,10,2,5,2,1,0
+Stadium,Flood,5000,200,20,50,10,10,2
+Stadium,Flood,6000,500,30,100,15,15,3
+Restaurant,Flood,400,5,1,5,1,1,0
+Restaurant,Flood,600,10,2,5,2,1,0
+Park,Flood,300,3,1,2,1,1,0
+Park,Flood,500,10,2,5,1,1,0
+Hotel,Flood,800,20,2,10,2,1,0
+Hotel,Flood,1000,30,5,10,2,2,0
+Apartment,Chemical Hazard,100,3,2,5,1,1,0
+Apartment,Chemical Hazard,200,5,2,5,1,1,0
+Building,Chemical Hazard,300,5,5,5,1,1,0
+Building,Chemical Hazard,500,10,10,5,1,1,0
+School,Chemical Hazard,1000,20,20,10,2,2,0
+School,Chemical Hazard,1500,50,15,30,5,5,1
+Library,Chemical Hazard,500,10,5,5,1,1,0
+Library,Chemical Hazard,800,20,10,5,2,1,0
+Stadium,Chemical Hazard,2000,200,20,50,10,10,2
+Stadium,Chemical Hazard,2500,500,30,100,15,15,3
+Restaurant,Chemical Hazard,400,5,1,5,1,1,0
+Restaurant,Chemical Hazard,600,10,2,5,2,1,0
+Park,Chemical Hazard,300,3,1,2,1,1,0
+Park,Chemical Hazard,500,10,2,5,1,1,0
+Hotel,Chemical Hazard,800,20,2,10,2,1,0
+Hotel,Chemical Hazard,1000,30,5,10,2,2,0
+Apartment,Terrorist Activity,200,3,2,10,2,1,0
+Apartment,Terrorist Activity,300,5,5,10,2,1,0
+Park,Flood,100,50,2,2,1,1,0
+Apartment,Tornado,150,3,2,5,1,1,0
+Library,Chemical Hazard,200,10,2,20,1,1,0
+Building,Tornado,600,5,1,5,1,1,0
+Stadium,Earthquake,5000,500,10,20,5,5,1
+Restaurant,Terrorist Activity,500,20,5,10,2,2,0
+School,Earthquake,1500,150,10,20,2,5,0
+Hotel,Flood,800,50,2,5,1,1,0
+Building,Terrorist Activity,1000,50,2,10,2,2,0
+Stadium,Chemical Hazard,4000,10000,30,100,5,20,1
+Park,Tornado,200,5,1,5,1,1,0
+Library,Earthquake,1500,100,10,20,2,5,0
+Apartment,Terrorist Activity,200,10,2,5,1,1,0
+Building,Fire,700,10,2,5,1,1,0
+Stadium,Flood,1500,100,5,10,2,2,1
+Library,Terrorist Activity,400,5,2,5,2,1,0
+Park,Chemical Hazard,800,50,5,10,2,2,0
+Restaurant,Fire,600,20,2,5,1,1,0
+Building,Explosion,800,50,5,10,2,2,0
+School,Fire,1000,30,5,10,2,2,0
+Hotel,Chemical Hazard,600,5,1,5,1,1,0
+Stadium,Explosion,2500,500,20,50,5,5,2
+Apartment,Flood,300,10,2,5,1,1,0
+Building,Terrorist Activity,1000,50,5,10,2,2,0
+Library,Fire,400,10,2,5,1,1,0
+Park,Chemical Hazard,800,100,10,20,2,2,0
+Restaurant,Explosion,400,5,1,5,1,1,0
+School,Flood,1200,20,2,5,1,1,0
+Hotel,Terrorist Activity,800,5,1,5,1,1,0
+Stadium,Chemical Hazard,2000,200,20,50,5,5,1
+Apartment,Fire,200,5,1,2,1,1,0
+Building,Explosion,800,100,5,10,2,2,0
+Library,Terrorist Activity,400,20,2,5,1,1,0
+Park,Chemical Hazard,400,10,2,5,1,1,0
+Restaurant,Flood,600,50,5,10,2,2,0
+Building,Fire,500,20,2,5,1,1,0
+School,Explosion,1500,100,10,20,2,2,1
+Hotel,Fire,400,5,1,5,1,1,0
+Stadium,Terrorist Activity,3000,500,20,50,5,5,2
+Apartment,Chemical Hazard,200,5,1,2,1,1,0
+Building,Terrorist Activity,1200,100,10,20,2,2,1
+Library,Flood,300,5,1,2,1,1,0
+Park,Explosion,800,50,5,10,2,2,0
+Restaurant,Chemical Hazard,400,10,2,5,1,1,0
+Building,Fire,700,50,5,10,2,2,0
+School,Terrorist Activity,2000,100,10,20,2,2,1
+Hotel,Flood,800,20,2,5,1,1,0
+Stadium,Chemical Hazard,1500,200,10,20,2,2,1
+Apartment,Tornado,200,10,2,2,1,1,1
+Apartment,Tornado,200,50,5,5,2,2,1
+Building,Tornado,500,20,2,5,2,1,1
+Building,Tornado,500,100,10,10,3,3,1
+School,Tornado,1000,50,5,10,2,2,1
+School,Tornado,1000,200,20,20,5,5,1
+Library,Tornado,200,10,2,5,1,1,1
+Library,Tornado,200,50,5,10,2,2,1
+Stadium,Tornado,2000,100,10,20,3,3,2
+Stadium,Tornado,2000,500,50,50,10,10,2
+Restaurant,Tornado,800,20,2,5,1,1,1
+Restaurant,Tornado,800,100,10,10,2,2,1
+Park,Tornado,400,10,1,5,1,1,1
+Park,Tornado,400,50,5,10,2,1,1
+Hotel,Tornado,500,20,2,5,2,1,1
+Hotel,Tornado,500,100,10,10,3,3,1
+Apartment,Flood,200,10,2,2,1,1,1
+Apartment,Flood,200,50,5,5,2,2,1
+Building,Flood,500,20,2,5,2,1,1
+Building,Flood,500,100,10,10,3,3,1
+School,Flood,1000,50,5,10,2,2,1
+School,Flood,1000,200,20,20,5,5,1
+Library,Flood,200,10,2,5,1,1,1
+Library,Flood,200,50,5,10,2,2,1
+Stadium,Flood,2000,100,10,20,3,3,2
+Stadium,Flood,2000,500,50,50,10,10,2
+Restaurant,Flood,800,20,2,5,1,1,1
+Restaurant,Flood,800,100,10,10,2,2,1
+Park,Flood,400,10,1,5,1,1,1
+Park,Flood,400,50,5,10,2,1,1
+Hotel,Flood,500,20,2,5,2,1,1
+Hotel,Flood,500,100,10,10,3,3,1
+Apartment,Chemical Hazard,200,10,2,2,1,1,1
+Apartment,Chemical Hazard,200,50,5,5,2,2,1
+Building,Chemical Hazard,500,20,2,5,2,1,1
+Building,Chemical Hazard,500,100,10,10,3,3,1
+School,Chemical Hazard,1000,50,5,10,2,2,1
+School,Chemical Hazard,1000,200,20,20,5,5,1
+School,Tornado,1000,200,5,5,5,2,2
+Park,Tornado,500,50,2,2,2,1,1
+Library,Tornado,500,10,1,1,1,0,0
+Hotel,Tornado,1500,100,3,3,3,2,2
+Stadium,Tornado,3000,500,10,10,10,5,3
+Apartment,Tornado,1000,50,2,2,2,1,1
+Building,Tornado,2000,100,5,5,5,2,2
+Restaurant,Tornado,800,20,1,1,1,1,0
+School,Hurricane,1000,100,3,3,3,1,1
+Park,Hurricane,500,20,1,1,1,0,0
+Library,Hurricane,500,5,1,1,1,0,0
+Hotel,Hurricane,1500,300,5,5,5,2,2
+Stadium,Hurricane,3000,1000,20,20,20,10,5
+Apartment,Hurricane,1000,50,2,2,2,1,1
+Building,Hurricane,2000,200,5,5,5,2,2
+Restaurant,Hurricane,800,10,1,1,1,1,0
+School,Earthquake,1000,100,5,5,5,2,1
+Park,Earthquake,500,50,2,2,2,1,0
+Library,Earthquake,500,10,1,1,1,0,0
+Hotel,Earthquake,1500,200,5,5,5,2,1
+Stadium,Earthquake,3000,500,10,10,10,5,2
+Apartment,Earthquake,1000,20,1,1,1,1,0
+Building,Earthquake,2000,100,3,3,3,1,1
+Restaurant,Earthquake,800,5,1,1,1,0,0
+School,Flood,1000,150,5,5,5,2,1
+Park,Flood,500,20,1,1,1,0,0
+Library,Flood,500,5,1,1,1,0,0
+Hotel,Flood,1500,100,3,3,3,2,1
+Stadium,Flood,3000,500,10,10,10,5,2
+Apartment,Flood,1000,50,2,2,2,1,1
+Building,Flood,2000,200,5,5,5,2,2
+Restaurant,Flood,800,10,1,1,1,1,0
+School,Chemical Hazard,1000,50,2,2,2,1,0
+Park,Chemical Hazard,500,10,1,1,1,0,0
+Library,Chemical Hazard,500,5,1,1,1,0,0
+Hotel,Chemical Hazard,1500,100,3,3,3,2,1
+Mall,Terrorist Activity,500,30,2,10,2,1,0
+Mall,Terrorist Activity,1000,100,10,20,2,2,1
+Office,Chemical Hazard,200,5,1,2,1,1,0
+Office,Chemical Hazard,200,20,2,5,1,1,0
+Factory,Chemical Hazard,1000,50,5,10,2,2,0
+Factory,Chemical Hazard,1000,200,20,50,5,5,1
+Airport,Flood,2000,100,5,10,2,2,1
+Airport,Flood,2000,500,10,20,2,5,1
+Hospital,Fire,500,10,1,2,1,1,0
+Hospital,Fire,500,50,2,5,1,1,0
+Supermarket,Fire,1000,20,2,5,2,1,0
+Supermarket,Fire,1000,100,5,10,2,2,0
+Hotel,Fire,500,5,1,5,2,1,0
+Hotel,Fire,500,50,2,10,2,2,0
+Bank,Terrorist Activity,500,5,1,5,1,1,0
+Bank,Terrorist Activity,500,20,2,10,2,1,0
+Park,Flood,1000,20,2,5,1,1,0
+Park,Flood,1000,100,5,10,2,2,0
+Highway,Accident,100,5,1,2,1,1,0
+Highway,Accident,100,20,2,5,1,1,0
+Library,Terrorist Activity,200,10,2,20,1,1,0
+Library,Terrorist Activity,200,50,5,20,2,1,0
+Stadium,Flood,3000,500,10,20,2,5,1
+Stadium,Flood,3000,10000,30,100,5,20,1
+Warehouse,Fire,1000,20,2,5,2,1,0
+Warehouse,Fire,1000,100,5,10,2,2,0
+Amusement Park,Terrorist Activity,1000,50,5,20,2,1,0
+Amusement Park,Terrorist Activity,1000,200,20,50,5,5,1
+Hospital,Chemical Hazard,500,10,1,2,1,1,0
+Hospital,Chemical Hazard,500,50,2,5,1,1,0
+Church,Terrorist Activity,200,5,1,5,1,1,0
+Church,Terrorist Activity,200,20,2,10,2,1,0
+Museum,Fire,500,10,1,2,1,1,0
+Museum,Fire,500,50,2,5,1,1,0
+Shopping Center,Chemical Hazard,1000,20,2,5,2,1,0
+Highway,Traffic accident,200,3,1,1,0,1,0
+Highway,Traffic accident,500,5,2,2,1,1,0
+Highway,Traffic accident,1000,10,5,5,2,1,0
+Highway,Traffic accident,2000,50,10,10,5,2,1
+Highway,Traffic accident,5000,100,20,20,10,3,1
+Warehouse,Explosion,500,5,2,5,2,1,0
+Warehouse,Explosion,1000,20,5,10,5,2,0
+Warehouse,Explosion,2000,50,10,20,10,3,1
+Warehouse,Explosion,5000,100,20,30,20,5,1
+Oil rig,Explosion,5000,10,2,5,2,1,1
+Oil rig,Explosion,10000,50,5,10,5,2,1
+Oil rig,Explosion,20000,100,10,20,10,3,2
+Power plant,Chemical hazard,1000,5,2,5,2,1,0
+Power plant,Chemical hazard,2000,10,5,10,5,2,0
+Power plant,Chemical hazard,5000,50,10,20,10,3,1
+Power plant,Chemical hazard,10000,100,20,30,20,5,1
+City street,Earthquake,200,3,1,1,1,0,0
+City street,Earthquake,500,5,2,1,2,1,0
+City street,Earthquake,1000,10,2,5,2,1,0
+City street,Earthquake,2000,50,5,10,5,2,1
+City street,Earthquake,5000,100,10,20,10,3,1
+Bridge,Collapse,200,3,1,1,1,1,0
+Bridge,Collapse,500,5,2,2,2,1,0
+Bridge,Collapse,1000,10,5,5,2,1,0
+Bridge,Collapse,2000,50,10,10,5,2,1
+Bridge,Collapse,5000,100,20,20,10,3,1
+Hospital,Fire,500,5,1,2,2,1,0
+Hospital,Fire,1000,20,2,5,5,2,0
+Hospital,Fire,2000,50,5,10,10,3,1
+Hospital,Fire,5000,100,10,20,20,5,1
+River,Flood,1000,10,2,5,2,1,1
+River,Flood,2000,50,5,10,5,2,1
+River,Flood,5000,100,10,20,10,3,1
+Forest,Wildfire,2000,10,1,1,2,1,1
+Forest,Wildfire,5000,50,2,2,5,2,1
+Factory,Fire,800,50,4,10,2,1,0
+Factory,Fire,800,200,10,20,4,2,1
+Mall,Fire,1200,100,10,15,2,2,0
+Mall,Fire,1200,500,20,30,5,5,1
+Hotel,Fire,500,20,2,5,2,1,0
+Hotel,Fire,500,100,5,10,2,2,0
+School,Flood,1000,50,5,5,1,1,0
+School,Flood,1000,200,10,10,2,2,1
+Restaurant,Flood,500,10,2,2,1,1,0
+Restaurant,Flood,500,50,5,5,1,1,0
+Library,Chemical Hazard,800,20,4,4,2,1,0
+Library,Chemical Hazard,800,100,10,10,5,2,1
+Park,Terrorist Activity,400,5,1,5,1,1,0
+Park,Terrorist Activity,400,20,5,10,1,1,0
+Office Building,Fire,500,10,2,5,1,1,0
+Office Building,Fire,500,50,5,10,2,2,0
+Hospital,Flood,1000,50,10,10,2,1,1
+Hospital,Flood,1000,200,20,20,5,2,2
+Stadium,Fire,3000,200,10,20,5,5,1
+Stadium,Fire,3000,1000,30,50,10,10,2
+Airport,Explosion,5000,50,10,20,2,2,1
+Airport,Explosion,5000,500,30,100,5,5,2
+High-rise Building,Fire,1000,50,5,10,2,2,0
+High-rise Building,Fire,1000,200,10,20,5,5,1
+Factory,Chemical Hazard,800,50,4,10,2,1,0
+Factory,Chemical Hazard,800,200,10,20,4,2,1
+Mall,Terrorist Activity,1200,100,10,15,2,2,0
+Mall,Terrorist Activity,1200,500,20,30,5,5,1
+Hotel,Explosion,500,20,2,5,2,1,0
+Hotel,Explosion,500,100,5,10,2,2,0
+School,Chemical Hazard,1000,50,5,5,1,1,0
+School,Chemical Hazard,1000,200,10,10,2,2,1
+Restaurant,Terrorist Activity,500,10,2,2,1,1,0
+Restaurant,Terrorist Activity,500,50,5,5,1,1,0
+Library,Flood,800,20,4,4,2,1,0
+Library,Flood,800,100,10,10,5,2,1
+Mall,Flood,100,200,2,4,2,3,0
+Library,Terrorist Activity,20,15,1,3,1,0,0
+Park,Flood,300,100,3,2,2,0,0
+Stadium,Fire,50,20,1,2,1,0,0
+Building,Terrorist Activity,100,50,2,4,2,0,0
+Restaurant,Chemical Hazard,30,10,1,1,1,0,0
+Hotel,Explosion,100,75,2,3,2,2,0
+School,Fire,150,100,3,3,3,0,0
+Apartment,Flood,50,30,1,2,1,0,0
+Building,Terrorist Activity,200,50,3,5,3,0,1
+Park,Terrorist Activity,50,10,1,2,1,0,0
+Mall,Fire,150,75,2,3,2,1,0
+School,Explosion,50,20,1,2,1,0,0
+Library,Flood,30,20,1,1,1,0,0
+Restaurant,Chemical Hazard,100,50,2,3,2,0,0
+Hotel,Terrorist Activity,200,100,3,4,3,1,1
+Stadium,Explosion,50,30,1,2,1,0,0
+Apartment,Terrorist Activity,100,20,2,3,2,0,0
+Building,Flood,200,75,2,4,2,0,0
+School,Terrorist Activity,50,10,1,2,1,0,0
+Mall,Explosion,100,50,2,3,2,0,0
+Library,Chemical Hazard,20,10,1,1,1,0,0
+Park,Fire,50,30,1,2,1,0,0
+Restaurant,Terrorist Activity,30,20,1,1,1,0,0
+Hotel,Flood,150,75,2,3,2,0,0
+Stadium,Chemical Hazard,100,50,2,3,2,0,0
+Apartment,Explosion,50,20,1,2,1,0,0
+Building,Fire,200,75,2,4,2,0,0
+School,Chemical Hazard,30,20,1,1,1,0,0
+Mall,Terrorist Activity,150,50,2,3,2,1,0
+Library,Explosion,50,30,1,2,1,0,0
+Park,Chemical Hazard,100,75,2,3,2,0,0
+Restaurant,Fire,30,20,1,1,1,0,0
+Hotel,Terrorist Activity,200,100,3,4,3,1,1
+Stadium,Flood,50,30,1,2,1,0,0
+Apartment,Chemical Hazard,100,50,2,3,2,0,0
+Building,Explosion,150,75,2,4,2,0,0
+Park,Flood,400,200,5,10,5,5,1
+Building,Fire,200,30,2,5,2,2,0
+Hotel,Explosion,150,15,3,5,3,1,1
+Stadium,Chemical Hazard,300,50,4,10,3,3,1
+Apartment,Terrorist Activity,100,10,2,4,2,1,0
+School,Flood,500,250,5,10,5,5,1
+Library,Fire,100,20,1,3,1,0,0
+Restaurant,Explosion,50,5,2,3,2,0,0
+Park,Terrorist Activity,500,100,10,20,10,10,2
+Building,Chemical Hazard,250,40,3,7,3,2,1
+Apartment,Fire,150,20,2,5,2,1,0
+Hotel,Terrorist Activity,200,15,2,5,2,1,0
+Stadium,Explosion,400,75,5,10,5,5,1
+School,Chemical Hazard,300,60,4,10,4,3,1
+Library,Terrorist Activity,50,5,1,2,1,0,0
+Restaurant,Fire,75,10,1,3,1,0,0
+Park,Chemical Hazard,200,40,3,7,3,2,1
+Building,Terrorist Activity,100,10,2,4,2,1,0
+Apartment,Flood,300,150,5,10,5,5,1
+Hotel,Fire,100,15,1,3,1,0,0
+Stadium,Terrorist Activity,500,100,10,20,10,10,2
+School,Explosion,200,30,3,5,3,2,0
+Library,Chemical Hazard,50,5,1,2,1,0,0
+Restaurant,Terrorist Activity,75,8,2,3,2,0,0
+Park,Fire,500,100,5,10,5,5,1
+Building,Explosion,300,50,3,7,3,2,1
+Apartment,Chemical Hazard,150,25,2,5,2,1,0
+Hotel,Terrorist Activity,150,10,2,4,2,1,0
+Stadium,Flood,400,200,5,10,5,5,1
+School,Fire,250,40,3,7,3,2,1
+Library,Terrorist Activity,100,10,2,3,2,1,0
+Restaurant,Chemical Hazard,50,5,1,2,1,0,0
+Park,Terrorist Activity,200,40,5,10,5,5,1
+Building,Flood,400,200,5,10,5,5,1
+Apartment,Explosion,100,15,2,4,2,1,0
+Hotel,Chemical Hazard,100,15,2,4,2,1,0
+Apartment,Flood,20,30,2,1,1,0,0
+Building,Chemical Hazard,50,100,2,2,1,1,0
+School,Explosion,100,250,4,3,2,2,1
+Library,Fire,30,20,1,1,2,0,0
+Stadium,Terrorist Activity,300,500,8,5,4,4,2
+Restaurant,Fire,25,40,2,1,2,0,0
+Park,Tornado,200,1000,12,8,6,6,3
+Hotel,Earthquake,100,200,6,4,3,2,1
+Apartment,Chemical Hazard,30,50,3,2,1,1,0
+Building,Flood,50,100,3,2,1,1,0
+School,Fire,75,150,4,3,2,2,1
+Library,Terrorist Activity,25,20,1,1,2,0,0
+Stadium,Explosion,200,500,10,6,4,4,2
+Restaurant,Tornado,10,15,1,1,1,0,0
+Park,Earthquake,150,800,10,6,5,5,2
+Hotel,Fire,50,100,4,3,2,1,1
+Apartment,Fire,15,10,1,1,1,0,0
+Building,Terrorist Activity,100,200,5,3,3,2,1
+School,Chemical Hazard,25,50,2,2,1,1,0
+Library,Flood,20,15,1,1,1,0,0
+Stadium,Earthquake,400,1000,12,8,6,6,3
+Restaurant,Explosion,30,50,2,1,2,1,0
+Park,Terrorist Activity,100,500,6,4,3,2,1
+Hotel,Tornado,75,150,5,3,2,2,1
+Apartment,Tornado,25,30,2,1,1,1,0
+Building,Fire,100,200,5,3,3,2,1
+School,Earthquake,150,500,8,5,4,3,2
+Library,Chemical Hazard,30,40,2,1,1,1,0
+Stadium,Flood,500,1500,16,10,8,8,4
+Restaurant,Chemical Hazard,20,30,1,1,1,0,0
+Park,Explosion,150,700,8,5,4,3,2
+Hotel,Terrorist Activity,50,100,4,3,2,1,1
+Apartment,Explosion,20,15,1,1,1,0,0
+Building,Tornado,75,150,5,3,2,2,1
+School,Flood,50,100,3,2,1,1,0
+Library,Earthquake,50,100,3,2,1,1,0
+Stadium,Chemical Hazard,200,500,8,5,4,3,2
+Apartment,Fire,200,3,1,2,1,1,0
+Apartment,Fire,200,10,2,5,1,1,0
+Building,Fire,500,5,1,2,1,1,0
+Building,Fire,500,50,5,10,2,2,0
+School,Fire,1000,20,2,10,1,1,0
+School,Fire,1000,150,10,20,2,5,0
+Library,Fire,200,10,2,20,1,1,0
+Library,Fire,200,100,2,20,2,5,0
+Stadium,Fire,2000,500,10,20,2,10,1
+Stadium,Fire,2000,10000,20,100,5,20,1
+Restaurant,Fire,800,20,2,5,2,1,0
+Restaurant,Fire,800,100,5,10,2,2,0
+Park,Fire,400,5,1,5,1,1,0
+Park,Fire,400,20,5,10,1,1,0
+Hotel,Fire,500,5,1,5,2,1,0
+Hotel,Fire,500,50,2,10,2,2,0
+Apartment,Exlposion,500,3,2,5,1,1,0
+Apartment,Exlposion,500,10,5,10,1,1,0
+Building,Exlposion,1000,5,2,10,2,1,0
+Building,Exlposion,1000,50,5,10,2,2,0
+School,Exlposion,2000,20,2,20,2,1,0
+School,Exlposion,2000,150,10,20,2,5,0
+Library,Exlposion,1000,10,2,20,2,1,0
+Library,Exlposion,1000,100,10,30,2,5,0
+Stadium,Exlposion,3000,500,10,100,5,5,1
+Stadium,Exlposion,3000,10000,30,100,5,20,1
+Park,Explosion,1000,20,2,10,2,1,0
+Park,Explosion,1000,100,10,10,2,5,0
+Restaurant,Exlposion,1000,5,1,10,1,1,0
+Restaurant,Exlposion,1000,20,4,10,1,1,0
+Hotel,Exlposion,1500,5,1,10,2,1,0
+Hotel,Exlposion,1500,50,5,10,2,2,0
+Apartment,Flood,1000,3,1,5,0,1,0
+Apartment,Flood,1000,10,3,5,0,1,0
+Building,Flood,1000,5,1,10,0,1,0
+Building,Flood,1000,50,5,10,0,2,0
+School,Flood,2000,20,1,20,0,1,0
+School,Flood,2000,150,10,20,0,5,0
+Library,Flood,2000,10,2,20,0,1,0
+Library,Flood,2000,100,10,20,0,5,0
+Stadium,Flood,3000,500,2,100,0,10,1
+Stadium,Flood,3000,10000,50,100,0,20,1
+Park,Flood,2000,20,1,10,0,1,0
+Park,Flood,2000,100,5,10,0,5,0
+Restaurant,Flood,1000,5,1,10,0,1,0
+Restaurant,Flood,1000,20,5,10,0,1,0
+Hotel,Flood,500,5,1,10,0,1,0
+Hotel,Flood,500,50,5,10,0,2,0
+Apartment,Chemical Hazard,500,3,1,5,0,1,0
+Apartment,Chemical Hazard,500,10,2,5,0,1,0
+Building,Chemical Hazard,1000,5,1,10,0,1,0
+Building,Chemical Hazard,1000,50,5,10,0,2,0
+School,Chemical Hazard,2000,20,2,20,0,1,0
+School,Chemical Hazard,2000,150,10,20,0,5,0
+Library,Chemical Hazard,1000,10,1,20,0,1,0
+Library,Chemical Hazard,1000,100,5,20,0,5,0
+Park,Chemical Hazard,2000,500,10,100,0,10,1
+Park,Chemical Hazard,2000,10000,50,100,0,20,1
+Stadium,Chemical Hazard,3000,20,1,10,0,1,0
+Stadium,Chemical Hazard,3000,100,5,10,0,5,0
+Restaurant,Chemical Hazard,1000,5,1,10,0,1,0
+Restaurant,Chemical Hazard,1000,20,4,10,0,1,0
+Hotel,Chemical Hazard,1500,5,1,10,0,1,0
+Hotel,Chemical Hazard,1500,50,5,10,0,1,0
+Apartment,Terrorist Activity,2000,3,1,5,1,1,0
+Apartment,Terrorist Activity,2000,10,2,5,1,1,0
+Building,Terrorist Activity,2000,5,1,10,1,1,0
+Building,Terrorist Activity,2000,50,5,10,1,2,0
+School,Terrorist Activity,2000,20,2,20,1,1,0
+School,Terrorist Activity,2000,150,10,20,1,5,0
+Library,Terrorist Activity,2000,10,2,20,1,1,0
+Library,Terrorist Activity,2000,100,5,20,1,5,0
+Park,Terrorist Activity,3000,500,10,100,1,10,0
+Park,Terrorist Activity,3000,10000,50,100,1,20,0
+Stadium,Terrorist Activity,3000,20,2,10,1,1,0
+Stadium,Terrorist Activity,3000,100,5,10,1,5,0
+Restaurant,Terrorist Activity,2000,5,1,10,1,1,0
+Restaurant,Terrorist Activity,2000,20,2,10,1,1,0
+Hotel,Terrorist Activity,2000,5,1,10,1,1,0
+Hotel,Terrorist Activity,2000,50,5,10,1,2,0
+Hotel,Terrorist Activity,2000,50,5,10,1,2,0

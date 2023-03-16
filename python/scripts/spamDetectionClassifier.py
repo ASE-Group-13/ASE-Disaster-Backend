@@ -8,7 +8,11 @@ from sklearn.model_selection import cross_val_score, train_test_split
 
 warnings.filterwarnings("ignore")
 
+<<<<<<< Updated upstream
 df = pd.read_csv("./python/datasets/tweets.csv", sep=",", names=['text', 'target'])
+=======
+df = pd.read_csv(os.path.join(directory, "datasets/pastResponses.csv"), sep=",", names=['text', 'target'])
+>>>>>>> Stashed changes
 x = df.iloc[:, 0]
 y = df.iloc[:, 1]
 
