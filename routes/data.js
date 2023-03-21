@@ -3,7 +3,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const Data = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
-const allocateResources = require('../machine_learning/resource_allocator/resourceAllocator.js');
+const allocateResources = require('../logic/resourceAllocator.js');
 const disasterTypeObj = require('../logic/DisasterInterpretation.js');
 const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
 const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')

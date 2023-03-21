@@ -5,8 +5,6 @@ const app = express();
 const mongoose = require("mongoose");
 const dataRoute = require("./routes/data");
 const authRoute = require("./routes/auth");
-const spamDetectorRoute = require("./routes/spamDetector");
-const resourceAllocatorRoute = require("./routes/resourceAllocator");
 
 const api = process.env.API_URI;
 
@@ -30,8 +28,6 @@ app.get(`${api}/hello`, (req, res) => {
     .send({ message: "Hello User!\nHow are you? Welcome to Disastro!" });
 });
 
-app.use(`${api}/spamDetector`, spamDetectorRoute);
-app.use(`${api}/resourceAllocator`, resourceAllocatorRoute);
 app.use(`${api}/auth`, authRoute);
 app.use(`${api}`, dataRoute);
 
