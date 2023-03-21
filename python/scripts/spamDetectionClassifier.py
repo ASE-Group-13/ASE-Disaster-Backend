@@ -6,7 +6,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score, train_test_split
 
-df = pd.read_csv("./python/datasets/pastReports.csv", sep=",", names=['text', 'target'])
+warnings.filterwarnings("ignore")
+
+df = pd.read_csv("../python/datasets/tweets.csv", sep=",", names=['text', 'target'])
+
 x = df.iloc[:, 0]
 y = df.iloc[:, 1]
 
@@ -34,5 +37,5 @@ model = LogisticRegression(penalty='l2', C=c_best)
 model.fit(X_train, y_train)
 
 # Save model and vectorizer
-pickle.dump(vectorizer, open('./python/models/vectorizer.pkl','wb'))
-pickle.dump(model, open('./python/models/model.pkl', 'wb'))
+pickle.dump(vectorizer, open('../python/models/vectorizer.pkl','wb'))
+pickle.dump(model, open('../python/models/model.pkl', 'wb'))
