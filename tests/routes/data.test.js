@@ -1,5 +1,5 @@
 const axios = require('axios');
-const app = require('../../index'); // assuming the router is mounted on an instance of express app
+const app = require('../../index'); 
 
   test('should return true', async() => {
     const newDisasterData = {
