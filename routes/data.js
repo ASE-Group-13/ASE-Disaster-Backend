@@ -41,6 +41,8 @@ router.post("/add-report-data", async (req, res) => {
     longitude: req.body.longitude,
   });
   try {
+    // spamDetector() functionality
+    // assignToDisaster() functionality
     const saveReportData = await newReportData.save();
     res.status(200).json({ success: true, saveReportData });
   } catch (err) {

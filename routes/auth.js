@@ -12,23 +12,25 @@ router.post("/register", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (user) {
     res.status(400).send({
-      message: "Account with this email already exists. Please login!",
+      message: "Account with this email already exists. Please login!"
     });
   }
-  const newUser = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.PASS_SEC
-    ).toString(),
-  });
-  // console.log(req.body);
-  try {
-    const savedUser = await newUser.save();
-    res.status(201).json({ success: true, savedUser });
-  } catch (err) {
-    res.status(500).json(err.stack);
+  else{
+    const newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: CryptoJS.AES.encrypt(
+        req.body.password,
+        process.env.PASS_SEC
+      ).toString(),
+    });
+    console.log(req.body);
+    try {
+      const savedUser = await newUser.save();
+      res.status(201).json({ success: true, savedUser });
+    } catch (err) {
+      res.status(500).json(err.stack);
+    }
   }
 });
 
