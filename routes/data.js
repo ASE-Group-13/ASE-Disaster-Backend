@@ -3,6 +3,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const Data = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
+const allocateResources = require('../logic/resourceAllocator.js');
 const disasterTypeObj = require('../logic/DisasterInterpretation.js');
 const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
 const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
@@ -40,6 +41,8 @@ router.post("/add-report-data", async (req, res) => {
     longitude: req.body.longitude,
   });
   try {
+    // spamDetector() functionality
+    // assignToDisaster() functionality
     const saveReportData = await newReportData.save();
     res.status(200).json({ success: true, saveReportData });
   } catch (err) {
@@ -47,7 +50,7 @@ router.post("/add-report-data", async (req, res) => {
   }
 });
 
-//input string interpretation
+// input string interpretation
 router.post("/getDisasterResponse", async (req, res) => {
   const myString = req.body.string;
   disasterType = disasterTypeObj.interpretDisaster(myString);
