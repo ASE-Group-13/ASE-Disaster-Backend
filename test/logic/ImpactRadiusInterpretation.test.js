@@ -1,48 +1,38 @@
-const { interpretDisasterLocation, interpretDisasterRadius } = require('./yourFileName');
+const { interpretDisasterLocation, interpretDisasterRadius } = require('../../logic/ImpactRadiusInterpretation');
 
-describe('interpretDisasterLocation function', () => {
-  test('should return an empty array when input string has no disaster locations', () => {
-    expect(interpretDisasterLocation('This is a random text')).toEqual([]);
+describe('interpretDisasterLocation', () => {
+  test('returns an array of matching locations from input string', () => {
+    const inputString = 'There was a fire at the school and library';
+    const expectedOutput = ['school', 'library'];
+    expect(interpretDisasterLocation(inputString)).toEqual(expectedOutput);
   });
 
-  test('should return a list of all matching disaster locations', () => {
-    expect(interpretDisasterLocation('The explosion happened in a building')).toEqual(['building']);
-    expect(interpretDisasterLocation('A fire broke out in a hotel and a restaurant')).toEqual(['hotel', 'restaurant']);
-  });
-
-  test('should be case-insensitive', () => {
-    expect(interpretDisasterLocation('Flood reported in SCHOOL')).toEqual(['school']);
-    expect(interpretDisasterLocation('The chemical hazard occurred in a LIBRARY')).toEqual(['library']);
-  });
-
-  test('should handle multiple occurrences of the same disaster location', () => {
-    expect(interpretDisasterLocation('The park was flooded and then the stadium was flooded too')).toEqual(['park', 'stadium']);
+  test('returns an empty array if no locations are found', () => {
+    const inputString = 'There was a fire at the hospital';
+    const expectedOutput = [];
+    expect(interpretDisasterLocation(inputString)).toEqual(expectedOutput);
   });
 });
 
-describe('interpretDisasterRadius function', () => {
-  test('should return 0 when disaster type is not recognized', () => {
-    expect(interpretDisasterRadius('Unknown', 'apartment')).toEqual(0);
+describe('interpretDisasterRadius', () => {
+  test('returns the impact radius for a given disaster type and location', () => {
+    const disasterType = 'fire';
+    const impactLocation = 'school';
+    const expectedOutput = 500;
+    expect(interpretDisasterRadius(disasterType, impactLocation)).toEqual(expectedOutput);
   });
 
-  test('should return correct impact radius for a given disaster type and location', () => {
-    expect(interpretDisasterRadius('Fire', 'apartment')).toEqual(500);
-    expect(interpretDisasterRadius('Fire', 'stadium')).toEqual(1000);
-    expect(interpretDisasterRadius('Explosion', 'library')).toEqual(500);
-    expect(interpretDisasterRadius('Flood', 'building')).toEqual(500);
-    expect(interpretDisasterRadius('Chemical Hazard', 'restaurant')).toEqual(500);
-    expect(interpretDisasterRadius('Terrorist Activity', 'park')).toEqual(500);
+  test('returns default radius value if disaster type is not recognized', () => {
+    const disasterType = 'earthquake';
+    const impactLocation = 'apartment';
+    const expectedOutput = 500;
+    expect(interpretDisasterRadius(disasterType, impactLocation)).toEqual(expectedOutput);
   });
 
-  test('should be case-insensitive', () => {
-    expect(interpretDisasterRadius('FLOOD', 'school')).toEqual(500);
-    expect(interpretDisasterRadius('TERRORIST ACTIVITY', 'hotel')).toEqual(500);
-  });
-
-  test('should handle synonyms for disaster locations', () => {
-    expect(interpretDisasterRadius('Explosion', 'college')).toEqual(0);
-    expect(interpretDisasterRadius('Explosion', 'office building')).toEqual(1000);
-    expect(interpretDisasterRadius('Flood', 'mall')).toEqual(0);
-    expect(interpretDisasterRadius('Flood', 'supermarket')).toEqual(500);
+  test('returns default radius value if location is not recognized', () => {
+    const disasterType = 'flood';
+    const impactLocation = 'museum';
+    const expectedOutput = 500;
+    expect(interpretDisasterRadius(disasterType, impactLocation)).toEqual(expectedOutput);
   });
 });

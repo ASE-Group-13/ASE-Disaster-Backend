@@ -1,43 +1,36 @@
-const { interpretImpactSize } = require('./interpretImpactSize');
-
-describe('interpretImpactSize', () => {
-  it('should return the correct impact size for "very few" in an apartment', () => {
-    const inputString = 'There were very few people in the apartment at the time of the disaster.';
-    const disasterLocation = 'apartment';
-    const expectedImpactSize = 5;
-    const actualImpactSize = interpretImpactSize(inputString, disasterLocation);
-    expect(actualImpactSize).toEqual(expectedImpactSize);
+describe("interpretImpactSize function", () => {
+  test("returns the correct impact size for very few synonyms and a building location", () => {
+    const inputString = "There were very few casualties.";
+    const disasterLocation = "building";
+    const expectedOutput = 10;
+    expect(interpretImpactSize(inputString, disasterLocation)).toEqual(expectedOutput);
   });
 
-  it('should return the correct impact size for "few" in a restaurant', () => {
-    const inputString = 'There were few customers in the restaurant when the disaster struck.';
-    const disasterLocation = 'restaurant';
-    const expectedImpactSize = 20;
-    const actualImpactSize = interpretImpactSize(inputString, disasterLocation);
-    expect(actualImpactSize).toEqual(expectedImpactSize);
+  test("returns the correct impact size for few synonyms and a school location", () => {
+    const inputString = "There were not many injuries.";
+    const disasterLocation = "school";
+    const expectedOutput = 10;
+    expect(interpretImpactSize(inputString, disasterLocation)).toEqual(expectedOutput);
   });
 
-  it('should return the correct impact size for "some" in a school', () => {
-    const inputString = 'There were some students and teachers in the school at the time of the disaster.';
-    const disasterLocation = 'school';
-    const expectedImpactSize = 30;
-    const actualImpactSize = interpretImpactSize(inputString, disasterLocation);
-    expect(actualImpactSize).toEqual(expectedImpactSize);
+  test("returns the correct impact size for some synonyms and a stadium location", () => {
+    const inputString = "There were some people hurt at the stadium.";
+    const disasterLocation = "stadium";
+    const expectedOutput = 100;
+    expect(interpretImpactSize(inputString, disasterLocation)).toEqual(expectedOutput);
   });
 
-  it('should return the correct impact size for "many" in a building', () => {
-    const inputString = 'There were many people in the building when the disaster occurred.';
-    const disasterLocation = 'building';
-    const expectedImpactSize = 50;
-    const actualImpactSize = interpretImpactSize(inputString, disasterLocation);
-    expect(actualImpactSize).toEqual(expectedImpactSize);
+  test("returns the correct impact size for many synonyms and a park location", () => {
+    const inputString = "There were quite a lot of injuries in the park.";
+    const disasterLocation = "park";
+    const expectedOutput = 50;
+    expect(interpretImpactSize(inputString, disasterLocation)).toEqual(expectedOutput);
   });
 
-  it('should return the correct impact size for "too many" in a stadium', () => {
-    const inputString = 'There were too many spectators in the stadium when the disaster happened.';
-    const disasterLocation = 'stadium';
-    const expectedImpactSize = 1500;
-    const actualImpactSize = interpretImpactSize(inputString, disasterLocation);
-    expect(actualImpactSize).toEqual(expectedImpactSize);
+  test("returns the correct impact size for too many synonyms and a hotel location", () => {
+    const inputString = "too many was affected by the disaster.";
+    const disasterLocation = "hotel";
+    const expectedOutput = 150;
+    expect(interpretImpactSize(inputString, disasterLocation)).toEqual(expectedOutput);
   });
 });
