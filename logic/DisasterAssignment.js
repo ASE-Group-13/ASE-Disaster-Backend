@@ -19,7 +19,7 @@ const calcDistance = (lat1, lon1, lat2, lon2) => {
 
 // main function to check if location is within 500m of an existing disaster
 const checkDisasterLocation = async (type, longitude, latitude) => {
-  const response = await axios.get("http://127.0.0.1:8000/api/v1//relevant-disaster-data");
+  const response = await axios.get("http://127.0.0.1:8000/api/v1/relevant-disaster-data");
   const disasters = response.data;
 
   for (let i = 0; i < disasters.length; i++) {

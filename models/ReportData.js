@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const {severityData,resourcesData} = require("./AssessmentData");
 
 const reportDataSchema = new mongoose.Schema({
+  created_at: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
   latitude: {
     type: String,
     required: true,
@@ -21,6 +26,12 @@ const reportDataSchema = new mongoose.Schema({
   spam: {
     type: Boolean,
     required: true,
+  },
+  status: {
+    type: String,
+    default: "pending",
+    enum : ['pending', 'active', 'resolved'],
+    required: true
   },
   disaster: {
     type: mongoose.Schema.Types.ObjectId,
