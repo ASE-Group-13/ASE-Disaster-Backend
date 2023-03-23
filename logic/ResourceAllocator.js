@@ -25,12 +25,23 @@ const { spawnSync } = require("child_process");
       const basicStr = str.replace("[","").replace("]","")
       finalArray = basicStr.split(" ").map(Number);
       console.log(finalArray);
-      return finalArray;
+      return formatResources(finalArray);
     } else {
       console.error('Error running Python script');
       console.error('Error:', result.stderr.toString());
     }
   }
+  function formatResources(resources){
+    return {
+      Ambulance : resources[0],
+      Police : resources[1],
+      FireTruck: resources[2],
+      Buses: resources[3],
+      Helicopter: resources[4]
+    }
+  }
+
+
   module.exports = {
     trainModel: trainModel,
     allocateResources: allocateResources,

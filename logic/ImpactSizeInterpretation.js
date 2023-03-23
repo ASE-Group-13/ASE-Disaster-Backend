@@ -201,3 +201,92 @@ function findSize(listObject, inputString){
 module.exports = {
     interpretImpactSize: interpretImpactSize
 };
+
+// const sizeMap = [
+//     { synonyms: ["very few"], impactSize: 5 },
+//     { synonyms: ["few", "not many"], impactSize: 10 },
+//     { synonyms: ["some", "handful"], impactSize: 20 },
+//     { synonyms: ["quite", "many", "a lot", "alot"], impactSize: 50 },
+//     { synonyms: ["too many", "everyone"], impactSize: 100 }
+//   ];
+  
+//   const defaultImpactSize = 20;
+  
+//   function interpretImpactSize(inputString, disasterLocation) {
+//     const size = findSize(inputString);
+//     const location = findLocation(disasterLocation);
+  
+//     if (size === undefined || location === undefined) {
+//       return defaultImpactSize;
+//     }
+  
+//     return location.impactSizes[size.impactSizeIndex];
+//   }
+  
+//   function findSize(inputString) {
+//     const inputStringLower = inputString.toLowerCase();
+  
+//     for (let i = 0; i < sizeMap.length; i++) {
+//       const synonyms = sizeMap[i].synonyms;
+//       const synonymsLower = synonyms.map(word => word.toLowerCase());
+  
+//       if (synonymsLower.some(word => inputStringLower.includes(word))) {
+//         return { impactSizeIndex: i };
+//       }
+//     }
+  
+//     return undefined;
+//   }
+  
+//   function findLocation(disasterLocation) {
+//     const locationMap = [
+//       {
+//         keywords: ["apartment"],
+//         impactSizes: [5, 5, 10, 20, 30]
+//       },
+//       {
+//         keywords: ["building"],
+//         impactSizes: [10, 10, 20, 50, 60]
+//       },
+//       {
+//         keywords: ["school"],
+//         impactSizes: [5, 10, 30, 50, 100]
+//       },
+//       {
+//         keywords: ["library"],
+//         impactSizes: [10, 15, 25, 50, 80]
+//       },
+//       {
+//         keywords: ["stadium"],
+//         impactSizes: [20, 50, 100, 500, 1500]
+//       },
+//       {
+//         keywords: ["restaurant"],
+//         impactSizes: [10, 20, 20, 30, 80]
+//       },
+//       {
+//         keywords: ["park"],
+//         impactSizes: [20, 20, 50, 50, 200]
+//       },
+//       {
+//         keywords: ["hotel"],
+//         impactSizes: [10, 20, 30, 50, 150]
+//       }
+//     ];
+  
+//     for (let i = 0; i < locationMap.length; i++) {
+//       const keywords = locationMap[i].keywords;
+//       const impactSizes = locationMap[i].impactSizes;
+  
+//       if (keywords.some(keyword => disasterLocation.includes(keyword))) {
+//         return { impactSizes: impactSizes };
+//       }
+//     }
+  
+//     return undefined;
+//   }
+  
+//   module.exports = {
+//     interpretImpactSize: interpretImpactSize
+//   };
+  
