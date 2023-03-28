@@ -6,6 +6,9 @@ const ReportData = require("../models/ReportData");
 const {predictMessage} = require('../logic/SpamFilter');
 const {assignToDisaster, addReportToDisaster} = require('../logic/DisasterAssignment');
 const {allocateResources} = require('../logic/ResourceAllocator');
+const disasterTypeObj = require('../logic/DisasterInterpretation.js');
+const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
+const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
 
 /* DISASTER ROUTES */
 
@@ -156,16 +159,23 @@ router.put("/resolve-disaster/:id", async (req, res) => {
 
 // Add report data
 router.post("/add-report-data", async (req, res) => {
-  const status = predictMessage(req.body.detail);
+  const spamStatus = predictMessage(req.body.detail); // identify spam messages
   var reportJson = {
     detail: req.body.detail,
     latitude: req.body.latitude,
     longitude: req.body.longitude,
     type : req.body.type,
-    spam : status,
+    spam : spamStatus,
   };
-  if (status === false) {
-    const resources = allocateResources(req.body.detail); // This can change to optimiseResources() function
+  if (spamStatus === false) {
+    // interpretation 
+    disasterType = disasterTypeObj.interpretDisaster(reportJson.detail);
+    disasterLocation = disasterLocationObj.interpretDisasterLocation(reportJson.detail);
+    disasterRadius = disasterLocationObj.interpretDisasterRadius(disasterType, disasterLocation);
+    disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation);
+    // DISASTER TYPE AND DISASTER LOCATION NEED TO BE CONVERTED INTO NUMBERS!
+    
+    const resources = allocateResources([disasterType,disasterLocation,disasterRadius,disasterImpactedPeopleCount]); // This can change to optimiseResources() function
     reportJson = Object.assign({}, reportJson, resources);
   }
   const completeJson = await assignToDisaster(reportJson);
@@ -220,5 +230,45 @@ router.put("/update-report/:id", async (req, res) => {
     return res.status(500).json({ message: err });
   }
 });
+
+router.get("/get-old-reports", async (req, res) => {
+  try {
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const oldReports = await ReportData.find({createdAt: { $lte: twentyFourHoursAgo } });
+    return res.json(oldReports);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+router.put("/update-spam", async (req, res) => {
+  try {
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const oldPendingReportIds = req.body; // array of _id values
+    await ReportData.updateMany(
+      { _id: { $in: oldPendingReportIds }, status: "pending", createdAt: { $lte: twentyFourHoursAgo } },
+      { $set: { spam: true } }
+    );
+    res.json({ message: "Reports updated successfully." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.delete("/delete--old-reports", async (req, res) => {
+  try {
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    await ReportData.deleteMany({ createdAt: { $lte: twentyFourHoursAgo } });
+    res.json({ message: `Deleted ${deletedCount} old reports.` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+// SEND RESOURCES API post("/send-resources")...
+// we need report messages and then submitted response if we want to do the smart feedback loop for allocation
+
+
 
 module.exports = router;
