@@ -1,101 +1,64 @@
-const cron = require('node-cron');
+// Import required modules and models
 const fs = require('fs');
 const path = require('path');
-const stringify = require('csv-stringify');
-const ReportData = require('../models/ReportData');
+const axios = require('axios');
 
-// Schedule the task to run every 24 hours
-cron.schedule('0 0 */24 * * *', async () => {
-  try {
-    // Get all reports older than 24 hours
-    const cutoffDate = new Date();
-    cutoffDate.setHours(cutoffDate.getHours() - 24);
-
-    const oldReports = await ReportData.find({
-      created_at: { $lt: cutoffDate }
-    });
-
-    // Set spam field to true for pending reports and save the documents
-    const pendingReports = oldReports.filter(report => report.status === "pending");
-    pendingReports.forEach(async (report) => {
-      report.spam = true;
-      await report.save();
-    });
-
-    // Convert old reports to CSV string
-    const csvString = await stringify(oldReports, {
-        header: false,
-        columns: [
-        { key: 'detail', header: 'text' },
-        { key: 'spam', header: 'target' }
-        ]
-    });
-
-    // Append CSV string to existing file or create a new file
-    const fileName = 'pastReports.csv';
-    const filePath = path.join("./python/datasets/", fileName);
-    if (fs.existsSync(filePath)) {
-      fs.appendFileSync(filePath, csvString);
-      console.log(`${oldReports.length} old reports appended to ${fileName}`);
-    } else {
-      fs.writeFileSync(filePath, csvString);
-      console.log(`${oldReports.length} old reports saved to new file ${fileName}`);
-    }
-
-    // Delete old reports from the database
-    await ReportData.deleteMany({ created_at: { $lt: cutoffDate } });
-    console.log(`${oldReports.length} old reports deleted from the database`);
-  } catch (err) {
-    console.error(`Error saving old reports: ${err.message}`);
-  }
-});
-
-// Manually run the spam feedback loop
+// Define a function to process old reports
 async function processOldReports() {
-    try {
-        // Get all reports older than 24 hours
-        const cutoffDate = new Date();
-        cutoffDate.setHours(cutoffDate.getHours() - 24);
+  try {
+    // Define the time limit for old reports
+    const hoursThreshold = 24;
+    const cutoffDate = new Date(Date.now() - hoursThreshold * 60 * 60 * 1000);
 
-        const oldReports = await ReportData.find({
-            created_at: { $lt: cutoffDate }
-        });
+    // Get all old pending reports and mark them as spam
+    console.log('updating spam reports...');
+    const updateSpam = await axios.put("http://127.0.0.1:8000/api/v1/update-spam");//`${process.env.HOSTNAME}${process.env.API_URI}/update-spam`);
+    console.log("fetching old reports...")
+    const response = await axios.get("http://127.0.0.1:8000/api/v1/get-old-reports");//`${process.env.HOSTNAME}${process.env.API_URI}/get-old-reports`);
+    const oldReports = response.data;
+    const data = oldReports.map(obj => {
+      delete obj._id;
+      delete obj.latitude;
+      delete obj.longitude;
+      delete obj.type;
+      delete obj.status;
+      delete obj.disaster;
+      delete obj.Ambulance;
+      delete obj.Police;
+      delete obj.FireTruck;
+      delete obj.Buses;
+      delete obj.Helicopter;
+      delete obj.created_at;
+      delete obj.__v;
+      return obj;
+    });
+    console.log(data);
+    const updatedData = data.map(item => ({
+      ...item,
+      spam: item.spam ? 0 : 1
+    }));
+    console.log(updatedData);
+    // Convert old reports to a CSV string
+    // Convert array to CSV format with headers
+    const csv = `${updatedData.map(item => `${item.detail},${item.spam}\n`).join('')}`;
 
-        // Set spam field to true for pending reports and save the documents
-        const pendingReports = oldReports.filter(report => report.status === "pending");
-        pendingReports.forEach(async (report) => {
-            report.spam = true;
-            await report.save();
-        });
-
-        // Convert old reports to CSV string
-        const csvString = await stringify(oldReports, {
-            header: false,
-            columns: [
-            { key: 'detail', header: 'text' },
-            { key: 'spam', header: 'target' }
-            ]
-        });
-
-        // Append CSV string to existing file or create a new file
-        const fileName = 'pastReports.csv';
-        const filePath = path.join("../python/datasets/", fileName);
-        if (fs.existsSync(filePath)) {
-            fs.appendFileSync(filePath, csvString);
-            console.log(`${oldReports.length} old reports appended to ${fileName}`);
-        } else {
-            fs.writeFileSync(filePath, csvString);
-            console.log(`${oldReports.length} old reports saved to new file ${fileName}`);
-        }
-
-        // Delete old reports from the database
-        await ReportData.deleteMany({ created_at: { $lt: cutoffDate } });
-        console.log(`${oldReports.length} old reports deleted from the database`);
-        } catch (err) {
-        console.error(`Error saving old reports: ${err.message}`);
-        }
+    const filePath = path.join(__dirname, '../python/datasets/pastReports.csv');
+    // Append CSV data to file
+    fs.appendFile(filePath, csv, err => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(`Data appended to ${filePath}`);
+    });
+    
+    // Delete old reports from the database
+    await axios.delete(`http://127.0.0.1:8000/api/v1/delete-old-reports`);
+  } catch (err) {
+    console.error(`Error processing old reports: ${err.message}`);
+  }
 }
 
 module.exports = {
-    processOldReports: processOldReports
+  processOldReports : processOldReports
 };

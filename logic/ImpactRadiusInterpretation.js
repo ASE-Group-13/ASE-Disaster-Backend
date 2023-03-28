@@ -72,7 +72,9 @@ function searchWord(listObject, inputString){
 //returns an impact radius for the map in meters
 function interpretDisasterRadius(disasterType, impactLocation){
     let impactRadius = 0;
-    if(disasterType.includes("fire")){
+    // console.log(typeof disasterType);
+    // console.log(disasterType);
+    if(disasterType.toLowerCase().includes("fire")){
 
         if(impactLocation.includes("apartment")){ 
             //make this more generic , add synonyms
