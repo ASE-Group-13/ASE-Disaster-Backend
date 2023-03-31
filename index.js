@@ -5,6 +5,24 @@ const app = express();
 const mongoose = require("mongoose");
 const dataRoute = require("./routes/data");
 const authRoute = require("./routes/auth");
+const schedule = require('node-schedule');
+const {processOldReports} = require("./logic/Scheduler")
+const {trainModel} = require("./logic/SpamFilter")
+
+const rule = new schedule.RecurrenceRule();
+rule.hour = 0; // Run the job at midnight every day
+
+// Define the scheduler
+const job = schedule.scheduleJob(rule, () => {
+  console.log('Running processOldReports job...');
+  processOldReports().catch(err => {
+    console.error(`Error running processOldReports: ${err.message}`);
+  });
+  trainModel().catch(err => {
+    console.error(`Error running spam predictor trainModel: ${err.message}`);
+  })
+  console.log(`processOldReports job scheduled to run at ${rule.hour}:00} every day.`);
+});
 
 const api = process.env.API_URI;
 
@@ -35,3 +53,4 @@ app.listen(process.env.PORT || 8000, () => {
   console.log("Backend Server in running!");
   console.log(`Server started on PORT: ${process.env.PORT}`);
 });
+

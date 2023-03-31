@@ -19,7 +19,7 @@ const calcDistance = (lat1, lon1, lat2, lon2) => {
 
 // main function to check if location is within 500m of an existing disaster
 const checkDisasterLocation = async (type, longitude, latitude) => {
-  const response = await axios.get("http://127.0.0.1:8000/api/v1//relevant-disaster-data");
+  const response = await axios.get(`${process.env.HOSTNAME}${process.env.API_URI}/relevant-disaster-data`);
   const disasters = response.data;
 
   for (let i = 0; i < disasters.length; i++) {
@@ -36,7 +36,7 @@ const checkDisasterLocation = async (type, longitude, latitude) => {
 }
 
 const createDisaster = async (report) => {
-  console.log("createDisaster");
+  // console.log("createDisaster");
   const data = {
     "latitude": report.latitude,
     "longitude": report.longitude,
@@ -44,25 +44,23 @@ const createDisaster = async (report) => {
     "type": report.type,
     "status": "pending"
   };
-  console.log("post request");
+  // console.log("post request");
   const response = await axios.post(
-    "http://127.0.0.1:8000/api/v1/add-Disaster-Data", data,
+    `${process.env.HOSTNAME}${process.env.API_URI}/add-Disaster-Data`, data,
     {
         headers:{
             'Content-Type': 'application/json'
         }
     }
   ); 
-  console.log("new disaster id");
-  console.log(response);
   return response.data.saveData._id;
 }
 
 const addReportToDisaster = async (disaster, report) => {
-  console.log("post request");
-  console.log(`Disaster Id:${disaster} Report Id:${report._id}`)
+  // console.log("post request");
+  // console.log(`Disaster Id:${disaster} Report Id:${report._id}`)
   const response = await axios.post(
-    `http://127.0.0.1:8000/api/v1/add-report-to-disaster/${disaster}`,
+    `${process.env.HOSTNAME}${process.env.API_URI}/add-report-to-disaster/${disaster}`,
     {"reportId":report._id,},
     {
         headers:{
@@ -75,15 +73,15 @@ const addReportToDisaster = async (disaster, report) => {
 const assignToDisaster = async (report) => {
   latitude = report.latitude;
   var disaster = await checkDisasterLocation(report.longitude, report.latitude, report._id);
-  console.log(`Disaster Id:${disaster}`);
+  // console.log(`Disaster Id:${disaster}`);
   if (disaster===null){
     disaster = await createDisaster(report)
   }
-  console.log("addReportToDisaster");
+  // console.log("addReportToDisaster");
   await addReportToDisaster(disaster, report);
   result = Object.assign({}, report, {"disaster":disaster})
-  console.log("result");
-  console.log(result);
+  // console.log("result");
+  // console.log(result);
   return result;
 }
 

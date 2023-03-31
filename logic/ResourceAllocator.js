@@ -21,11 +21,23 @@ const { spawnSync } = require("child_process");
     if (result.status === 0) {
       console.log('Python script ran successfully');
       console.log('Output:', result.stdout.toString());
-      const str = result.stdout.toString()
-      const basicStr = str.replace("[","").replace("]","")
-      finalArray = basicStr.split(" ").map(Number);
-      console.log(finalArray);
-      return formatResources(finalArray);
+      const string = result.stdout.toString();
+      let strippedString = string.replace(/\s+/g, ' ').trim(); // remove extra spaces
+      let stringArray 
+      if (string[2]===" "){
+        stringArray  = strippedString.slice(3, -2).split(' ');
+      } else{
+        stringArray  = strippedString.slice(2, -2).split(' ');
+      }
+       // remove brackets and split into individual string values
+      let floatArray = stringArray.map(function(element) {
+        return parseFloat(element);
+      });
+      let intArray = floatArray.map(function(element) {
+        return Math.round(element);
+      });
+      console.log(intArray);
+      return formatResources(intArray);
     } else {
       console.error('Error running Python script');
       console.error('Error:', result.stderr.toString());
