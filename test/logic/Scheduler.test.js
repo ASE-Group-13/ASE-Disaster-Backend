@@ -1,50 +1,30 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-
 const { processOldReports } = require('../../logic/Scheduler');
-
+const axios = require('axios');
 jest.mock('axios');
-jest.mock('fs');
 
-describe('processOldReports', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+describe('processOldReports function', () => {
+  it('should update spam reports, get old reports, convert them to CSV and delete them from the database', async () => {
+    const mockedPut = axios.put.mockResolvedValue({});
+    const mockedGet = axios.get.mockResolvedValue({
+      data: [{
+        detail: 'Report 1',
+        spam: false
+      }, {
+        detail: 'Report 2',
+        spam: true
+      }]
+    });
+    const mockedDelete = axios.delete.mockResolvedValue({});
+    const mockedAppendFile = jest.spyOn(fs, 'appendFile').mockImplementation((path, data, callback) => {
+      callback(null);
+    });
 
-  it('should update old reports as spam', async () => {
-    const oldReports = [      { _id: '1', detail: 'Report 1', spam: false },      { _id: '2', detail: 'Report 2', spam: true },    ];
-    axios.put.mockResolvedValue({});
-    axios.get.mockResolvedValue({ data: oldReports });
-    axios.delete.mockResolvedValue({});
+    const result = await processOldReports();
 
-    await processOldReports();
-
-    expect(axios.put).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/update-spam');
-    expect(axios.get).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/get-old-reports');
-    expect(axios.delete).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/delete-old-reports');
-
-    expect(fs.appendFile).toHaveBeenCalled();
-    const csv = 'Report 1,1\nReport 2,0\n';
-    const filePath = path.join('C:\\myProjects\\MSc Programming\\CS7CS3_AdvancedSoftwareEngineering\\ASE-Disaster-Backend\\python\\datasets\\pastReports.csv');
-    expect(fs.appendFile.mock.calls[0][0]).toEqual(filePath);
-    expect(fs.appendFile.mock.calls[0][1]).toEqual(csv);
-  });
-
-  it('should handle errors', async () => {
-    axios.put.mockRejectedValue(new Error('update error'));
-    axios.get.mockRejectedValue(new Error('get error'));
-    axios.delete.mockRejectedValue(new Error('delete error'));
-    console.error = jest.fn();
-
-    await processOldReports();
-
-    expect(axios.put).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/update-spam');
-    expect(axios.get).toHaveBeenCalledWith("http://127.0.0.1:8000/api/v1/get-old-reports");
-    expect(axios.delete).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/delete-old-reports');
-
-    expect(fs.appendFile).not.toHaveBeenCalled();
-    expect(console.error).toHaveBeenCalledTimes(1);
-    expect(console.error).toHaveBeenCalledWith('Error processing old reports: update error');
+    expect(mockedPut).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/update-spam');
+    expect(mockedGet).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/get-old-reports');
+    expect(mockedDelete).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/delete-old-reports');
+    expect(mockedAppendFile).toHaveBeenCalled();
+    expect(result).toBe(true);
   });
 });

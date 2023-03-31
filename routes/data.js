@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const mongoose = require("mongoose");
 const DisasterData = require("../models/DisasterData");
@@ -110,7 +111,8 @@ router.put("/activate-disaster/:id", async (req, res) => {
     // Find the disaster document and update its status field
     const updatedDisaster = await DisasterData.findByIdAndUpdate(
       req.params.id,
-      { status: 'active' },
+      { status: 'active',
+        evacuation: req.body.evacuation },
       { new: true }
     );
 
@@ -159,13 +161,39 @@ router.put("/resolve-disaster/:id", async (req, res) => {
 
 // Add report data
 router.post("/add-report-data", async (req, res) => {
-  const spamStatus = predictMessage(req.body.detail); // identify spam messages
+  // Get the JWT token from the request header
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+  let responderMessage;
+  let spamStatus;
+  if (token) {
+    try {
+      // Verify the JWT token to ensure that the user is logged in
+      const decoded = jwt.verify(token, process.env.JWT_SEC);
+      
+      // Flag the report as submitted by a responder
+      responderMessage = true;
+      spamStatus = false;
+    } catch (error) {
+      // If the token is invalid, log the error and proceed with processing the report data
+      console.error(error);
+      console.warn('Token invalid');
+      spamStatus = predictMessage(req.body.detail); // identify spam messages
+      responderMessage = false;
+    }
+  } else {
+    // If no token is present, log a warning message and proceed with processing the report data
+    console.warn('No token present in request header');
+    spamStatus = predictMessage(req.body.detail); // identify spam 
+    responderMessage = false;
+  }
   var reportJson = {
     detail: req.body.detail,
     latitude: req.body.latitude,
     longitude: req.body.longitude,
     type : req.body.type,
-    spam : spamStatus,
+    isSpam : spamStatus,
+    isResponder : responderMessage
   };
   if (spamStatus === false) {
     // interpretation 
@@ -276,6 +304,13 @@ router.delete("/delete-old-reports", async (req, res) => {
 // SEND RESOURCES API post("/send-resources")...
 // we need report messages and then submitted response if we want to do the smart feedback loop for allocation
 
-
+router.post("/send-resources", async (req, res) => {
+  try {
+    res.json({ message: 'Received Resource Request' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while receiving resource request' });
+  }
+});
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const {severityData,resourcesData} = require("./AssessmentData");
 
 const disasterDataSchema = new mongoose.Schema({
   latitude: {
@@ -18,6 +17,11 @@ const disasterDataSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  evacuation: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
   type: {
     type: String,
     required: true,
@@ -31,6 +35,62 @@ const disasterDataSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "ReportData",
   }],
+  radius: {
+    type: Number,
+    required: false,
+  },
+  impact: {
+    type: Number,
+    enum: [
+        "Flood",
+        "Explosion",
+        "Chemical hazard",
+        "Terrorist activity",
+        "Fire",
+        "Tornado",
+        "Earthquake",
+        "Hurricane",
+        "Accident",
+        "Traffic accident",
+        "Collapse",
+        "Wildfire",
+        "Exlposion",
+    ],
+    required: false,
+  },
+  building: {
+    type: String,
+    enum: ["Building",
+    "Library",
+    "Hotel",
+    "Stadium",
+    "Restaurant",
+    "School",
+    "Apartment",
+    "Park",
+    "Mall",
+    "Office",
+    "Factory",
+    "Airport",
+    "Hospital",
+    "Supermarket",
+    "Bank",
+    "Highway",
+    "Warehouse",
+    "Amusement Park",
+    "Church",
+    "Museum",
+    "Shopping Center",
+    "Oil rig",
+    "Power plant",
+    "City street",
+    "Bridge",
+    "River",
+    "Forest",
+    "Office Building",
+    "High-rise Building"],
+    required: false,
+  },
   Ambulance : {
       type: Number,
       required: false,

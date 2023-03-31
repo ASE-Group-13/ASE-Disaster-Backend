@@ -23,9 +23,13 @@ const reportDataSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  spam: {
+  isSpam: {
     type: Boolean,
     required: true,
+  },
+  isResponder: {
+    type: Boolean,
+    required: true
   },
   status: {
     type: String,

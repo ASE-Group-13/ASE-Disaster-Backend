@@ -47,15 +47,16 @@ async function processOldReports() {
     fs.appendFile(filePath, csv, err => {
       if (err) {
         console.error(err);
-        return;
       }
       console.log(`Data appended to ${filePath}`);
     });
     
     // Delete old reports from the database
     await axios.delete(`http://127.0.0.1:8000/api/v1/delete-old-reports`);
+    return true;
   } catch (err) {
     console.error(`Error processing old reports: ${err.message}`);
+    return false;
   }
 }
 
