@@ -1,4 +1,11 @@
-const { calculateDurations, calculateDuration } = require('../../logic/Mapbox');
+const { calculateDistance, calculateDurations, calculateDuration } = require('../../logic/MappingService');
+
+describe('calculateDistance()', () => {
+  test('calculates the straight-line distance between two coordinates', async () => {
+    const distance = await calculateDistance(53.288152, -6.139752, 53.292385, -6.142756);
+    expect(distance).toBeCloseTo(515, 400); // expect distance to be within 0 meters of 8053 meters
+  });
+});
 
 describe('calculateDuration', () => {
   test('should return a number', async () => {
@@ -44,9 +51,11 @@ describe('calculateDurations', () => {
 
   test('should have correct keys in returned objects', async () => {
     const durations = await calculateDurations(startingLocations, destinationLocation);
-    expect(durations[0]).toHaveProperty('id');
-    expect(durations[0]).toHaveProperty('coordinates');
+    expect(durations[0]).toHaveProperty('_id');
+    expect(durations[0]).toHaveProperty('latitude');
+    expect(durations[0]).toHaveProperty('longitude');
     expect(durations[0]).toHaveProperty('duration');
+    expect(durations[0]).toHaveProperty('name');
     expect(durations[0]).toHaveProperty('resource');
     expect(durations[0]).toHaveProperty('capacity');
   });

@@ -1,4 +1,5 @@
 const { spawnSync } = require("child_process");
+const {typeEnum,siteEnum} = require("../models/enumData");
 
   function trainModel() {
     console.log("Training model...")
@@ -13,6 +14,7 @@ const { spawnSync } = require("child_process");
     return true
   }
   function allocateResources(disaster){
+    console.log(disaster);
     var resultArray;
     const { spawnSync } = require('child_process');
     // Run the Python script using spawnSync
@@ -37,20 +39,26 @@ const { spawnSync } = require("child_process");
         return Math.round(element);
       });
       console.log(intArray);
-      return formatResources(intArray);
+      return formatResources(intArray,disaster);
     } else {
       console.error('Error running Python script');
       console.error('Error:', result.stderr.toString());
     }
   }
-  function formatResources(resources){
-    return {
-      Ambulance : resources[0],
-      Police : resources[1],
-      FireTruck: resources[2],
-      Buses: resources[3],
-      Helicopter: resources[4]
-    }
+  function formatResources(resources,disaster){
+    const data = {
+      site: siteEnum[disaster[0]],
+      type: typeEnum[disaster[1]],
+      radius: disaster[2],
+      size: disaster[3],
+      ambulance : resources[0],
+      police : resources[1],
+      fire: resources[2],
+      bus: resources[3],
+      helicopter: resources[4]
+    };
+    // console.log(`resource:${JSON.stringify(data)}`);
+    return data;
   }
 
 

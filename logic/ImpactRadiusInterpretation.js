@@ -47,13 +47,14 @@
 // };
 
 
-const disasterLocations = ["apartment", "building", "school", "library", "stadium", "restaurant", "park", "hotel"]
+
+const {siteEnum} = require("../models/enumData");
 
 //finds out the location from the input string
 //make it more generic by interpreting location data in future
 function interpretDisasterLocation(inputString){
     // const inputString = inputString.string.toLowerCase();
-    const foundLocations  = searchWord(disasterLocations.map(word => word.toLowerCase()),inputString.toLowerCase());
+    const foundLocations  = searchWord(siteEnum.map(word => word.toLowerCase()),inputString.toLowerCase());
     return foundLocations;
 }
 
@@ -68,6 +69,7 @@ function searchWord(listObject, inputString){
     return foundWords;
 }
 
+const defaultRadius = 500;
 
 //returns an impact radius for the map in meters
 function interpretDisasterRadius(disasterType, impactLocation){
@@ -107,8 +109,9 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("explosion")){
 
         if(impactLocation.includes("apartment")){ 
@@ -142,8 +145,9 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("flood")){
 
         if(impactLocation.includes("apartment")){ 
@@ -177,8 +181,9 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("chemical")){
 
         if(impactLocation.includes("apartment")){ 
@@ -212,8 +217,9 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("terrorist")){
 
         if(impactLocation.includes("apartment")){ 
@@ -247,8 +253,11 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
+    }else {
+        impactRadius = defaultRadius;
     }
     return impactRadius;
 }

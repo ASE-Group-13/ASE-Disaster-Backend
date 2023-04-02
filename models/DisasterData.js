@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
+const {siteEnum,typeEnum,statusEnum} = require("./enumData");
 
 const disasterDataSchema = new mongoose.Schema({
+  created_at: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
   latitude: {
     type: String,
     required: true,
@@ -22,92 +28,50 @@ const disasterDataSchema = new mongoose.Schema({
     required: false,
     default: false
   },
-  type: {
-    type: String,
-    required: true,
-  },
   status: {
     type: String,
-    enum: ['pending', 'active', 'resolved'], 
+    enum: statusEnum, 
     required: true,
   },
   reports: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "ReportData",
   }],
-  radius: {
-    type: Number,
-    required: false,
-  },
-  impact: {
-    type: Number,
-    enum: [
-        "Flood",
-        "Explosion",
-        "Chemical hazard",
-        "Terrorist activity",
-        "Fire",
-        "Tornado",
-        "Earthquake",
-        "Hurricane",
-        "Accident",
-        "Traffic accident",
-        "Collapse",
-        "Wildfire",
-        "Exlposion",
-    ],
-    required: false,
-  },
-  building: {
+  type: {
     type: String,
-    enum: ["Building",
-    "Library",
-    "Hotel",
-    "Stadium",
-    "Restaurant",
-    "School",
-    "Apartment",
-    "Park",
-    "Mall",
-    "Office",
-    "Factory",
-    "Airport",
-    "Hospital",
-    "Supermarket",
-    "Bank",
-    "Highway",
-    "Warehouse",
-    "Amusement Park",
-    "Church",
-    "Museum",
-    "Shopping Center",
-    "Oil rig",
-    "Power plant",
-    "City street",
-    "Bridge",
-    "River",
-    "Forest",
-    "Office Building",
-    "High-rise Building"],
+    enum: typeEnum,
     required: false,
   },
-  Ambulance : {
+  radius: {
+    type: String,
+    required: false,
+  },
+  size: {
+    type: String,
+    required: false,
+  },
+  site: {
+    type: String,
+    enum: Object.keys(siteEnum),
+    required: false,
+  },
+  ambulance : {
       type: Number,
       required: false,
   },
-  Police : {
+  police : {
       type: Number,
       required: false,
   },
-  FireTruck: {
+  fire: {
       type: Number,
       required: false,
   },
-  Buses: {
+  bus: {
       type: Number,
       required: false,
   },
-  Helicopter: {
+  helicopter: {
       type: Number,
       required: false,
   },

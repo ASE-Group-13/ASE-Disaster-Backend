@@ -1,3 +1,5 @@
+const { interpretImpactSize } = require('../../logic/ImpactSizeInterpretation');
+
 describe("interpretImpactSize function", () => {
   test("returns the correct impact size for very few synonyms and a building location", () => {
     const inputString = "There were very few casualties.";

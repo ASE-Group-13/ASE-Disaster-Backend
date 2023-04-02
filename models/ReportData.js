@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {severityData,resourcesData} = require("./AssessmentData");
+const {siteEnum,typeEnum,statusEnum} = require("./enumData");
 
 const reportDataSchema = new mongoose.Schema({
   created_at: {
@@ -21,7 +21,21 @@ const reportDataSchema = new mongoose.Schema({
   },
   type: {
     type: String,
+    enum: typeEnum,
     required: true,
+  },
+  radius: {
+    type: String,
+    required: false,
+  },
+  size: {
+    type: String,
+    required: false,
+  },
+  site: {
+    type: String,
+    enum: siteEnum,
+    required: false,
   },
   isSpam: {
     type: Boolean,
@@ -34,30 +48,30 @@ const reportDataSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "pending",
-    enum : ['pending', 'active', 'resolved'],
+    enum : statusEnum,
     required: true
   },
   disaster: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "DisasterData",
   },
-  Ambulance : {
+  ambulance : {
     type: Number,
     required: false,
   },
-  Police : {
+  police : {
       type: Number,
       required: false,
   },
-  FireTruck: {
+  fire: {
       type: Number,
       required: false,
   },
-  Buses: {
+  bus: {
       type: Number,
       required: false,
   },
-  Helicopter: {
+  helicopter: {
       type: Number,
       required: false,
   },

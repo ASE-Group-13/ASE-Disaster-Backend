@@ -1,5 +1,7 @@
 const { processOldReports } = require('../../logic/Scheduler');
 const axios = require('axios');
+const fs = require('fs');
+jest.mock('fs');
 jest.mock('axios');
 
 describe('processOldReports function', () => {
