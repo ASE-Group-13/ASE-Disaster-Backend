@@ -116,47 +116,5 @@ router.post("/add-report-data", async (req, res) => {
     }
   });
   
-  router.get("/get-old-reports", async (req, res) => {
-    try {
-      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-      const oldReports = await ReportData.find({createdAt: { $lte: twentyFourHoursAgo } });
-      return res.json(oldReports);
-    } catch (err) {
-      res.json({ message: err });
-    }
-  });
-  
-  router.put("/update-spam", async (req, res) => {
-    try {
-      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-      const oldPendingReports = await ReportData.updateMany(
-        { status: "pending", createdAt: { $lte: twentyFourHoursAgo } },
-        { $set: { spam: true } }
-      );
-      return res.json({ message: `${oldPendingReports.nModified} report(s) updated` });
-    } catch (err) {
-      res.status(500).json({ message: "Error updating reports" });
-    }
-  });
-  
-  router.delete("/delete-old-reports", async (req, res) => {
-    // Calculate date 24 hours ago
-    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-  
-    try {
-      // Find all reports older than 24 hours
-      const oldReports = await ReportData.find({ createdAt: { $lt: twentyFourHoursAgo } });
-  
-      // Delete the old reports
-      await ReportData.deleteMany({ _id: { $in: oldReports.map(report => report._id) } });
-  
-      // Send response with success message
-      res.json({ message: 'Old reports deleted successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'An error occurred while deleting old reports' });
-    }
-  });
-  
   module.exports = router;
   
