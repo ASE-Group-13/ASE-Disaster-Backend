@@ -1,7 +1,6 @@
 // Import required modules and models
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios');
 
 // Define a function to process old reports
 async function processOldReports() {
@@ -12,9 +11,13 @@ async function processOldReports() {
 
     // Get all old pending reports and mark them as spam
     console.log('updating spam reports...');
-    const updateSpam = await axios.put("http://127.0.0.1:8000/api/v1/update-spam");//`${process.env.HOSTNAME}${process.env.API_URI}/update-spam`);
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    await ReportData.updateMany(
+      { status: "pending", createdAt: { $lte: twentyFourHoursAgo } },
+      { $set: { spam: true } }
+    );
     console.log("fetching old reports...")
-    const response = await axios.get("http://127.0.0.1:8000/api/v1/get-old-reports");//`${process.env.HOSTNAME}${process.env.API_URI}/get-old-reports`);
+    const response = await ReportData.find({createdAt: { $lte: twentyFourHoursAgo } });
     const oldReports = response.data;
     const data = oldReports.map(obj => {
       delete obj._id;
@@ -47,15 +50,16 @@ async function processOldReports() {
     fs.appendFile(filePath, csv, err => {
       if (err) {
         console.error(err);
-        return;
       }
       console.log(`Data appended to ${filePath}`);
     });
-    
-    // Delete old reports from the database
-    await axios.delete(`http://127.0.0.1:8000/api/v1/delete-old-reports`);
+
+    // Delete the old reports
+    await ReportData.deleteMany({ _id: { $in: oldReports.map(report => report._id) } });
+    return true;
   } catch (err) {
     console.error(`Error processing old reports: ${err.message}`);
+    return false;
   }
 }
 

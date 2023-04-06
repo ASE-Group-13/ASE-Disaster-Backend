@@ -3,11 +3,14 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const dataRoute = require("./routes/data");
+const disasterRoute = require("./routes/disasters");
+const orderRoute = require("./routes/orders");
+const reportRoute = require("./routes/reports");
 const authRoute = require("./routes/auth");
 const schedule = require('node-schedule');
 const {processOldReports} = require("./logic/Scheduler")
-const {trainModel} = require("./logic/SpamFilter")
+const spam = require("./logic/SpamFilter")
+const resource = require("./logic/ResourceAllocator")
 
 const rule = new schedule.RecurrenceRule();
 rule.hour = 0; // Run the job at midnight every day
@@ -18,9 +21,8 @@ const job = schedule.scheduleJob(rule, () => {
   processOldReports().catch(err => {
     console.error(`Error running processOldReports: ${err.message}`);
   });
-  trainModel().catch(err => {
-    console.error(`Error running spam predictor trainModel: ${err.message}`);
-  })
+  spam.trainModel();
+  resource.trainModel();
   console.log(`processOldReports job scheduled to run at ${rule.hour}:00} every day.`);
 });
 
@@ -47,10 +49,15 @@ app.get(`${api}/hello`, (req, res) => {
 });
 
 app.use(`${api}/auth`, authRoute);
-app.use(`${api}`, dataRoute);
+app.use(`${api}`, disasterRoute);
+app.use(`${api}`, orderRoute);
+app.use(`${api}`, reportRoute);
 
 app.listen(process.env.PORT || 8000, () => {
   console.log("Backend Server in running!");
   console.log(`Server started on PORT: ${process.env.PORT}`);
 });
 
+module.exports = {
+  job: job
+}
