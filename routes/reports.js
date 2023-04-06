@@ -54,7 +54,7 @@ router.post("/add-report-data", async (req, res) => {
       const disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
       const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
       const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
-      const resourcesFromStatic = allocationStaticObj.allocateResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
+      const resourcesFromStatic = allocationStaticObj.getResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
       resources = min(resourcesFromModel, resourcesFromStatic);
       const disasterResources = Object.assign({}, resources,{
         site: disasterLocation,
