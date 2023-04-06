@@ -75,7 +75,8 @@ router.post("/request-resources", async (req, res) => {
         }
         orders.push(...await setOrder(resource.orderLocations, disaster));
       }
-
+ // MAKE IT JUST ONE ID NOT A BUNCH
+ // DIFFER BETWEEN ORDERS AND EVACUATIONS
       if (police !== 0) {
         const resource = await checkRequest(
           fastestRoutes,

@@ -11,6 +11,14 @@ const orderDataSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "LocationData",
 	},
+	locationLatitude: {
+		type: String,
+		required: true,
+	},
+	locationLongitude: {
+		type: String,
+		required: true,
+	},
 	resource: {
 		type: String,
 		enum: resourceEnum, 

@@ -191,17 +191,21 @@ async function checkRequest(fastestRoutes, resourceType, quantity) {
 
 async function setOrder(orderLocations, disaster) {
   const result = [];
+  
   for (const order of orderLocations) {
     const newData = new
     OrderData({
-      location: order.location,
-      URL: `http://127.0.0.1:4000/orders/${disaster._id}/${order.location._id}`,
+      location: order.location._id,
+      locationLatitude: order.location.latitude,
+      locationLongitude: order.location.longitude,
+      URL: `http://127.0.0.1:4000/orders/`,
       quantity: order.quantity,
       instructions: "Urgently head to disaster site.",
       disaster: disaster,
       status: "active",
       resource: order.location.resource,
     });
+    newData.URL += `/${newData._id}`;
     console.log("Saving order");
     await newData.save();
     await sendOrder(newData);
@@ -214,8 +218,10 @@ async function setEvacuation(evacuationOrders, disaster) {
   const result = [];
   for (const order of evacuationOrders) {
     const busData = new OrderData({
-      location: order.busDepot,
-      URL: `http://127.0.0.1:4000/orders/${disaster._id}/${order.restCentre._id}/${order.busDepot._id}`,
+      location: order.busDepot._id,
+      locationLatitude: order.busDepot.latitude,
+      locationLongitude: order.busDepot.longitude,
+      URL: `http://127.0.0.1:4000/orders/`,
       quantity: order.sentBuses,
       instructions:
         "Please head to evacuation point, gather victims and escort them to the rest center.",
@@ -228,17 +234,19 @@ async function setEvacuation(evacuationOrders, disaster) {
       },
       restCentre: order.restCentre,
     });
-
+    busData.URL += `/${busData._id}`;
     const restData = new OrderData({
-      location: order.restCentre,
-      URL: `http://127.0.0.1:4000/orders/${disaster._id}/${order.restCentre._id}`,
+      location: order.restCentre._id,
+      locationLongitude: order.restCentre.latitude,
+      locationLatitude: order.restCentre.longitude,
+      URL: `http://127.0.0.1:4000/orders/`,
       quantity: order.quantity,
       instructions: `Please prepare rest center for approximately ${order.quantity} victims of the disaster.`,
       disaster: disaster,
       status: "active",
       resource: "rest centre",
     });
-
+    restData.URL += `/${restData._id}`;
     console.log("Saving orders");
     await busData.save();
     await restData.save();
