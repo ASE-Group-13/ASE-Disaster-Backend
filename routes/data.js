@@ -9,7 +9,7 @@ const {allocateResources} = require('../logic/ResourceAllocator');
 const disasterTypeObj = require('../logic/DisasterInterpretation.js');
 const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
 const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
-
+const disasterCanoObj = require('../logic/DisasterCanonicalization.js')
 /* DISASTER ROUTES */
 
 // Add disaster data
@@ -173,8 +173,10 @@ router.post("/add-report-data", async (req, res) => {
     disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
     disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation);
     // DISASTER TYPE AND DISASTER LOCATION NEED TO BE CONVERTED INTO NUMBERS!
-    
-    const resources = allocateResources([1,5,disasterRadius,disasterImpactedPeopleCount]); // This can change to optimiseResources() function
+    disasterTypeCano, disasterLocationCano = disasterCanoObj.getCanonicalForm(disasterLocation, disasterTypeObj[0]);
+    const resourcesFromModel = allocateResources([disasterTypeCano, disasterLocationCano, disasterRadius, disasterImpactedPeopleCount]); // This can change to optimiseResources() function
+    const resourcesFromStatic = allocateResourcesStatic([disasterTypeCano, disasterLocationCano, disasterRadius, disasterImpactedPeopleCount])
+    resources = min(resourcesFromModel, resourcesFromStatic);
     reportJson = Object.assign({}, reportJson, resources);
   }
   const completeJson = await assignToDisaster(reportJson);
