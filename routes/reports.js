@@ -55,13 +55,19 @@ router.post("/add-report-data", async (req, res) => {
       const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
       const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
       const resourcesFromStatic = allocationStaticObj.getResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
-      resources = min(resourcesFromModel, resourcesFromStatic);
-      const disasterResources = Object.assign({}, resources,{
+      console.log("resourcesFromModel:", resourcesFromModel);
+      console.log("resourcesFromStatic:", resourcesFromStatic);
+      const finalResources = {};
+      for (const key in resourcesFromModel) {
+        finalResources[key] = Math.min(resourcesFromModel[key], resourcesFromStatic[key]);
+      }
+      const disasterResources = Object.assign({}, finalResources,{
         site: disasterLocation,
         type: reportJson.type,
         radius: disasterRadius,
         size: disasterImpactedPeopleCount,
       })
+      console.log("disasterResources:", finalResources);
       const combinedJson = Object.assign({}, reportJson, disasterResources);
       reportJson = await assignToDisaster(combinedJson);
     }

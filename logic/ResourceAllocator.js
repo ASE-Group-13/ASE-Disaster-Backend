@@ -49,7 +49,7 @@ const {typeEnum,siteEnum} = require("../models/enumData");
     const data = {
       "Ambulance" : resources[0],
       "Police" : resources[1],
-      "Fire truck" : resources[2],
+      "FireTruck" : resources[2],
       "Bus": resources[3],
       "Helicopter" : resources[4]
     };

@@ -3,24 +3,27 @@ function getResourcesStatic(disasterType, impactRadius, impactSize) {
   return resources;
 }
 
-function allocateResourcesStatic(){
-    const resourceMapping = [
-        // Ambulance and Police are required for all disasters
-        { type: 'Ambulance', count: 2 },
-        { type: 'Police', count: 2 },
-      
-        // Resources required for each disaster type
-        { type: 'Helicopter', count: 1, requiredFor: [0, 9, 13] }, // Flood, Hurricane, Wildfire
-        { type: 'Bus', count: 1, requiredFor: [0] }, // Flood
-        { type: 'Fire Truck', count: 1, requiredFor: [4, 5, 13] }, // Fire, Chemical Hazard, Wildfire
-        
-      ];
-}
-
 function allocateResourcesStatic(disasterType, impactRadius, impactSize) {
-    const resources = [];
+  const resources = {
+    Ambulance: 0,
+    Police: 0,
+    'FireTruck': 0,
+    Bus: 0,
+    Helicopter: 0
+  };
 
     const disasterIndex = disasterType;
+
+    const resourceMapping = [
+      // Ambulance and Police are required for all disasters
+      { type: 'Ambulance', count: 2 },
+      { type: 'Police', count: 2 },
+      { type: 'Bus', count: 1 },
+      // Resources required for each disaster type
+      { type: 'Helicopter', count: 1, requiredFor: [0, 9, 13] }, // Flood, Hurricane, Wildfire
+      { type: 'FireTruck', count: 1, requiredFor: [4, 5, 13] } // Fire, Chemical Hazard, Wildfire
+      // Add more resources as needed
+    ];
   
     // Loop through the resource mapping and add resources as needed
     for (let resource of resourceMapping) {
@@ -34,7 +37,7 @@ function allocateResourcesStatic(disasterType, impactRadius, impactSize) {
       count += Math.ceil(impactRadius / 500);
       count += Math.ceil(impactSize / 10);
   
-      resources.push({ type: resource.type, count });
+      resources[resource.type] = count;
     }
     
     return resources; 
