@@ -45,24 +45,20 @@ const {typeEnum,siteEnum} = require("../models/enumData");
       console.error('Error:', result.stderr.toString());
     }
   }
-  function formatResources(resources,disaster){
+  function formatResources(resources){
     const data = {
-      site: siteEnum[disaster[0]],
-      type: typeEnum[disaster[1]],
-      radius: disaster[2],
-      size: disaster[3],
-      ambulance : resources[0],
-      police : resources[1],
-      fire: resources[2],
-      bus: resources[3],
-      helicopter: resources[4]
+      "Ambulance" : resources[0],
+      "Police" : resources[1],
+      "Fire truck" : resources[2],
+      "Bus": resources[3],
+      "Helicopter" : resources[4]
     };
     // console.log(`resource:${JSON.stringify(data)}`);
     return data;
   }
 
 
-  module.exports = {
+module.exports = {
     trainModel: trainModel,
     allocateResources: allocateResources,
 };

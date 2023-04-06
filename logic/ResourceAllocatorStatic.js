@@ -4,7 +4,7 @@ const impactSize = parseInt(req.query.size) || 0;
 const resources = allocateResourcesStatic(type, impactRadius, impactSize);
 res.json({ resources });
 
-function allocateResourcesStatic(disaster){
+function allocateResourcesStatic(){
     const resourceMapping = [
         // Ambulance and Police are required for all disasters
         { type: 'Ambulance', count: 2 },
@@ -43,6 +43,6 @@ function allocateResourcesStatic(disasterType, impactRadius, impactSize) {
   
       resources.push({ type: resource.type, count });
     }
-  
-    return resources;
+    
+    return resources; 
   }

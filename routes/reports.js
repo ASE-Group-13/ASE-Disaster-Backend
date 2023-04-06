@@ -9,6 +9,7 @@ const {allocateResources} = require('../logic/ResourceAllocator');
 const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
 const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
 const {getSiteNumber,getTypeNumber} = require("../models/enumData");
+const allocationStaticObj = require('../logic/ResourceAllocatorStatic.js')
 
 /* REPORTS ROUTES */
 
@@ -52,8 +53,16 @@ router.post("/add-report-data", async (req, res) => {
       const disasterLocation = disasterLocationObj.interpretDisasterLocation(reportJson.detail);
       const disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
       const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
-      const resources = allocateResources([getSiteNumber(disasterLocation),getTypeNumber(reportJson.type),disasterRadius,disasterImpactedPeopleCount]); 
-      const combinedJson = Object.assign({}, reportJson, resources);
+      const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
+      const resourcesFromStatic = allocationStaticObj.allocateResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
+      resources = min(resourcesFromModel, resourcesFromStatic);
+      const disasterResources = Object.assign({}, resources,{
+        site: disasterLocation,
+        type: reportJson.type,
+        radius: disasterRadius,
+        size: disasterImpactedPeopleCount,
+      })
+      const combinedJson = Object.assign({}, reportJson, disasterResources);
       reportJson = await assignToDisaster(combinedJson);
     }
     console.log(reportJson);

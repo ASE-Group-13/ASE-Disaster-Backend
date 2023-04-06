@@ -20,50 +20,13 @@ function getTypeNumber(type) {
   }
 }
 
+
 const siteEnum = [
-  "building",
-  "library",
-  "hotel",
-  "stadium",
-  "restaurant",
-  "school",
-  "apartment",
-  "park",
-  "mall",
-  "office",
-  "factory",
-  "airport",
-  "hospital",
-  "supermarket",
-  "bank",
-  "highway",
-  "warehouse",
-  "amusement park",
-  "church",
-  "museum",
-  "shopping center",
-  "oil rig",
-  "power plant",
-  "city street",
-  "bridge",
-  "river",
-  "forest",
-  "high-rise"
+  'Building', 'Library', 'Hotel', 'Stadium', 'Restaurant', 'School', 'Apartment', 'Park', 'Mall', 'Office', 'Factory', 'Airport', 'Hospital', 'Supermarket', 'Bank', 'Highway', 'Warehouse', 'Amusement Park', 'Church', 'Museum', 'Shopping Center', 'Oil rig', 'Power plant', 'City street', 'Bridge', 'River', 'Forest', 'Office Building', 'High-rise Building'
 ];
 
 const typeEnum = [
-  "Flood",
-  "Explosion",
-  "Chemical hazard",
-  "Terrorist activity",
-  "Fire",
-  "Tornado",
-  "Earthquake",
-  "Hurricane",
-  "Accident",
-  "Traffic accident",
-  "Collapse",
-  "Wildfire"
+  'Flood', 'Explosion', 'Exlposion', 'Chemical hazard', 'Terrorist activity', 'Fire', 'Chemical Hazard', 'Terrorist Activity', 'Tornado', 'Earthquake', 'Hurricane', 'Accident', 'Traffic accident', 'Collapse', 'Wildfire'
 ];
 
 const statusEnum = [
