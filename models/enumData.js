@@ -22,11 +22,53 @@ function getTypeNumber(type) {
 
 
 const siteEnum = [
-  'Building', 'Library', 'Hotel', 'Stadium', 'Restaurant', 'School', 'Apartment', 'Park', 'Mall', 'Office', 'Factory', 'Airport', 'Hospital', 'Supermarket', 'Bank', 'Highway', 'Warehouse', 'Amusement Park', 'Church', 'Museum', 'Shopping Center', 'Oil rig', 'Power plant', 'City street', 'Bridge', 'River', 'Forest', 'Office Building', 'High-rise Building'
+  'building', 
+  'library', 
+  'hotel',
+  'stadium', 
+  'restaurant', 
+  'school', 
+  'apartment', 
+  'park', 
+  'mall', 
+  'office', 
+  'factory', 
+  'airport', 
+  'hospital', 
+  'supermarket', 
+  'bank', 
+  'highway', 
+  'warehouse', 
+  'amusement park', 
+  'church', 
+  'museum', 
+  'shopping center', 
+  'oil rig', 
+  'power plant', 
+  'city street', 
+  'bridge', 
+  'river', 
+  'forest', 
+  'office building', 
+  'high-rise building'  
 ];
 
 const typeEnum = [
-  'Flood', 'Explosion', 'Exlposion', 'Chemical hazard', 'Terrorist activity', 'Fire', 'Chemical Hazard', 'Terrorist Activity', 'Tornado', 'Earthquake', 'Hurricane', 'Accident', 'Traffic accident', 'Collapse', 'Wildfire'
+  'flood', 
+  'explosion', 
+  'exlposion', 
+  'chemical hazard', 
+  'terrorist activity', 
+  'fire', 
+  'chemical hazard', 
+  'terrorist activity', 
+  'tornado', 
+  'earthquake', 
+  'hurricane', 
+  'accident', 
+  'traffic accident', 
+  'collapse', 
+  'wildfire'
 ];
 
 const statusEnum = [

@@ -67,7 +67,10 @@ function searchWord(listObject, inputString){
             inputString = inputString.replace(new RegExp(`\\b${word}\\b`, 'gi'), '');
         }
     } 
-    if (foundWords.length === 0){
+    if(foundWords.length > 0){
+        foundWords = foundWords[0]
+    }
+    else{
         foundWords = "Building"
     }
     return foundWords;
