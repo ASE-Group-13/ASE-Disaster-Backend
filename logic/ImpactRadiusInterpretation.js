@@ -54,6 +54,7 @@ const {siteEnum} = require("../models/enumData");
 //make it more generic by interpreting location data in future
 function interpretDisasterLocation(inputString){
     // const inputString = inputString.string.toLowerCase();
+    console.log(inputString);
     const foundLocations  = searchWord(siteEnum.map(word => word.toLowerCase()),inputString.toLowerCase());
     return foundLocations;
 }
@@ -65,6 +66,9 @@ function searchWord(listObject, inputString){
             foundWords.push(word);
             inputString = inputString.replace(new RegExp(`\\b${word}\\b`, 'gi'), '');
         }
+    } 
+    if (foundWords.length === 0){
+        foundWords = "Building"
     }
     return foundWords;
 }

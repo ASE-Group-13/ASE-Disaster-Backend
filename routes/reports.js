@@ -51,6 +51,7 @@ router.post("/add-report-data", async (req, res) => {
     };
     if (spamStatus === false) { 
       const disasterLocation = disasterLocationObj.interpretDisasterLocation(reportJson.detail);
+      console.log(disasterLocation);
       const disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
       const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
       const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
@@ -67,7 +68,7 @@ router.post("/add-report-data", async (req, res) => {
         radius: disasterRadius,
         size: disasterImpactedPeopleCount,
       })
-      console.log("disasterResources:", finalResources);
+      // console.log("disasterResources:", finalResources);
       const combinedJson = Object.assign({}, reportJson, disasterResources);
       reportJson = await assignToDisaster(combinedJson);
     }
@@ -82,7 +83,9 @@ router.post("/add-report-data", async (req, res) => {
     console.log(`Distaster Details:${updateDisaster}`);
     console.log(`Report Details:${newReportObject}`);
     try {    
+      console.log("Saving Report")
       const saveReportData = await newReportObject.save();
+      console.log("Saved Report")
       res.status(200).json({ success: true, saveReportData });
     } catch (err) {
       res.status(500).json({ success: false, error: err});

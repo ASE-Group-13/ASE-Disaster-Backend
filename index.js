@@ -8,7 +8,7 @@ const orderRoute = require("./routes/orders");
 const reportRoute = require("./routes/reports");
 const authRoute = require("./routes/auth");
 const schedule = require('node-schedule');
-const {processOldReports} = require("./logic/Scheduler")
+const {processOldReports} = require("./logic/SpamFeedback")
 const spam = require("./logic/SpamFilter")
 const resource = require("./logic/ResourceAllocator")
 

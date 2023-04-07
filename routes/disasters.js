@@ -4,6 +4,7 @@ const OrderData = require("../models/OrderData");
 const DisasterData = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
 const {allocateResources} = require('../logic/ResourceAllocator');
+const {getSiteNumber,getTypeNumber} = require("../models/enumData");
 
 /* DISASTER ROUTES */
 
@@ -83,9 +84,12 @@ router.put("/update-disaster/:id", async (req, res) => {
 });
 
 router.put("/activate-disaster/:id", async (req, res) => {
+  console.log(req.body)
   try {
     // Find the disaster document and update its status field
-    const resources = allocateResources([getSiteNumber(req.body.site),getTypeNumber(req.body.type),disasterRadius,disasterImpactedPeopleCount]); 
+    console.log(getSiteNumber(req.body.site))
+    console.log(getTypeNumber(req.body.type))
+    const resources = allocateResources([getSiteNumber(req.body.site),getTypeNumber(req.body.type),req.body.radius,req.body.size]); 
     const updatedDisaster = await DisasterData.findByIdAndUpdate(
       req.params.id,
       { status: 'active',
