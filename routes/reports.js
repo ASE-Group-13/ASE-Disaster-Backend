@@ -109,28 +109,10 @@ router.post("/add-report-data", async (req, res) => {
   // get all report data
   router.get("/all-report-data", async (req, res) => {
     try {
-      const allReportData = await ReportData.find().populate("disaster");
+      const allReportData = await ReportData.find({status: { $in: ["pending", "active"]}}).populate("disaster");
       return res.json(allReportData);
     } catch (err) {
       res.json({ message: err });
-    }
-  });
-  
-  router.put("/update-report/:id", async (req, res) => {
-    const { id } = req.params;
-  
-    try {
-      const report = await ReportData.findByIdAndUpdate(
-        id,
-        { $set: req.body },
-        { new: true }
-      );
-      if (!report) {
-        return res.status(404).json({ message: "Report not found" });
-      }
-      return res.json(report);
-    } catch (err) {
-      return res.status(500).json({ message: err });
     }
   });
   
