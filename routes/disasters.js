@@ -11,7 +11,7 @@ const {getSiteNumber,getTypeNumber} = require("../models/enumData");
 // Add disaster data
 router.post("/add-disaster-data", async (req, res) => {
   const newData = new DisasterData({
-    title: req.body.title,
+    disasterName: req.body.title,
     latitude: req.body.latitude,
     longitude: req.body.longitude,
     type: req.body.type,
@@ -87,16 +87,16 @@ router.put("/activate-disaster/:id", async (req, res) => {
   console.log(req.body)
   try {
     // Find the disaster document and update its status field
-    console.log(getSiteNumber(req.body.site))
-    console.log(getTypeNumber(req.body.type))
-    const resources = allocateResources([getSiteNumber(req.body.site),getTypeNumber(req.body.type),req.body.radius,req.body.size]); 
+    const resources = allocateResources([getSiteNumber((req.body.site).toLowerCase()),getTypeNumber((req.body.type).toLowerCase()),parseInt(req.body.radiu),parseInt(req.body.size)]); 
     const updatedDisaster = await DisasterData.findByIdAndUpdate(
       req.params.id,
       { status: 'active',
-        type: req.body.type,
-        radius: req.body.radius,
-        size: req.body.size,
-        site: req.body.site,
+        disasterName: req.body.disasterName,
+        disasterDescription: req.body.disasterDescription,
+        type: (req.body.type).toLowerCase(),
+        radius: parseInt(req.body.radius),
+        size: parseInt(req.body.size),
+        site: (req.body.site).toLowerCase(),
         evacuation: req.body.evacuation,
         ambulance: resources.ambulance,
         police : resources.police,

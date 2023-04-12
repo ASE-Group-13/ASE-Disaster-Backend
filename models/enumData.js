@@ -72,9 +72,10 @@ const typeEnum = [
 ];
 
 const statusEnum = [
-  'pending',
+  'pending', // Upon creation
   'active',
-  'resolved'
+  'resolved', // The disaster is over.
+  'closed' // It was added to feedback loop.
 ];
 
 const resourceEnum = [

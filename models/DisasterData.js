@@ -15,11 +15,11 @@ const disasterDataSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
+  disasterName: {
     type: String,
     required: true,
   },
-  detail: {
+  disasterDescription: {
     type: String,
     required: false,
   },

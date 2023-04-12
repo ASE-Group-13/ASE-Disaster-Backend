@@ -71,7 +71,7 @@ function searchWord(listObject, inputString){
         foundWords = foundWords[0]
     }
     else{
-        foundWords = "Building"
+        foundWords = "building"
     }
     return foundWords;
 }

@@ -45,7 +45,7 @@ router.post("/add-report-data", async (req, res) => {
       detail: req.body.detail,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      type : req.body.type,
+      type : (req.body.type).toLowerCase(),
       isSpam : spamStatus,
       isResponder : responderMessage
     };

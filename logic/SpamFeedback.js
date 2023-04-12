@@ -17,7 +17,8 @@ async function processOldReports() {
       { $set: { spam: true } }
     );
     console.log("fetching old reports...")
-    const response = await ReportData.find({createdAt: { $lte: twentyFourHoursAgo } });
+    const response = await ReportData.find({createdAt: { $lte: twentyFourHoursAgo },
+      status: { $ne: "closed" } });
     const oldReports = response.data;
     const data = oldReports.map(obj => {
       delete obj._id;
@@ -56,6 +57,10 @@ async function processOldReports() {
 
     // Delete the old reports
     await ReportData.deleteMany({ _id: { $in: oldReports.map(report => report._id) } });
+    await ReportData.updateMany(
+      { _id: { $in: oldReports._id } },
+      { status: 'closed' }
+    );
     return true;
   } catch (err) {
     console.error(`Error processing old reports: ${err.message}`);
