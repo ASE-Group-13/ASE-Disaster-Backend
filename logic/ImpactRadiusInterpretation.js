@@ -1,10 +1,61 @@
-const disasterLocations = ["apartment", "building", "school", "library", "stadium", "restaurant", "park", "hotel"]
+// const disasterLocations = ["apartment", "building", "school", "library", "stadium", "restaurant", "park", "hotel"];
+
+// function interpretDisasterLocation(inputString){
+//   const inputStringLower = inputString.toLowerCase();
+//   const foundLocations = disasterLocations.filter(word => inputStringLower.includes(word));
+//   return foundLocations;
+// }
+
+// const locationImpactRadius = {
+//   apartment: 500,
+//   building: 500,
+//   school: 500,
+//   library: 500,
+//   stadium: 1000,
+//   restaurant: 500,
+//   park: 500,
+//   hotel: 500,
+// };
+
+// function interpretDisasterRadius(disasterType, impactLocation, defaultRadius = 500){
+//   const impactLocationLower = impactLocation.toLowerCase();
+//   const radiusObject = {
+//     fire: 500,
+//     explosion: 500,
+//     flood: 500,
+//     chemical: 500,
+//     terrorist: 500,
+//   };
+
+//   if (disasterType.toLowerCase() in radiusObject) {
+//     for (const key in locationImpactRadius) {
+//       if (impactLocationLower.includes(key)) {
+//         radiusObject[disasterType.toLowerCase()] = locationImpactRadius[key];
+//         break;
+//       }
+//     }
+//   } else {
+//     return defaultRadius;
+//   }
+
+//   return radiusObject[disasterType.toLowerCase()] || defaultRadius;
+// }
+
+// module.exports = {
+//   interpretDisasterLocation,
+//   interpretDisasterRadius
+// };
+
+
+
+const {siteEnum} = require("../models/enumData");
 
 //finds out the location from the input string
 //make it more generic by interpreting location data in future
 function interpretDisasterLocation(inputString){
     // const inputString = inputString.string.toLowerCase();
-    const foundLocations  = searchWord(disasterLocations.map(word => word.toLowerCase()),inputString.toLowerCase());
+    console.log(inputString);
+    const foundLocations  = searchWord(siteEnum.map(word => word.toLowerCase()),inputString.toLowerCase());
     return foundLocations;
 }
 
@@ -15,15 +66,24 @@ function searchWord(listObject, inputString){
             foundWords.push(word);
             inputString = inputString.replace(new RegExp(`\\b${word}\\b`, 'gi'), '');
         }
+    } 
+    if(foundWords.length > 0){
+        foundWords = foundWords[0]
+    }
+    else{
+        foundWords = "building"
     }
     return foundWords;
 }
 
+const defaultRadius = 500;
 
 //returns an impact radius for the map in meters
 function interpretDisasterRadius(disasterType, impactLocation){
     let impactRadius = 0;
-    if(disasterType.includes("fire")){
+    // console.log(typeof disasterType);
+    // console.log(disasterType);
+    if(disasterType.toLowerCase().includes("fire")){
 
         if(impactLocation.includes("apartment")){ 
             //make this more generic , add synonyms
@@ -56,8 +116,9 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("explosion")){
 
         if(impactLocation.includes("apartment")){ 
@@ -91,10 +152,11 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-        
     }else if(disasterType.toLowerCase().includes("flood")){
-        
+
         if(impactLocation.includes("apartment")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
@@ -126,8 +188,9 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("chemical")){
 
         if(impactLocation.includes("apartment")){ 
@@ -161,10 +224,11 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
     }else if(disasterType.toLowerCase().includes("terrorist")){
-        
+
         if(impactLocation.includes("apartment")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
@@ -196,8 +260,11 @@ function interpretDisasterRadius(disasterType, impactLocation){
         if(impactLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactRadius = 500;
+        }else {
+            impactRadius = defaultRadius;
         }
-
+    }else {
+        impactRadius = defaultRadius;
     }
     return impactRadius;
 }
@@ -206,68 +273,3 @@ module.exports = {
     interpretDisasterLocation: interpretDisasterLocation,
     interpretDisasterRadius: interpretDisasterRadius
 };
-
-//   function searchEnum(enumObject, impactLocation) {
-//     for (const key in enumObject) {
-//         if (enumObject.hasOwnProperty(key)) {
-//             if(enumObject[key].toLowerCase() === impactLocation.string.toLowerCase())
-//                 return enumObject[key];
-//         }
-//     }
-//     return null;
-// }
-
-// const FireRadius = {
-//     Apartment: 200,
-//     Building: 500,
-//     School: 1000,
-//     Library: 200,
-//     Stadium: 2000,
-//     Restaurant: 800,
-//     Park: 400,
-//     Hotel: 500
-//   };
-
-// const ExplosionRadius = {
-//     Apartment: 500,
-//     Building: 1000,
-//     School: 2000,
-//     Library: 1000,
-//     Stadium: 3000,
-//     Park: 1000,
-//     Restaurant: 1000,
-//     Hotel: 1500
-//   };
-
-// const FloodRadius = {
-//     Apartment: 1000,
-//     Building: 1000,
-//     School: 2000,
-//     Library: 2000,
-//     Stadium: 3000,
-//     Park: 2000,
-//     Restaurant: 1000,
-//     Hotel: 500
-//   };
-
-// const ChemicalHazardRadius = {
-//     Apartment: 500,
-//     Building: 1000,
-//     School: 2000,
-//     Library: 1000,
-//     Park: 2000,
-//     Stadium: 3000,
-//     Restaurant: 1000,
-//     Hotel: 1500
-//   };
-
-// const TerroristActivityRadius = {
-//     Apartment: 2000,
-//     Building: 2000,
-//     School: 2000,
-//     Library: 2000,
-//     Park: 3000,
-//     Stadium: 3000,
-//     Restaurant: 2000,
-//     Hotel: 2000
-//   };

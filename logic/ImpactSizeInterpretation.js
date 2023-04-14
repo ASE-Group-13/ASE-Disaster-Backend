@@ -115,6 +115,41 @@ function interpretImpactSize(inputString, disasterLocation){
             impactSize = 30;
         }
         return impactSize;
+    } else if(findSize(tooManySynonyms.map(word => word.toLowerCase()),inputString)){
+        //case 4
+        if(disasterLocation.includes("apartment")){ 
+            //make this more generic , add synonyms
+            impactSize = 30;
+        } 
+        if(disasterLocation.includes("building")){ 
+            //make this more generic , add synonyms
+            impactSize = 60;
+        } 
+        if(disasterLocation.includes("school")){ 
+            //make this more generic , add synonyms
+            impactSize = 100;
+        } 
+        if(disasterLocation.includes("library")){ 
+            //make this more generic , add synonyms
+            impactSize = 80;
+        }
+        if(disasterLocation.includes("stadium")){ 
+            //make this more generic , add synonyms
+            impactSize = 1500;
+        }
+        if(disasterLocation.includes("restaurant")){ 
+            //make this more generic , add synonyms
+            impactSize = 80;
+        }
+        if(disasterLocation.includes("park")){ 
+            //make this more generic , add synonyms
+            impactSize = 200;
+        }
+        if(disasterLocation.includes("hotel")){ 
+            //make this more generic , add synonyms
+            impactSize = 150;
+        }
+        return impactSize;
     }else if(findSize(manySynonyms.map(word => word.toLowerCase()),inputString)){
         //case 3
         if(disasterLocation.includes("apartment")){ 
@@ -148,41 +183,6 @@ function interpretImpactSize(inputString, disasterLocation){
         if(disasterLocation.includes("hotel")){ 
             //make this more generic , add synonyms
             impactSize = 50;
-        }
-        return impactSize;
-    }else if(findSize(tooManySynonyms.map(word => word.toLowerCase()),inputString)){
-        //case 4
-        if(disasterLocation.includes("apartment")){ 
-            //make this more generic , add synonyms
-            impactSize = 30;
-        } 
-        if(disasterLocation.includes("building")){ 
-            //make this more generic , add synonyms
-            impactSize = 60;
-        } 
-        if(disasterLocation.includes("school")){ 
-            //make this more generic , add synonyms
-            impactSize = 100;
-        } 
-        if(disasterLocation.includes("library")){ 
-            //make this more generic , add synonyms
-            impactSize = 80;
-        }
-        if(disasterLocation.includes("stadium")){ 
-            //make this more generic , add synonyms
-            impactSize = 1500;
-        }
-        if(disasterLocation.includes("restaurant")){ 
-            //make this more generic , add synonyms
-            impactSize = 80;
-        }
-        if(disasterLocation.includes("park")){ 
-            //make this more generic , add synonyms
-            impactSize = 200;
-        }
-        if(disasterLocation.includes("hotel")){ 
-            //make this more generic , add synonyms
-            impactSize = 150;
         }
         return impactSize;
     }
