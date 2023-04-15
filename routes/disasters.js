@@ -28,7 +28,7 @@ router.post("/add-disaster-data", async (req, res) => {
 router.get("/disaster/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const disasterData = await DisasterData.findById(id);
+    const disasterData = await DisasterData.findById(id).populate("reports");
     if (!disasterData) {
       return res.status(404).json({ success: false, error: "Disaster not found" });
     }
@@ -43,6 +43,15 @@ router.get("/all-disaster-data", async (req, res) => {
   try {
     const allData = await DisasterData.find().populate("reports");
     return res.json(allData);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+router.get("/pending-disaster-data", async (req, res) => {
+  try {
+    const pendingActiveData = await DisasterData.find({status: { $in: ["pending"]}}).populate("reports");
+    return res.json(pendingActiveData);
   } catch (err) {
     res.json({ message: err });
   }
@@ -87,7 +96,7 @@ router.put("/activate-disaster/:id", async (req, res) => {
   console.log(req.body)
   try {
     // Find the disaster document and update its status field
-    const resources = allocateResources([getSiteNumber((req.body.site).toLowerCase()),getTypeNumber((req.body.type).toLowerCase()),parseInt(req.body.radiu),parseInt(req.body.size)]); 
+    const resources = allocateResources([getSiteNumber((req.body.site).toLowerCase()),getTypeNumber((req.body.type).toLowerCase()),parseInt(req.body.radius),parseInt(req.body.size)]); 
     const updatedDisaster = await DisasterData.findByIdAndUpdate(
       req.params.id,
       { status: 'active',
@@ -98,11 +107,11 @@ router.put("/activate-disaster/:id", async (req, res) => {
         size: parseInt(req.body.size),
         site: (req.body.site).toLowerCase(),
         evacuation: req.body.evacuation,
-        ambulance: resources.ambulance,
-        police : resources.police,
-        fire: resources.fire,
-        bus: resources.bus,
-        helicopter: resources.helicopter,
+        ambulance: resources.Ambulance,
+        police : resources.Police,
+        fire: resources.Fire,
+        bus: resources.Bus,
+        helicopter: resources.Helicopter,
       }, { new: true }
     );
 
