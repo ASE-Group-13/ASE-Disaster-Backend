@@ -94,13 +94,13 @@ router.post("/add-report-data", async (req, res) => {
   
   router.get("/report/:id", async (req, res) => {
     const { id } = req.params;
-  
     try {
-      const report = await Report.findById(id);
+      const report = await ReportData.findById(id);
+      console.log(report);
       if (!report) {
         return res.status(404).json({ message: "Report not found" });
       }
-      return res.json(report);
+      return res.status(200).json({ success: true, report });
     } catch (err) {
       return res.status(500).json({ message: err });
     }

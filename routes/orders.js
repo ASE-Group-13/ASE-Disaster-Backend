@@ -18,12 +18,14 @@ router.get("/all-order-data", async (req, res) => {
 
 router.get("/order/:id", async (req, res) => {
     const { id } = req.params;
+    console.log(id);
     try {
-        const OrderData = await OrderData.findById(id);
-        if (!OrderData) {
-        return res.status(404).json({ success: false, error: "Disaster not found" });
+        const order = await OrderData.findById(id);
+        console.log(order);
+        if (!order) {
+          return res.status(404).json({ success: false, error: "Disaster not found" });
         }
-        res.status(200).json({ success: true, ResponseData });
+        res.status(200).json({ success: true, order });
     } catch (err) {
         res.status(500).json({ success: false, error: err });
     }
