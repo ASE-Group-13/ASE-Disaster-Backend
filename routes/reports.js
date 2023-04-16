@@ -49,30 +49,27 @@ router.post("/add-report-data", async (req, res) => {
       isSpam : spamStatus,
       isResponder : responderMessage
     };
-    if (spamStatus === false) { 
-      const disasterLocation = disasterLocationObj.interpretDisasterLocation(reportJson.detail);
-      console.log(disasterLocation);
-      const disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
-      const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
-      const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
-      const resourcesFromStatic = allocationStaticObj.getResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
-      console.log("resourcesFromModel:", resourcesFromModel);
-      console.log("resourcesFromStatic:", resourcesFromStatic);
-      const finalResources = {};
-      for (const key in resourcesFromModel) {
-        finalResources[key] = Math.min(resourcesFromModel[key], resourcesFromStatic[key]);
-      }
-      const disasterResources = Object.assign({}, finalResources,{
-        site: disasterLocation,
-        type: reportJson.type,
-        radius: disasterRadius,
-        size: disasterImpactedPeopleCount,
-      })
-      // console.log("disasterResources:", finalResources);
-      const combinedJson = Object.assign({}, reportJson, disasterResources);
-      reportJson = await assignToDisaster(combinedJson);
+    const disasterLocation = disasterLocationObj.interpretDisasterLocation(reportJson.detail);
+    console.log(disasterLocation);
+    const disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
+    const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
+    const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
+    const resourcesFromStatic = allocationStaticObj.getResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
+    console.log("resourcesFromModel:", resourcesFromModel);
+    console.log("resourcesFromStatic:", resourcesFromStatic);
+    const finalResources = {};
+    for (const key in resourcesFromModel) {
+      finalResources[key] = Math.min(resourcesFromModel[key], resourcesFromStatic[key]);
     }
-    console.log(reportJson);
+    const disasterResources = Object.assign({}, finalResources,{
+      site: disasterLocation,
+      type: reportJson.type,
+      radius: disasterRadius,
+      size: disasterImpactedPeopleCount,
+    })
+    const combinedJson = Object.assign({}, reportJson, disasterResources);
+    reportJson = await assignToDisaster(combinedJson);
+    console.log("reportJson:", reportJson);
     const newReportObject = new ReportData(reportJson);
     // Adding report to its related disaster.
     const updateDisaster = await DisasterData.findByIdAndUpdate(
