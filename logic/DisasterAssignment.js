@@ -28,9 +28,17 @@ const assignToDisaster = async (report) => {
     const newData = new DisasterData({
       "latitude": report.latitude,
       "longitude": report.longitude,
-      "title": report.detail,
+      "disasterName": report.detail,
       "type": report.type,
-      "status": "pending"
+      "status": "pending",
+      "site": report.site,
+      "radius": report.radius,
+      "size": report.size,
+      "ambulance": report.Ambulance,
+      "fire": report.FireTruck,
+      "police": report.Police,
+      "helicopter": report.Helicopter,
+      "bus": report.Bus
     });
     await newData.save();
     disasterId = newData._id.toString();

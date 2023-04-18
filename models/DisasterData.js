@@ -52,7 +52,7 @@ const disasterDataSchema = new mongoose.Schema({
   },
   site: {
     type: String,
-    enum: Object.keys(siteEnum),
+    enum: siteEnum,
     required: false,
   },
   ambulance : {
