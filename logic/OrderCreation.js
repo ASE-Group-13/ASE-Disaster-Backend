@@ -38,8 +38,9 @@ function createOrder(locations, resource, requiredQuantity) {
       });
       remainingQuantity -= location.capacity;
     }
+    
   }
-
+  console.log(`Test:${JSON.stringify(orderLocations)}`);
   if (remainingQuantity > 0) {
     // There isn't enough capacity at any of the locations, so return an error message
     console.log(`There is not enough capacity for ${resource} at any of the locations. Shortfall of ${remainingQuantity}.`);
@@ -167,6 +168,7 @@ function createEvacuation(locations, impact) {
 }
 
 async function saveCsvData(site,type,radius,size,ambulance,police,fire,bus,heli,filename) {
+  console.log(site,type,radius,size,ambulance,police,fire,bus,heli,filename);
   if(typeof site == "number" && typeof type === "number"){
     const csv = `\n${site},${type},${radius},${size},${ambulance},${police},${fire},${bus},${heli}`;
     const filePath = path.join(__dirname, filename);
@@ -195,10 +197,10 @@ async function setOrder(orderLocations, disaster) {
   for (const order of orderLocations) {
     const newData = new
     OrderData({
-      location: order.location._id,
+      location: order.location,
       locationLatitude: order.location.latitude,
       locationLongitude: order.location.longitude,
-      URL: `http://127.0.0.1:4000/orders/`,
+      URL: `http://127.0.0.1:4000/orders`,
       quantity: order.quantity,
       instructions: "Urgently head to disaster site.",
       disaster: disaster,
@@ -218,10 +220,10 @@ async function setEvacuation(evacuationOrders, disaster) {
   const result = [];
   for (const order of evacuationOrders) {
     const busData = new OrderData({
-      location: order.busDepot._id,
+      location: order.busDepot,
       locationLatitude: order.busDepot.latitude,
       locationLongitude: order.busDepot.longitude,
-      URL: `http://127.0.0.1:4000/orders/`,
+      URL: `http://127.0.0.1:4000/orders`,
       quantity: order.sentBuses,
       instructions:
         "Please head to evacuation point, gather victims and escort them to the rest center.",
@@ -236,10 +238,10 @@ async function setEvacuation(evacuationOrders, disaster) {
     });
     busData.URL += `/${busData._id}`;
     const restData = new OrderData({
-      location: order.restCentre._id,
+      location: order.restCentre,
       locationLongitude: order.restCentre.latitude,
       locationLatitude: order.restCentre.longitude,
-      URL: `http://127.0.0.1:4000/orders/`,
+      URL: `http://127.0.0.1:4000/orders`,
       quantity: order.quantity,
       instructions: `Please prepare rest center for approximately ${order.quantity} victims of the disaster.`,
       disaster: disaster,

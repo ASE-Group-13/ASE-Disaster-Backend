@@ -8,8 +8,8 @@ const orderDataSchema = new mongoose.Schema({
 		required: true
 	},
 	location: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "LocationData",
+		type: JSON,
+		required: true
 	},
 	locationLatitude: {
 		type: String,
