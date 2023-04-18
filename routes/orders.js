@@ -58,7 +58,7 @@ router.post("/request-resources", async (req, res) => {
       console.log(`Disaster with ID ${disasterId} not found`);
       res.status(404).json({ message: `Disaster with ID ${disasterId} not found` });
     } else {
-      await saveCsvData(getSiteNumber(disaster.site),getTypeNumber(disaster.type),disaster.radius,disaster.size,ambulance,police,fire,bus,heli, "../python/datasets/Main_D2.csv");
+      await saveCsvData(getSiteNumber(disaster.site),getTypeNumber((disaster.type).toLowerCase()),disaster.radius,disaster.size,ambulance,police,fire,bus,heli, "../python/datasets/Main_D2.csv");
 
       const locations = await getLocations();
       const fastestRoutes = await calculateDurations(locations, disaster);

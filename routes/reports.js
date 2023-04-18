@@ -113,5 +113,22 @@ router.post("/add-report-data", async (req, res) => {
     }
   });
   
+  router.put("/update-report/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const report = await ReportData.findByIdAndUpdate(
+        id,
+        { $set: req.body },
+        { new: true }
+      );
+      if (!report) {
+        return res.status(404).json({ message: "Report not found" });
+      }
+      return res.json(report);
+    } catch (err) {
+      return res.status(500).json({ message: err });
+    }
+  });
+
   module.exports = router;
   
