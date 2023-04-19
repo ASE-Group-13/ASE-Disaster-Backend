@@ -9,7 +9,7 @@ const tooManySynonyms = ["too many", "everyone"]; //case 4
 //returns avg number of people impacted
 function interpretImpactSize(inputString, disasterLocation){
     // const inputString = inputString.string.toLowerCase();
-    let impactSize = 5;
+    let impactSize = 0;
     if(findSize(veryFewSynonyms.map(word => word.toLowerCase()),inputString.toLowerCase())){
         //case 0
         if(disasterLocation.includes("apartment")){ 
@@ -185,6 +185,41 @@ function interpretImpactSize(inputString, disasterLocation){
             impactSize = 100;
         }
         return impactSize;
+    }else{
+                //default -> case 0
+                if(disasterLocation.includes("apartment")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 5;
+                } 
+                if(disasterLocation.includes("building")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 15;
+                } 
+                if(disasterLocation.includes("school")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 15;
+                } 
+                if(disasterLocation.includes("library")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 15;
+                }
+                if(disasterLocation.includes("stadium")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 100;
+                }
+                if(disasterLocation.includes("restaurant")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 10;
+                }
+                if(disasterLocation.includes("park")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 15;
+                }
+                if(disasterLocation.includes("hotel")){ 
+                    //make this more generic , add synonyms
+                    impactSize = 15;
+                }
+                return impactSize;
     }
     return impactSize;
 }
