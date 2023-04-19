@@ -2,7 +2,7 @@ const DisasterData = require("../models/DisasterData");
 const express = require("express");
 const router = express.Router();
 require("dotenv").config();
-const {calculateDistance} = require("./MappingService");
+const {calculateDistance, getAddressFromLatLng} = require("./MappingService");
 
 const checkDisasterLocation = async (type, longitude, latitude) => {
   const disasters = await DisasterData.find({ status: { $in: ['pending', 'active'] } }).populate('reports');
@@ -25,10 +25,13 @@ const assignToDisaster = async (report) => {
   if (!disasterId){
     console.log("Creating new report");
     console.log(JSON.stringify(report));
+    const address = await getAddressFromLatLng(report.latitude,report.longitude)
+    console.log(`${report.site} ${report.type} at ${address}`);
+
     const newData = new DisasterData({
       "latitude": report.latitude,
       "longitude": report.longitude,
-      "disasterName": report.detail,
+      "disasterName": `${report.site} ${report.type} at ${address})}`,
       "type": report.type,
       "status": "pending",
       "site": report.site,

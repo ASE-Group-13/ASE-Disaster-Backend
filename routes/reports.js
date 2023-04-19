@@ -15,6 +15,7 @@ const allocationStaticObj = require('../logic/ResourceAllocatorStatic.js')
 
 // Add report data
 router.post("/add-report-data", async (req, res) => {
+  try {
     // Get the JWT token from the request header
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
@@ -79,39 +80,55 @@ router.post("/add-report-data", async (req, res) => {
     );
     console.log(`Distaster Details:${updateDisaster}`);
     console.log(`Report Details:${newReportObject}`);
-    try {    
-      console.log("Saving Report")
-      const saveReportData = await newReportObject.save();
-      console.log("Saved Report")
-      res.status(200).json({ success: true, saveReportData });
-    } catch (err) {
-      res.status(500).json({ success: false, error: err});
-    }
-  });
+    console.log("Saving Report")
+    const saveReportData = await newReportObject.save();
+    console.log("Saved Report")
+    res.status(200).json({ success: true, saveReportData });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err});
+  }
+});
   
-  router.get("/report/:id", async (req, res) => {
+router.get("/report/:id", async (req, res) => {
+  try {
     const { id } = req.params;
-    try {
-      const report = await ReportData.findById(id);
-      console.log(report);
-      if (!report) {
-        return res.status(404).json({ message: "Report not found" });
-      }
-      return res.status(200).json({ success: true, report });
-    } catch (err) {
-      return res.status(500).json({ message: err });
+    const report = await ReportData.findById(id);
+    console.log(report);
+    if (!report) {
+      return res.status(404).json({ message: "Report not found" });
     }
-  });
+    return res.status(200).json({ success: true, report });
+  } catch (err) {
+    return res.status(500).json({ message: err });
+  }
+});
+
+// get all report data
+router.get("/all-report-data", async (req, res) => {
+  try {
+    const allReportData = await ReportData.find({status: { $in: ["pending", "active"]}}).populate("disaster");
+    return res.json(allReportData);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
   
-  // get all report data
-  router.get("/all-report-data", async (req, res) => {
-    try {
-      const allReportData = await ReportData.find({status: { $in: ["pending", "active"]}}).populate("disaster");
-      return res.json(allReportData);
-    } catch (err) {
-      res.json({ message: err });
+router.put("/update-report/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const report = await ReportData.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+    if (!report) {
+      return res.status(404).json({ message: "Report not found" });
     }
-  });
-  
+    return res.json(report);
+  } catch (err) {
+    return res.status(500).json({ message: err });
+  }
+});
+
   module.exports = router;
   
