@@ -2,11 +2,11 @@ const DisasterData = require("../models/DisasterData");
 const express = require("express");
 const router = express.Router();
 require("dotenv").config();
-const {calculateDistance, getAddressFromLatLng} = require("./MappingService");
+const { calculateDistance, getAddressFromLatLng } = require("./MappingService");
 
 const checkDisasterLocation = async (type, longitude, latitude) => {
   const disasters = await DisasterData.find({ status: { $in: ['pending', 'active'] } }).populate('reports');
-  
+
   for (let i = 0; i < disasters.length; i++) {
     const disaster = disasters[i];
     const distance = calculateDistance(latitude, longitude, disaster.latitude, disaster.longitude);
@@ -22,16 +22,17 @@ const checkDisasterLocation = async (type, longitude, latitude) => {
 
 const assignToDisaster = async (report) => {
   var disasterId = await checkDisasterLocation(report.type, report.longitude, report.latitude);
-  if (!disasterId){
+  if (!disasterId) {
     console.log("Creating new report");
     console.log(JSON.stringify(report));
-    const address = await getAddressFromLatLng(report.latitude,report.longitude)
+    const address = await getAddressFromLatLng(report.latitude, report.longitude)
     console.log(`${report.site} ${report.type} at ${address}`);
 
     const newData = new DisasterData({
       "latitude": report.latitude,
       "longitude": report.longitude,
       "disasterName": `${report.site} ${report.type} at ${address})}`,
+      "disasterDescription": report.detail,
       "type": report.type,
       "status": "pending",
       "site": report.site,
@@ -51,6 +52,35 @@ const assignToDisaster = async (report) => {
   return report;
 }
 
+const updateDisasterWithReport = async (report) => {
+  const disaster = await DisasterData.findById(report.disaster);
+
+  // Push the new report to the disaster's reports array and update the description
+  disaster.reports.push(newReportObject);
+  disaster.disasterDescription += `\n\n${report.detail}`;
+
+  // Calculate the new maximum size and radius
+  let maxSize = disaster.size;
+  let maxRadius = disaster.radius;
+  for (const r of disaster.reports) {
+    maxSize = Math.max(maxSize, r.size);
+    maxRadius = Math.max(maxRadius, r.radius);
+  }
+  disaster.size = maxSize;
+  disaster.radius = maxRadius;
+
+  // Update type and site based on the median values
+  const types = disaster.reports.map(r => r.type).sort();
+  const sites = disaster.reports.map(r => r.site).sort();
+  const medianIndex = Math.floor(types.length / 2);
+  disaster.type = types.length % 2 === 0 ? types[medianIndex - 1] : types[medianIndex];
+  disaster.site = sites.length % 2 === 0 ? sites[medianIndex - 1] : sites[medianIndex];
+
+  // Save the updated disaster
+  await disaster.save();
+}
+
 module.exports = {
-  assignToDisaster : assignToDisaster
+  updateDisasterWithReport: updateDisasterWithReport,
+  assignToDisaster: assignToDisaster
 };
