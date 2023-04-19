@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 require("dotenv").config();
 const DisasterData = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
-const {predictMessage} = require('../logic/SpamFilter');
-const {assignToDisaster} = require('../logic/DisasterAssignment');
-const {allocateResources} = require('../logic/ResourceAllocator');
+const { predictMessage } = require('../logic/SpamFilter');
+const { assignToDisaster } = require('../logic/DisasterAssignment');
+const { allocateResources } = require('../logic/ResourceAllocator');
 const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
 const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
-const {getSiteNumber,getTypeNumber} = require("../models/enumData");
+const { getSiteNumber, getTypeNumber } = require("../models/enumData");
 const allocationStaticObj = require('../logic/ResourceAllocatorStatic.js')
 
 /* REPORTS ROUTES */
@@ -25,7 +25,7 @@ router.post("/add-report-data", async (req, res) => {
       try {
         // Verify the JWT token to ensure that the user is logged in
         const decoded = jwt.verify(token, process.env.JWT_SEC);
-        
+
         // Flag the report as submitted by a responder
         responderMessage = true;
         spamStatus = false;
@@ -46,15 +46,15 @@ router.post("/add-report-data", async (req, res) => {
       detail: req.body.detail,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      type : (req.body.type).toLowerCase(),
-      isSpam : spamStatus,
-      isResponder : responderMessage
+      type: (req.body.type).toLowerCase(),
+      isSpam: spamStatus,
+      isResponder: responderMessage
     };
     const disasterLocation = disasterLocationObj.interpretDisasterLocation(reportJson.detail);
     console.log(disasterLocation);
     const disasterRadius = disasterLocationObj.interpretDisasterRadius(reportJson.type, disasterLocation);
-    const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation); 
-    const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius,disasterImpactedPeopleCount]); 
+    const disasterImpactedPeopleCount = disasterSizeObj.interpretImpactSize(reportJson.detail, disasterLocation);
+    const resourcesFromModel = allocateResources([getSiteNumber(disasterLocation), getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount]);
     const resourcesFromStatic = allocationStaticObj.getResourcesStatic(getTypeNumber(reportJson.type), disasterRadius, disasterImpactedPeopleCount)
     console.log("resourcesFromModel:", resourcesFromModel);
     console.log("resourcesFromStatic:", resourcesFromStatic);
@@ -62,7 +62,7 @@ router.post("/add-report-data", async (req, res) => {
     for (const key in resourcesFromModel) {
       finalResources[key] = Math.min(resourcesFromModel[key], resourcesFromStatic[key]);
     }
-    const disasterResources = Object.assign({}, finalResources,{
+    const disasterResources = Object.assign({}, finalResources, {
       site: disasterLocation,
       type: reportJson.type,
       radius: disasterRadius,
@@ -73,11 +73,7 @@ router.post("/add-report-data", async (req, res) => {
     console.log("reportJson:", reportJson);
     const newReportObject = new ReportData(reportJson);
     // Adding report to its related disaster.
-    const updateDisaster = await DisasterData.findByIdAndUpdate(
-      newReportObject.disaster,
-      { $push: { reports: newReportObject} },
-      { new: true }
-    );
+    updateDisasterWithReport(newReportObject);
     console.log(`Distaster Details:${updateDisaster}`);
     console.log(`Report Details:${newReportObject}`);
     console.log("Saving Report")
@@ -85,10 +81,10 @@ router.post("/add-report-data", async (req, res) => {
     console.log("Saved Report")
     res.status(200).json({ success: true, saveReportData });
   } catch (err) {
-    res.status(500).json({ success: false, error: err});
+    res.status(500).json({ success: false, error: err });
   }
 });
-  
+
 router.get("/report/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,13 +102,13 @@ router.get("/report/:id", async (req, res) => {
 // get all report data
 router.get("/all-report-data", async (req, res) => {
   try {
-    const allReportData = await ReportData.find({status: { $in: ["pending", "active"]}}).populate("disaster");
+    const allReportData = await ReportData.find({ status: { $in: ["pending", "active"] } }).populate("disaster");
     return res.json(allReportData);
   } catch (err) {
     res.json({ message: err });
   }
 });
-  
+
 router.put("/update-report/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -130,5 +126,4 @@ router.put("/update-report/:id", async (req, res) => {
   }
 });
 
-  module.exports = router;
-  
+module.exports = router;
