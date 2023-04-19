@@ -9,13 +9,13 @@ const cookie_time = process.env.COOKIE_EXPIRES_TIME;
 
 // Register
 router.post("/register", async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (user) {
-    res.status(400).send({
-      message: "Account with this email already exists. Please login!"
-    });
-  }
-  else{
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user) {
+      return res.status(400).send({
+        message: "Account with this email already exists. Please login!"
+      });
+    }
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
@@ -25,12 +25,11 @@ router.post("/register", async (req, res) => {
       ).toString(),
     });
     console.log(req.body);
-    try {
-      const savedUser = await newUser.save();
-      res.status(201).json({ success: true, savedUser });
-    } catch (err) {
-      res.status(500).json(err.stack);
-    }
+    const savedUser = await newUser.save();
+    return res.status(201).json({ success: true, savedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -83,14 +82,20 @@ router.post("/login", async (req, res) => {
 
 // Logout user
 router.get("/logout", async (req, res) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-  });
-  res.status(200).json({
-    success: true,
-    message: "Logged out",
-  });
+  try {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Logged out",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
 });
+
 
 module.exports = router;

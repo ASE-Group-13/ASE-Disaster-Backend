@@ -8,37 +8,36 @@ const {calculateDurations} = require("../logic/MappingService");
 const {getSiteNumber,getTypeNumber} = require("../models/enumData");
 
 router.get("/all-order-data", async (req, res) => {
-    try {
-        const allData = await OrderData.find();
-        return res.json(allData);
-    } catch (err) {
-        res.json({ message: err });
-    }
+  try {
+      const allData = await OrderData.find();
+      return res.json(allData);
+  } catch (err) {
+      res.json({ message: err });
+  }
 });
 
-router.get("/order/:id", async (req, res) => {
+router.get("/order/:id", async (req, res) => {    
+  try {
     const { id } = req.params;
-    console.log(id);
-    try {
-        const order = await OrderData.findById(id);
-        console.log(order);
-        if (!order) {
-          return res.status(404).json({ success: false, error: "Disaster not found" });
-        }
-        res.status(200).json({ success: true, order });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err });
+    const order = await OrderData.findById(id);
+    console.log(order);
+    if (!order) {
+      return res.status(404).json({ success: false, error: "Disaster not found" });
     }
+    res.status(200).json({ success: true, order });
+  } catch (err) {
+      res.status(500).json({ success: false, error: err });
+  }
 });
 
-router.get("/disaster-orders/:disaster", async (req,res) => {
+router.get("/disaster-orders/:disaster", async (req,res) => {    
+  try {
     const response = req.params.disaster;
-    try {
-        const units = await OrderData.find({disaster: { $in: [response]}});
-        return res.json(units);
-    } catch (err) {
-        res.json({ message: err });
-    }
+    const units = await OrderData.find({disaster: { $in: [response]}});
+    return res.json(units);
+  } catch (err) {
+    res.json({ message: err });
+  }
 })
 
 router.post("/request-resources", async (req, res) => {

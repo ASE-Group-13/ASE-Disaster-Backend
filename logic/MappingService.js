@@ -1,3 +1,4 @@
+const axios = require('axios');
 require("dotenv").config();
 const mapboxApiKey = process.env.MAPBOX;
 
@@ -52,7 +53,28 @@ async function calculateDurations(startLocations, disaster) {
   return durations;
 }
 
+async function getAddressFromLatLng(latitude, longitude){
+  const apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxApiKey}`;
+  
+  axios.get(apiUrl)
+    .then((response) => {
+      const features = response.data.features;
+      if (features.length > 0) {
+        const address = features[0].place_name;
+        console.log(address);
+        return address;
+      } else {
+        console.log('No address found');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      console.log('Error retrieving data');
+    });
+};  
+
 module.exports = {
+  getAddressFromLatLng : getAddressFromLatLng,
   calculateDistance : calculateDistance,
   calculateDurations : calculateDurations,
   calculateDuration : calculateDuration
