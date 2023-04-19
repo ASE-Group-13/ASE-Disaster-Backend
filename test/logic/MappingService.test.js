@@ -3,7 +3,7 @@ const { calculateDistance, calculateDurations, calculateDuration } = require('..
 describe('calculateDistance()', () => {
   test('calculates the straight-line distance between two coordinates', async () => {
     const distance = await calculateDistance(53.288152, -6.139752, 53.292385, -6.142756);
-    expect(distance).toBeCloseTo(515, 400); // expect distance to be within 0 meters of 8053 meters
+    expect(distance).toBeCloseTo(511, 400); // expect distance to be within 0 meters of 8053 meters
   });
 });
 

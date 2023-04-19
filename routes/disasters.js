@@ -3,21 +3,21 @@ require("dotenv").config();
 const OrderData = require("../models/OrderData");
 const DisasterData = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
-const {allocateResources} = require('../logic/ResourceAllocator');
-const {getSiteNumber,getTypeNumber} = require("../models/enumData");
+const { allocateResources } = require('../logic/ResourceAllocator');
+const { getSiteNumber, getTypeNumber } = require("../models/enumData");
 
 /* DISASTER ROUTES */
 
 // Add disaster data
 router.post("/add-disaster-data", async (req, res) => {
-  const newData = new DisasterData({
-    disasterName: req.body.title,
-    latitude: req.body.latitude,
-    longitude: req.body.longitude,
-    type: req.body.type,
-    status: req.body.status
-  });
   try {
+    const newData = new DisasterData({
+      disasterName: req.body.title,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      type: req.body.type,
+      status: req.body.status
+    });
     const saveData = await newData.save();
     res.status(200).json({ success: true, saveData });
   } catch (err) {
@@ -26,8 +26,8 @@ router.post("/add-disaster-data", async (req, res) => {
 });
 
 router.get("/disaster/:id", async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const disasterData = await DisasterData.findById(id).populate("reports");
     if (!disasterData) {
       return res.status(404).json({ success: false, error: "Disaster not found" });
@@ -50,7 +50,7 @@ router.get("/all-disaster-data", async (req, res) => {
 
 router.get("/pending-disaster-data", async (req, res) => {
   try {
-    const pendingActiveData = await DisasterData.find({status: { $in: ["pending"]}}).populate("reports");
+    const pendingActiveData = await DisasterData.find({ status: { $in: ["pending"] } }).populate("reports");
     return res.json(pendingActiveData);
   } catch (err) {
     res.json({ message: err });
@@ -59,7 +59,7 @@ router.get("/pending-disaster-data", async (req, res) => {
 
 router.get("/relevant-disaster-data", async (req, res) => {
   try {
-    const pendingActiveData = await DisasterData.find({status: { $in: ["pending", "active"]}}).populate("reports");
+    const pendingActiveData = await DisasterData.find({ status: { $in: ["pending", "active"] } }).populate("reports");
     return res.json(pendingActiveData);
   } catch (err) {
     res.json({ message: err });
@@ -68,7 +68,7 @@ router.get("/relevant-disaster-data", async (req, res) => {
 
 router.get("/active-disaster-data", async (req, res) => {
   try {
-    const pendingActiveData = await DisasterData.find({status: { $in: ["active"]}}).populate("reports");
+    const pendingActiveData = await DisasterData.find({ status: { $in: ["active"] } }).populate("reports");
     return res.json(pendingActiveData);
   } catch (err) {
     res.json({ message: err });
@@ -76,30 +76,32 @@ router.get("/active-disaster-data", async (req, res) => {
 });
 
 router.put("/update-disaster/:id", async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const disaster = await DisasterData.findByIdAndUpdate(
       id,
       { $set: req.body },
       { new: true }
     );
+    console.log("UPDATED DISASTER");
     if (!disaster) {
       return res.status(404).json({ message: "Disaster not found" });
     }
     return res.json(disaster);
   } catch (err) {
+    console.log("ERROR");
+    console.log(err);
     return res.status(500).json({ message: err });
   }
 });
 
 router.put("/activate-disaster/:id", async (req, res) => {
-  console.log(req.body)
   try {
-    // Find the disaster document and update its status field
-    const resources = allocateResources([getSiteNumber((req.body.site).toLowerCase()),getTypeNumber((req.body.type).toLowerCase()),parseInt(req.body.radius),parseInt(req.body.size)]); 
+    const resources = allocateResources([getSiteNumber((req.body.site).toLowerCase()), getTypeNumber((req.body.type).toLowerCase()), parseInt(req.body.radius), parseInt(req.body.size)]);
     const updatedDisaster = await DisasterData.findByIdAndUpdate(
       req.params.id,
-      { status: 'active',
+      {
+        status: 'active',
         disasterName: req.body.disasterName,
         disasterDescription: req.body.disasterDescription,
         type: (req.body.type).toLowerCase(),
@@ -108,7 +110,7 @@ router.put("/activate-disaster/:id", async (req, res) => {
         site: (req.body.site).toLowerCase(),
         evacuation: req.body.evacuation,
         ambulance: resources.Ambulance,
-        police : resources.Police,
+        police: resources.Police,
         fire: resources.Fire,
         bus: resources.Bus,
         helicopter: resources.Helicopter,
@@ -147,10 +149,10 @@ router.put("/resolve-disaster/:id", async (req, res) => {
     );
     console.log(`Reports: ${updatedReports}`);
     const orders = await OrderData.updateMany({
-        disaster: { $in: [req.params.id]},
-        status: 'active'
-      },
-      {status: 'resolved' }
+      disaster: { $in: [req.params.id] },
+      status: 'active'
+    },
+      { status: 'resolved' }
     );
     console.log(`Order: ${orders}`);
     console.log(`Order: ${orders[0]}`);
@@ -171,12 +173,12 @@ router.put("/resolve-disaster/:id", async (req, res) => {
 });
 
 router.post("/add-report-to-disaster/:id", async (req, res) => {
-  const disasterId = req.params.id;
-  const reportId = req.body.reportId;
   try {
+    const disasterId = req.params.id;
+    const reportId = req.body.reportId;
     const updatedDisaster = await DisasterData.findByIdAndUpdate(
       disasterId,
-      { $push: { reports: reportId} },
+      { $push: { reports: reportId } },
       { new: true }
     );
     if (!updatedDisaster) {
@@ -184,13 +186,13 @@ router.post("/add-report-to-disaster/:id", async (req, res) => {
     }
     const updatedReport = await ReportData.findByIdAndUpdate(
       reportId,
-      { $push: { reports: disasterId} },
+      { $set: { disaster: disasterId } },
       { new: true }
     );
     if (!updatedReport) {
       return res.status(404).json({ success: false, error: "Report not found" });
     }
-    res.status(200).json({ success: true, data : { updatedDisaster : updatedDisaster, updatedReport : updatedReport } });
+    res.status(200).json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false, error: err });
   }

@@ -1,3 +1,4 @@
+const axios = require('axios');
 require("dotenv").config();
 const mapboxApiKey = process.env.MAPBOX;
 
@@ -6,13 +7,13 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371e3; // metres
   const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
   const φ2 = lat2 * Math.PI / 180;
-  const Δφ = (lat2-lat1) * Math.PI / 180;
-  const Δλ = (lon2-lon1) * Math.PI / 180;
+  const Δφ = (lat2 - lat1) * Math.PI / 180;
+  const Δλ = (lon2 - lon1) * Math.PI / 180;
 
-  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-          Math.cos(φ1) * Math.cos(φ2) *
-          Math.sin(Δλ/2) * Math.sin(Δλ/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const d = R * c; // distance in metres
   return d;
@@ -52,8 +53,31 @@ async function calculateDurations(startLocations, disaster) {
   return durations;
 }
 
+async function getAddressFromLatLng(latitude, longitude) {
+  const apiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxApiKey}`;
+  let address
+  await axios.get(apiUrl)
+    .then((response) => {
+      const features = response.data.features;
+      if (features.length > 0) {
+        address = features[0];
+        console.log(response);
+      } else {
+        console.log('No address found');
+        address = "Dublin"
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      console.log('Error retrieving data');
+      address = "Dublin"
+    });
+  return address
+};
+
 module.exports = {
-  calculateDistance : calculateDistance,
-  calculateDurations : calculateDurations,
-  calculateDuration : calculateDuration
+  getAddressFromLatLng: getAddressFromLatLng,
+  calculateDistance: calculateDistance,
+  calculateDurations: calculateDurations,
+  calculateDuration: calculateDuration
 };

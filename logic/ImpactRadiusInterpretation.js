@@ -1,53 +1,3 @@
-// const disasterLocations = ["apartment", "building", "school", "library", "stadium", "restaurant", "park", "hotel"];
-
-// function interpretDisasterLocation(inputString){
-//   const inputStringLower = inputString.toLowerCase();
-//   const foundLocations = disasterLocations.filter(word => inputStringLower.includes(word));
-//   return foundLocations;
-// }
-
-// const locationImpactRadius = {
-//   apartment: 500,
-//   building: 500,
-//   school: 500,
-//   library: 500,
-//   stadium: 1000,
-//   restaurant: 500,
-//   park: 500,
-//   hotel: 500,
-// };
-
-// function interpretDisasterRadius(disasterType, impactLocation, defaultRadius = 500){
-//   const impactLocationLower = impactLocation.toLowerCase();
-//   const radiusObject = {
-//     fire: 500,
-//     explosion: 500,
-//     flood: 500,
-//     chemical: 500,
-//     terrorist: 500,
-//   };
-
-//   if (disasterType.toLowerCase() in radiusObject) {
-//     for (const key in locationImpactRadius) {
-//       if (impactLocationLower.includes(key)) {
-//         radiusObject[disasterType.toLowerCase()] = locationImpactRadius[key];
-//         break;
-//       }
-//     }
-//   } else {
-//     return defaultRadius;
-//   }
-
-//   return radiusObject[disasterType.toLowerCase()] || defaultRadius;
-// }
-
-// module.exports = {
-//   interpretDisasterLocation,
-//   interpretDisasterRadius
-// };
-
-
-
 const {siteEnum} = require("../models/enumData");
 
 //finds out the location from the input string
@@ -78,8 +28,198 @@ function searchWord(listObject, inputString){
 
 const defaultRadius = 500;
 
+function interpretDisasterRadius(disasterType, impactLocation) {
+    const defaultRadius = 0;
+
+    const category1 = [
+        'building',
+        'library',
+        'hotel',
+        'restaurant',
+        'school',
+        'apartment',
+        'supermarket',
+        'bank',
+        'church',
+        'museum',
+        'office',
+        'city street',
+        'park'
+    ];
+
+    const category2 = [
+        'stadium',
+        'mall',
+        'factory',
+        'hospital',
+        'highway',
+        'warehouse',
+        'amusement park',
+        'shopping center'
+    ];
+
+    const category3 = [
+        'airport',
+        'oil rig',
+        'power plant',
+        'bridge',
+        'forest',
+        'high-rise building',
+        'river',
+        'office building'
+    ];
+
+    let impactRadius = 0;
+    let category = 0;
+
+    if (category1.includes(impactLocation)) {
+        category = 1;
+    } else if (category2.includes(impactLocation)) {
+        category = 2;
+    } else if (category3.includes(impactLocation)) {
+        category = 3;
+    }
+
+    switch (category) {
+    case 1:
+        switch (disasterType) {
+        case 'flood':
+            impactRadius = 50;
+            break;
+        case 'explosion':
+            impactRadius = 150;
+            break;
+        case 'chemical hazard':
+            impactRadius = 150;
+            break;
+        case 'terrorist activity':
+            impactRadius = 150;
+            break;
+        case 'fire':
+            impactRadius = 50;
+            break;
+        case 'tornado':
+            impactRadius = 100;
+            break;
+        case 'earthquake':
+            impactRadius = 100;
+            break;
+        case 'hurricane':
+            impactRadius = 50;
+            break;
+        case 'accident':
+            impactRadius = 50;
+            break;
+        case 'traffic accident':
+            impactRadius = 50;
+            break;
+        case 'collapse':
+            impactRadius = 50;
+            break;
+        case 'wildfire':
+            impactRadius = 50;
+            break;
+        default:
+            impactRadius = defaultRadius;
+            break;
+        }
+        break;
+    case 2:
+        switch (disasterType) {
+        case 'flood':
+            impactRadius = 100;
+            break;
+        case 'explosion':
+            impactRadius = 250;
+            break;
+        case 'chemical hazard':
+            impactRadius = 250;
+            break;
+        case 'terrorist activity':
+            impactRadius = 250;
+            break;
+        case 'fire':
+            impactRadius = 100;
+            break;
+        case 'tornado':
+            impactRadius = 200;
+            break;
+        case 'earthquake':
+            impactRadius = 200;
+            break;
+        case 'hurricane':
+            impactRadius = 100;
+            break;
+        case 'accident':
+            impactRadius = 100;
+            break;
+        case 'traffic accident':
+            impactRadius = 100;
+            break;
+        case 'collapse':
+            impactRadius = 100;
+            break;
+        case 'wildfire':
+            impactRadius = 100;
+            break;
+        default:
+            impactRadius = defaultRadius;
+            break;
+        }
+        break;
+    case 3:
+        switch (disasterType) {
+        case 'flood':
+            impactRadius = 200;
+            break;
+        case 'explosion':
+            impactRadius = 500;
+            break;
+        case 'chemical hazard':
+            impactRadius = 500;
+            break;
+        case 'terrorist activity':
+            impactRadius = 500;
+            break;
+        case 'fire':
+            impactRadius = 200;
+            break;
+        case 'tornado':
+            impactRadius = 400;
+            break;
+        case 'earthquake':
+            impactRadius = 400;
+            break;
+        case 'hurricane':
+            impactRadius = 200;
+            break;
+        case 'accident':
+            impactRadius = 200;
+            break;
+        case 'traffic accident':
+            impactRadius = 200;
+            break;
+        case 'collapse':
+            impactRadius = 200;
+            break;
+        case 'wildfire':
+            impactRadius = 200;
+            break;
+        default:
+            impactRadius = defaultRadius;
+            break;
+        }
+        break;
+    default:
+        impactRadius = defaultRadius;
+        break;
+    }
+    return impactRadius;
+}
+
+
 //returns an impact radius for the map in meters
-function interpretDisasterRadius(disasterType, impactLocation){
+function interpretDisasterRadiusOld(disasterType, impactLocation){
     let impactRadius = 0;
     // console.log(typeof disasterType);
     // console.log(disasterType);

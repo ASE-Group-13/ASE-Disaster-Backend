@@ -56,12 +56,9 @@ const siteEnum = [
 const typeEnum = [
   'flood', 
   'explosion', 
-  'exlposion', 
   'chemical hazard', 
   'terrorist activity', 
   'fire', 
-  'chemical hazard', 
-  'terrorist activity', 
   'tornado', 
   'earthquake', 
   'hurricane', 

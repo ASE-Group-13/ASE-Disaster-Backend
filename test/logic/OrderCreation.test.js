@@ -26,7 +26,7 @@ describe('createOrder', () => {
   ];
 
   test('should return an array of objects', async () => {
-    const resource = 'Fire';
+    const resource = 'fire';
     const requiredQuantity = 2;
     const orders = await createOrder(startingLocations, resource, requiredQuantity);
     expect(Array.isArray(orders.orderLocations)).toBe(true);
@@ -67,17 +67,23 @@ describe('createEvacuation', () => {
     console.log(result);
     expect(result).toEqual(    [
       {
-        restCentre: { id: 2, resource: 'rest center', capacity: 50, duration: 3 },
-        quantity: 50,
-        busDepot: { id: 1, resource: 'bus', capacity: 96, duration: 5 },
-        sentBuses: 2
-      },
-      {
-        restCentre: { id: 4, resource: 'rest center', capacity: 25, duration: 4 },
-        quantity: 25,
-        busDepot: { id: 1, resource: 'bus', capacity: 96, duration: 5 },
-        sentBuses: 1
+        message: 'Successful Evacuation Plan.',
+        orders:[
+          {
+            restCentre: { id: 2, resource: 'rest center', capacity: 50, duration: 3 },
+            quantity: 50,
+            busDepot: { id: 1, resource: 'bus', capacity: 96, duration: 5 },
+            sentBuses: 2
+          },
+          {
+            restCentre: { id: 4, resource: 'rest center', capacity: 25, duration: 4 },
+            quantity: 25,
+            busDepot: { id: 1, resource: 'bus', capacity: 96, duration: 5 },
+            sentBuses: 1
+          }
+        ]
       }
+
     ]);
   });
 

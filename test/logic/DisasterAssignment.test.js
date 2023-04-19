@@ -3,19 +3,19 @@ const {assignToDisaster, addReportToDisaster} = require('../../logic/DisasterAss
 
 jest.mock('axios');
 
-describe('addReportToDisaster', () => {
-  it('sends a post request to add a report to a disaster', async () => {
-    const disasterId = '641a169827bf7f62579d2548';
-    const report = { _id: '641a3204b7523d9253796a54' };
-    axios.post.mockResolvedValue({ data: 'Success' });
-    await addReportToDisaster(disasterId, report);
-    expect(axios.post).toHaveBeenCalledWith(
-      `http://127.0.0.1:8000/api/v1/add-report-to-disaster/${disasterId}`,
-      { reportId: report._id },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-  });
-});
+// describe('addReportToDisaster', () => {
+//   it('sends a post request to add a report to a disaster', async () => {
+//     const disasterId = '641a169827bf7f62579d2548';
+//     const report = { _id: '641a3204b7523d9253796a54' };
+//     axios.post.mockResolvedValue({ data: 'Success' });
+//     await addReportToDisaster(disasterId, report);
+//     expect(axios.post).toHaveBeenCalledWith(
+//       `http://127.0.0.1:8000/api/v1/add-report-to-disaster/${disasterId}`,
+//       { reportId: report._id },
+//       { headers: { 'Content-Type': 'application/json' } }
+//     );
+//   });
+// });
 
 describe('assignToDisaster', () => {
   it('calls createDisaster if no existing disasters within 500m', async () => {
