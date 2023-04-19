@@ -1,13 +1,13 @@
 const axios = require('axios');
 
 async function getLocations(){
-    const locations = await axios.get(`http://127.0.0.1:5000/api/v1/all-location-data`);
+    const locations = await axios.get(`https://disaster-responder.onrender.com/api/v1/all-location-data`);
     return locations.data;
 }
 
 async function sendOrder(order){
     console.log(`Sending Order to Responder API:${order}`);
-    return axios.post(`http://127.0.0.1:5000/api/v1/send-order`, order)
+    return axios.post(`https://disaster-responder.onrender.com/api/v1/send-order`, order)
     .then((response) => {
         console.log(`Dummy Responder API Response: ${response.data.message}`);
         const success = response.data.message;
@@ -30,7 +30,7 @@ async function sendOrder(order){
 function resetCapacity(orders) {
     return new Promise((resolve, reject) => {
         console.log(`Resetting Orders`);
-        axios.post(`http://127.0.0.1:5000/api/v1/reset`, orders)
+        axios.post(`https://disaster-responder.onrender.com/api/v1/reset`, orders)
             .then((response) => {
                 console.log(response.data.message);
                 const success = response.data.message;
