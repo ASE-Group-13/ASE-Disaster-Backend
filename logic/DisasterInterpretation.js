@@ -1,4 +1,15 @@
-const disasterTypes = ["Fire", "Flood", "Explosion", "Chemical Hazard", "Terrorist Activity"]
+const disasterTypes = [  'flood', 
+'explosion', 
+'chemical hazard', 
+'terrorist activity', 
+'fire', 
+'tornado', 
+'earthquake', 
+'hurricane', 
+'accident', 
+'traffic accident', 
+'collapse', 
+'wildfire']
 
 //check disaster interatively from a unique set of disaster types
 //returns a list
