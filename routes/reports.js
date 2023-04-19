@@ -4,7 +4,7 @@ require("dotenv").config();
 const DisasterData = require("../models/DisasterData");
 const ReportData = require("../models/ReportData");
 const { predictMessage } = require('../logic/SpamFilter');
-const { assignToDisaster } = require('../logic/DisasterAssignment');
+const { assignToDisaster, updateDisasterWithReport } = require('../logic/DisasterAssignment');
 const { allocateResources } = require('../logic/ResourceAllocator');
 const disasterLocationObj = require('../logic/ImpactRadiusInterpretation.js')
 const disasterSizeObj = require('../logic/ImpactSizeInterpretation.js')
@@ -73,8 +73,8 @@ router.post("/add-report-data", async (req, res) => {
     console.log("reportJson:", reportJson);
     const newReportObject = new ReportData(reportJson);
     // Adding report to its related disaster.
-    updateDisasterWithReport(newReportObject);
-    console.log(`Distaster Details:${updateDisaster}`);
+    const updatedDisaster = updateDisasterWithReport(newReportObject);
+    console.log(`Distaster Details:${updatedDisaster}`);
     console.log(`Report Details:${newReportObject}`);
     console.log("Saving Report")
     const saveReportData = await newReportObject.save();

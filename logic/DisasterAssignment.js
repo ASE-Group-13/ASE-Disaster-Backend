@@ -25,13 +25,13 @@ const assignToDisaster = async (report) => {
   if (!disasterId) {
     console.log("Creating new report");
     console.log(JSON.stringify(report));
-    const address = await getAddressFromLatLng(report.latitude, report.longitude)
-    console.log(`${report.site} ${report.type} at ${address}`);
+    const title = `${report.site} ${report.type}`;
+    console.log(title);
 
     const newData = new DisasterData({
       "latitude": report.latitude,
       "longitude": report.longitude,
-      "disasterName": `${report.site} ${report.type} at ${address})}`,
+      "disasterName": title,
       "disasterDescription": report.detail,
       "type": report.type,
       "status": "pending",
@@ -56,7 +56,7 @@ const updateDisasterWithReport = async (report) => {
   const disaster = await DisasterData.findById(report.disaster);
 
   // Push the new report to the disaster's reports array and update the description
-  disaster.reports.push(newReportObject);
+  disaster.reports.push(report._id);
   disaster.disasterDescription += `\n\n${report.detail}`;
 
   // Calculate the new maximum size and radius
@@ -78,6 +78,8 @@ const updateDisasterWithReport = async (report) => {
 
   // Save the updated disaster
   await disaster.save();
+  console.log(disaster);
+  return disaster;
 }
 
 module.exports = {
