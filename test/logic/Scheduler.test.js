@@ -1,4 +1,4 @@
-const { processOldReports } = require('../../logic/Scheduler');
+const { processOldReports } = require('../../logic/SpamFeedback');
 const axios = require('axios');
 const fs = require('fs');
 jest.mock('fs');

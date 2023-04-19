@@ -31,7 +31,8 @@ describe('getSiteNumber', () => {
 
   test('returns the correct index for a site with leading/trailing whitespace', () => {
     const site = ' office ';
-    const expectedIndex = siteEnum.indexOf('office');
+    const actual = 'office';
+    const expectedIndex = siteEnum.indexOf(actual);
     const actualIndex = getSiteNumber(site);
     expect(actualIndex).toBe(expectedIndex);
   });
@@ -39,7 +40,7 @@ describe('getSiteNumber', () => {
 
 describe('getTypeNumber', () => {
   test('returns the correct index for a valid type', () => {
-    const type = 'Fire';
+    const type = 'fire';
     const expectedIndex = typeEnum.indexOf(type);
     const actualIndex = getTypeNumber(type);
     expect(actualIndex).toBe(expectedIndex);
@@ -67,8 +68,9 @@ describe('getTypeNumber', () => {
   });
 
   test('returns the correct index for a type with leading/trailing whitespace', () => {
-    const type = ' Fire ';
-    const expectedIndex = typeEnum.indexOf('Fire');
+    const type = ' fire ';
+    const actual = 'fire'
+    const expectedIndex = typeEnum.indexOf(actual);
     const actualIndex = getTypeNumber(type);
     expect(actualIndex).toBe(expectedIndex);
   });

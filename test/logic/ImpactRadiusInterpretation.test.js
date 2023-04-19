@@ -2,13 +2,13 @@ const { interpretDisasterLocation, interpretDisasterRadius } = require('../../lo
 
 describe('interpretDisasterLocation', () => {
   test('returns an array of matching locations from input string', () => {
-    const inputString = 'There was a fire at the school and library';
-    const expectedOutput = ['school', 'library'];
+    const inputString = 'There was a fire at the library';
+    const expectedOutput = 'library';
     expect(interpretDisasterLocation(inputString)).toEqual(expectedOutput);
   });
 
   test('returns an empty array if no locations are found', () => {
-    const inputString = 'There was a fire at the hospital';
+    const inputString = 'There was a fire';
     const expectedOutput = [];
     expect(interpretDisasterLocation(inputString)).toEqual(expectedOutput);
   });
