@@ -53,33 +53,53 @@ const assignToDisaster = async (report) => {
 }
 
 const updateDisasterWithReport = async (report) => {
-  const disaster = await DisasterData.findById(report.disaster);
-
-  // Push the new report to the disaster's reports array and update the description
-  disaster.reports.push(report._id);
-  disaster.disasterDescription += `\n\n${report.detail}`;
-
-  // Calculate the new maximum size and radius
-  let maxSize = disaster.size;
-  let maxRadius = disaster.radius;
+  console.log("starting disaster update");
+  console.log(report);
+  const disaster = await DisasterData.findByIdAndUpdate(
+    report.disaster,
+    {
+      $push: {
+        reports: report._id,
+      },
+      $set: {
+        type: report.type,
+        site: report.site,
+      }
+    },
+    { new: true }
+  );
+  const description = disaster.disasterDescription;
+  console.log("first updated disaster", disaster);
+  let maxSize = 0;
+  let maxRadius = 0;
   for (const r of disaster.reports) {
-    maxSize = Math.max(maxSize, r.size);
-    maxRadius = Math.max(maxRadius, r.radius);
+    if (!isNaN(r.size)) {
+      maxSize = Math.max(maxSize, parseInt(r.size));
+    }
+    if (!isNaN(r.radius)) {
+      maxRadius = Math.max(maxRadius, parseInt(r.radius));
+    }
   }
-  disaster.size = maxSize;
-  disaster.radius = maxRadius;
+  if (maxSize === 0) {
+    maxSize = report.size;
+  }
+  if (maxRadius === 0) {
+    maxRadius = report.radius;
+  }
+  const updatedDisaster = await DisasterData.findByIdAndUpdate(
+    report.disaster,
+    {
+      $set: {
+        radius: maxRadius,
+        size: maxSize,
+        disasterDescription: `${description}\n${report.detail}`
+      }
+    },
+    { new: true }
+  );
 
-  // Update type and site based on the median values
-  const types = disaster.reports.map(r => r.type).sort();
-  const sites = disaster.reports.map(r => r.site).sort();
-  const medianIndex = Math.floor(types.length / 2);
-  disaster.type = types.length % 2 === 0 ? types[medianIndex - 1] : types[medianIndex];
-  disaster.site = sites.length % 2 === 0 ? sites[medianIndex - 1] : sites[medianIndex];
-
-  // Save the updated disaster
-  await disaster.save();
-  console.log(disaster);
-  return disaster;
+  console.log("second updated disaster", disaster);
+  return updatedDisaster;
 }
 
 module.exports = {

@@ -1,4 +1,3 @@
-// Import required modules and models
 const fs = require('fs');
 const path = require('path');
 const ReportData = require("../models/ReportData");
@@ -11,61 +10,65 @@ async function processOldReports() {
     const cutoffDate = new Date(Date.now() - hoursThreshold * 60 * 60 * 1000);
 
     // Get all old pending reports and mark them as spam
-    console.log('updating spam reports...');
+    console.log('Updating spam reports...');
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     await ReportData.updateMany(
       { status: "pending", createdAt: { $lte: twentyFourHoursAgo } },
       { $set: { spam: true } }
     );
-    console.log("fetching old reports...")
-    const response = await ReportData.find({createdAt: { $lte: twentyFourHoursAgo },
-      status: { $ne: "closed" } });
-    const oldReports = response.data;
-    console.log(oldReports);
-    if (oldReports.length() > 0){
+
+    console.log("Fetching old reports...");
+    const oldReports = await ReportData.find({
+      createdAt: { $lte: twentyFourHoursAgo },
+      status: { $ne: "closed" }
+    });
+
+    console.log(`Found ${oldReports.length} old reports`);
+    if (oldReports.length > 0) {
       const data = oldReports.map(obj => {
-        delete obj._id;
-        delete obj.latitude;
-        delete obj.longitude;
-        delete obj.type;
-        delete obj.status;
-        delete obj.disaster;
-        delete obj.Ambulance;
-        delete obj.Police;
-        delete obj.FireTruck;
-        delete obj.Buses;
-        delete obj.Helicopter;
-        delete obj.created_at;
-        delete obj.__v;
-        return obj;
+        const {
+          _id,
+          createdAt,
+          detail,
+          spam
+        } = obj;
+
+        return {
+          _id,
+          createdAt,
+          detail,
+          spam
+        };
       });
-      console.log(data);
+
       const updatedData = data.map(item => ({
         ...item,
         spam: item.spam ? 0 : 1
       }));
-      console.log(updatedData);
+
       // Convert old reports to a CSV string
-      // Convert array to CSV format with headers
-      const csv = `${updatedData.map(item => `${item.detail},${item.spam}\n`).join('')}`;
+      const csv = updatedData.map(item => `"${item.detail.replace(/"/g, '""')}",${item.spam}\n`).join('');
 
       const filePath = path.join(__dirname, '../python/datasets/pastReports.csv');
       // Append CSV data to file
       fs.appendFile(filePath, csv, err => {
         if (err) {
-          console.error(err);
+          console.error(`Error appending data to ${filePath}: ${err.message}`);
+          return;
         }
         console.log(`Data appended to ${filePath}`);
       });
 
       // Delete the old reports
-      await ReportData.deleteMany({ _id: { $in: oldReports.map(report => report._id) } });
+      const reportIds = oldReports.map(report => report._id);
+      await ReportData.deleteMany({ _id: { $in: reportIds } });
       await ReportData.updateMany(
-        { _id: { $in: oldReports._id } },
+        { _id: { $in: reportIds } },
         { status: 'closed' }
       );
+      console.log(`Closed ${oldReports.length} old reports`);
     } else {
-      console.log(`No Data appended`);
+      console.log(`No old reports found`);
     }
     return true;
   } catch (err) {
@@ -75,5 +78,5 @@ async function processOldReports() {
 }
 
 module.exports = {
-  processOldReports : processOldReports
+  processOldReports: processOldReports
 };

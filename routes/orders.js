@@ -40,6 +40,25 @@ router.get("/disaster-orders/:disaster", async (req, res) => {
   }
 })
 
+router.put("/update-order/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await OrderData.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+    if (!disaster) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    return res.json(order);
+  } catch (err) {
+    console.log("ERROR");
+    console.log(err);
+    return res.status(500).json({ message: err });
+  }
+});
+
 router.post("/request-resources", async (req, res) => {
   try {
     const {

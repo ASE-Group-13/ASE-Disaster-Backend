@@ -8,12 +8,13 @@ const orderRoute = require("./routes/orders");
 const reportRoute = require("./routes/reports");
 const authRoute = require("./routes/auth");
 const schedule = require('node-schedule');
-const {processOldReports} = require("./logic/SpamFeedback")
+const { processOldReports } = require("./logic/SpamFeedback")
 const spam = require("./logic/SpamFilter")
 const resource = require("./logic/ResourceAllocator")
 
 const rule = new schedule.RecurrenceRule();
 rule.hour = 0; // Run the job at midnight every day
+rule.minute = 1;
 
 // Define the scheduler
 const job = schedule.scheduleJob(rule, () => {
@@ -23,7 +24,7 @@ const job = schedule.scheduleJob(rule, () => {
   });
   spam.trainModel();
   resource.trainModel();
-  console.log(`processOldReports job scheduled to run at ${rule.hour}:00} every day.`);
+  console.log(`processOldReports job scheduled to run at ${rule.hour}:${rule.minute} every day.`);
 });
 
 const api = process.env.API_URI;
