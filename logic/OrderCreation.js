@@ -1,7 +1,10 @@
+require("dotenv").config();
 const fs = require('fs');
 const path = require('path');
 const OrderData = require("../models/OrderData");
-const {sendOrder} = require("../logic/ResponderService");
+const { sendOrder } = require("../logic/ResponderService");
+
+const FRONTEND = process.env.FRONTEND;
 
 // Find Optimal Locations
 function createOrder(locations, resource, requiredQuantity) {
@@ -38,7 +41,7 @@ function createOrder(locations, resource, requiredQuantity) {
       });
       remainingQuantity -= location.capacity;
     }
-    
+
   }
   console.log(`Test:${JSON.stringify(orderLocations)}`);
   if (remainingQuantity > 0) {
@@ -51,11 +54,11 @@ function createOrder(locations, resource, requiredQuantity) {
   }
 }
 
-function createEvacuation(locations, impact) { 
+function createEvacuation(locations, impact) {
   console.log("Creating Evacuation Plan");
   const busDepots = locations.filter(location => location.capacity > 0 && location.resource === "bus");
   const restCentres = locations.filter(location => location.capacity > 0 && location.resource === "rest center");
-  
+
   busDepots.sort((a, b) => a.duration - b.duration);
   restCentres.sort((a, b) => a.duration - b.duration);
 
@@ -78,16 +81,16 @@ function createEvacuation(locations, impact) {
     if (currentRestCentre.capacity >= remainingQuantity) {
       // This location has enough quantity, so add it to the order and update remainingQuantity
       let busUnits = Math.ceil(remainingQuantity / 35);
-      
-      while (busDepotIndex < busDepots.length){
+
+      while (busDepotIndex < busDepots.length) {
         // Looping through Bus Depots
         const currentBusDepot = busDepots[busDepotIndex];
-    
+
         if (busUnits <= 0) {
           // We've found all the enough buses, so break out of the loop
           break;
         }
-    
+
         if (currentBusDepot.capacity >= busUnits) {
           // The Current Bus Depot has enough capacity to cover the required bus units
           const data = {
@@ -100,7 +103,7 @@ function createEvacuation(locations, impact) {
           busUnits = 0;
         } else {
           // The Current Bus Depot doesn't have enough capacity to cover the required bus units
-          const restCenterLimit = currentBusDepot.capacity*35;
+          const restCenterLimit = currentBusDepot.capacity * 35;
           const data = {
             restCentre: currentRestCentre,
             quantity: restCenterLimit,
@@ -109,7 +112,7 @@ function createEvacuation(locations, impact) {
           };
           allocatedBuses.push(data);
           busUnits -= currentBusDepot.capacity;
-          remainingQuantity -= (currentBusDepot.capacity*35)
+          remainingQuantity -= (currentBusDepot.capacity * 35)
         }
         busDepotIndex++;
       }
@@ -119,7 +122,7 @@ function createEvacuation(locations, impact) {
       let busUnits = Math.ceil(currentRestCentre.capacity / 35);
       remainingQuantity -= currentRestCentre.capacity;
 
-      while (busDepotIndex < busDepots.length){
+      while (busDepotIndex < busDepots.length) {
         // Looping through Bus Depots
         const currentBusDepot = busDepots[busDepotIndex];
         if (busUnits <= 0) {
@@ -148,10 +151,10 @@ function createEvacuation(locations, impact) {
             sentBuses: currentBusDepot.capacity
           };
           allocatedBuses.push(data);
-          busUnits -= currentBusDepot.capacity;         
+          busUnits -= currentBusDepot.capacity;
         }
       }
-    }  
+    }
     restCentreIndex++;
   }
   if (remainingQuantity > 0) {
@@ -167,9 +170,9 @@ function createEvacuation(locations, impact) {
   }
 }
 
-async function saveCsvData(site,type,radius,size,ambulance,police,fire,bus,heli,filename) {
-  console.log(site,type,radius,size,ambulance,police,fire,bus,heli,filename);
-  if(typeof site == "number" && typeof type === "number"){
+async function saveCsvData(site, type, radius, size, ambulance, police, fire, bus, heli, filename) {
+  console.log(site, type, radius, size, ambulance, police, fire, bus, heli, filename);
+  if (typeof site == "number" && typeof type === "number") {
     const csv = `\n${site},${type},${radius},${size},${ambulance},${police},${fire},${bus},${heli}`;
     const filePath = path.join(__dirname, filename);
     // Append CSV data to file
@@ -179,7 +182,7 @@ async function saveCsvData(site,type,radius,size,ambulance,police,fire,bus,heli,
       }
       console.log(`Data appended to ${filePath}`);
     });
-  }else{
+  } else {
     console.log(`Incorrect inputs.`);
   }
 }
@@ -193,20 +196,20 @@ async function checkRequest(fastestRoutes, resourceType, quantity) {
 
 async function setOrder(orderLocations, disaster) {
   const result = [];
-  
+
   for (const order of orderLocations) {
     const newData = new
-    OrderData({
-      location: order.location,
-      locationLatitude: order.location.latitude,
-      locationLongitude: order.location.longitude,
-      URL: `http://127.0.0.1:4000/orders`,
-      quantity: order.quantity,
-      instructions: "Urgently head to disaster site.",
-      disaster: disaster,
-      status: "active",
-      resource: order.location.resource,
-    });
+      OrderData({
+        location: order.location,
+        locationLatitude: order.location.latitude,
+        locationLongitude: order.location.longitude,
+        URL: `${FRONTEND}/orders`,
+        quantity: order.quantity,
+        instructions: "Urgently head to disaster site.",
+        disaster: disaster,
+        status: "active",
+        resource: order.location.resource,
+      });
     newData.URL += `/${newData._id}`;
     console.log("Saving order");
     await newData.save();
@@ -223,7 +226,7 @@ async function setEvacuation(evacuationOrders, disaster) {
       location: order.busDepot,
       locationLatitude: order.busDepot.latitude,
       locationLongitude: order.busDepot.longitude,
-      URL: `http://127.0.0.1:4000/orders`,
+      URL: `${FRONTEND}/orders`,
       quantity: order.sentBuses,
       instructions:
         "Please head to evacuation point, gather victims and escort them to the rest center.",
@@ -241,7 +244,7 @@ async function setEvacuation(evacuationOrders, disaster) {
       location: order.restCentre,
       locationLongitude: order.restCentre.latitude,
       locationLatitude: order.restCentre.longitude,
-      URL: `http://127.0.0.1:4000/orders`,
+      URL: `${FRONTEND}/orders`,
       quantity: order.quantity,
       instructions: `Please prepare rest center for approximately ${order.quantity} victims of the disaster.`,
       disaster: disaster,
@@ -257,13 +260,13 @@ async function setEvacuation(evacuationOrders, disaster) {
     result.push(busData, restData);
   }
   return result;
-}  
+}
 
 module.exports = {
-    createOrder : createOrder,
-    createEvacuation : createEvacuation,
-    saveCsvData : saveCsvData,
-    setEvacuation : setEvacuation,
-    checkRequest : checkRequest,
-    setOrder : setOrder
+  createOrder: createOrder,
+  createEvacuation: createEvacuation,
+  saveCsvData: saveCsvData,
+  setEvacuation: setEvacuation,
+  checkRequest: checkRequest,
+  setOrder: setOrder
 };
