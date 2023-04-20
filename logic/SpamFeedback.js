@@ -59,9 +59,8 @@ async function processOldReports() {
         console.log(`Data appended to ${filePath}`);
       });
 
-      // Delete the old reports
+      // Close the old reports
       const reportIds = oldReports.map(report => report._id);
-      await ReportData.deleteMany({ _id: { $in: reportIds } });
       await ReportData.updateMany(
         { _id: { $in: reportIds } },
         { status: 'closed' }

@@ -25,7 +25,7 @@ const assignToDisaster = async (report) => {
   if (!disasterId) {
     console.log("Creating new report");
     console.log(JSON.stringify(report));
-    const title = `${report.site} ${report.type}`;
+    const title = `${report.site} ${report.type} (${report._id})`;
     console.log(title);
 
     const newData = new DisasterData({
