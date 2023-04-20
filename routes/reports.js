@@ -73,7 +73,7 @@ router.post("/add-report-data", async (req, res) => {
     console.log("reportJson:", reportJson);
     const newReportObject = new ReportData(reportJson);
     // Adding report to its related disaster.
-    const updatedDisaster = updateDisasterWithReport(newReportObject);
+    const updatedDisaster = await updateDisasterWithReport(newReportObject);
     console.log(`Distaster Details:${updatedDisaster}`);
     console.log(`Report Details:${newReportObject}`);
     console.log("Saving Report")
