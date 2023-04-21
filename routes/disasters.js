@@ -169,7 +169,6 @@ router.put("/activate-disaster/:id", async (req, res) => {
     }, {
       new: true
     });
-
     // Find all related report documents and update their status fields
     const updatedReports = await ReportData.updateMany({
       _id: {
@@ -178,7 +177,6 @@ router.put("/activate-disaster/:id", async (req, res) => {
     }, {
       status: 'active'
     });
-
     // Return the updated disaster and reports data
     return res.json({
       updatedDisaster,
