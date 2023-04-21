@@ -4,14 +4,14 @@
   "description": "",
   "main": "master-tester.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.3.5",
-    "express": "^4.18.2",
-    "fastify": "^4.15.0"
+      "axios": "^1.3.5",
+      "express": "^4.18.2",
+      "fastify": "^4.15.0"
   }
 }
