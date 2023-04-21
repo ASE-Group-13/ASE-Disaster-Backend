@@ -1,64 +1,87 @@
 const mongoose = require("mongoose");
 const {
-    resourceEnum
+    siteEnum,
+    typeEnum,
+    statusEnum
 } = require("./enumData");
 
-// Order schema structure definition
-const orderDataSchema = new mongoose.Schema({
+// Report schema structure definition
+const reportDataSchema = new mongoose.Schema({
     created_at: {
         type: Date,
     default:
         Date.now,
         required: true
     },
-    location: {
-        type: JSON,
-        required: true
-    },
-    locationLatitude: {
+    latitude: {
         type: String,
         required: true,
     },
-    locationLongitude: {
+    longitude: {
         type: String,
         required: true,
     },
-    resource: {
-        type: String,
-        enum: resourceEnum,
-        required: true,
-    },
-    URL: {
+    detail: {
         type: String,
         required: true,
     },
-    quantity: {
+    type: {
         type: String,
+        enum: typeEnum,
         required: true,
     },
-    instructions: {
+    radius: {
         type: String,
         required: false,
+    },
+    size: {
+        type: String,
+        required: false,
+    },
+    site: {
+        type: String,
+        enum: siteEnum,
+        required: false,
+    },
+    isSpam: {
+        type: Boolean,
+        required: true,
+    },
+    isResponder: {
+        type: Boolean,
+        required: true
+    },
+    status: {
+        type: String,
+    default:
+        "pending",
+        enum: statusEnum,
+        required: true
     },
     disaster: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "DisasterData",
-        required: true,
     },
-    status: {
-        type: String,
-        enum: ["active", "resolved"],
-        required: true,
+    ambulance: {
+        type: Number,
+        required: false,
     },
-    evacuationPoint: {
-        type: JSON,
-        required: false
+    police: {
+        type: Number,
+        required: false,
     },
-    restCentre: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "LocationData",
-        required: false
-    }
+    fire: {
+        type: Number,
+        required: false,
+    },
+    bus: {
+        type: Number,
+        required: false,
+    },
+    helicopter: {
+        type: Number,
+        required: false,
+    },
 });
 
-module.exports = mongoose.model("OrderData", orderDataSchema);
+module.exports = mongoose.model("ReportData", reportDataSchema);
