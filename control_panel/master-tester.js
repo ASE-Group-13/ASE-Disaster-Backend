@@ -7,7 +7,7 @@ app.use("/api/v1", reportRoutes);
 // Start the app on a different port to avoid conflicts with your main server
 const port = 9000;
 app.listen(port, () => {
-  console.log(`Control room app listening at http://localhost:${port}`);
+    console.log(`Control room app listening at http://localhost:${port}`);
 });
 
 const axios = require("axios");
@@ -16,92 +16,134 @@ const apiUrl = "http://localhost:8000/api/v1"; // Make sure to replace 8000 with
 
 // Helper function to make a POST request to the provided path
 async function postToPath(path, body) {
-  const response = await axios.post(`${apiUrl}${path}`, body);
-  return response.data;
+    const response = await axios.post(`${apiUrl}${path}`, body);
+    return response.data;
 }
 
 // Step 1: Add a disaster and provide a message in the detail field describing the disaster
 async function addDisaster(detail, latitude, longitude, type) {
-  const reportData = await postToPath("/add-report-data", {
-    detail,
-    latitude,
-    longitude,
-    type,
-  });
+    const reportData = await postToPath("/add-report-data", {
+        detail,
+        latitude,
+        longitude,
+        type,
+    });
 
-  return reportData.saveReportData;
+    return reportData.saveReportData;
 }
 
 // Step 2: Extract the disaster id from the disaster field in the response
 function extractDisasterId(disasterData) {
-  return disasterData.disaster._id;
+    return disasterData.disaster._id;
 }
 
 // Step 3: Call the activate-disaster API and pass the id in the request URL
 async function activateDisaster(
-  id,
-  type,
-  radius,
-  size,
-  site,
-  evacuation = true
-) {
-  const response = await postToPath(`/activate-disaster/${id}`, {
+    id,
     type,
     radius,
     size,
     site,
-    evacuation,
-  });
+    evacuation = true) {
+    const response = await postToPath(`/activate-disaster/${id}`, {
+        type,
+        radius,
+        size,
+        site,
+        evacuation,
+    });
 
-  return response;
+    return response;
 }
 
 // Step 4: Call request-resources API and set the request body with the resources and disasterId
 async function requestResources(
-  disasterId,
-  ambulance,
-  police,
-  fireTruck,
-  buses,
-  helicopter,
-  evacuation
-) {
-  const response = await postToPath("/request-resources", {
     disasterId,
     ambulance,
     police,
     fireTruck,
     buses,
     helicopter,
-    evacuation,
-  });
+    evacuation) {
+    const response = await postToPath("/request-resources", {
+        disasterId,
+        ambulance,
+        police,
+        fireTruck,
+        buses,
+        helicopter,
+        evacuation,
+    });
 
-  return response;
+    return response;
 }
 
 // Main function to perform all the steps sequentially
 async function main() {
     try {
         // Add a new disaster
-  const disasterData = await addDisaster(
-    "Fire in the building",
-    "53.3543",
-    "-6.2341",
-    "fire"
-  );
+        const disasterData = await addDisaster(
+                "Fire in the building",
+                "53.3543",
+                "-6.2341",
+                "fire");
+
+        // Extract the disaster id
+        const disasterId = extractDisasterId(disasterData);
+
+        // Activate the disaster
+        await activateDisaster(
+            disasterId,
+            "traffic accident",
+            100,
+            20,
+            "city street");
+
+        // Request resources for the disaster
+        await requestResources(
+            disasterId,
+            2, // ambulance
+            3, // police
+            1, // fireTruck
+            0, // buses
+            0, // helicopter
+            true // evacuation
+        );
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
+
+  }
+
+// scenario definitions
+async function moreScenarios() {
+  try {
+    // Scenario 1: Flood in the subway station
+    await executeScenario("Flood in the subway station", "51.5074", "-0.1278", "flood");
+
+    // Scenario 2: Explosion in a chemical factory
+    await executeScenario("Explosion in a chemical factory", "52.4068", "-1.5197", "explosion");
+
+    // Scenario 3: Chemical hazard in a residential area
+    await executeScenario("Chemical hazard in a residential area", "53.8008", "-1.5491", "chemical hazard");
+
+    // Scenario 4: Terrorist activity at a shopping mall
+    await executeScenario("Terrorist activity at a shopping mall", "51.4545", "-2.5879", "terrorist activity");
+
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+}
+
+async function executeScenario(detail, latitude, longitude, type) {
+  // Add a new disaster
+  const disasterData = await addDisaster(detail, latitude, longitude, type);
 
   // Extract the disaster id
   const disasterId = extractDisasterId(disasterData);
 
   // Activate the disaster
-  await activateDisaster(
-    disasterId,
-    "traffic accident",
-    100,
-    20,
-    "city street"
-  );
+  await activateDisaster(disasterId, "traffic accident", 100, 20, "city street");
 
   // Request resources for the disaster
   await requestResources(
@@ -113,9 +155,7 @@ async function main() {
     0, // helicopter
     true // evacuation
   );
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
-  }
-  
+}
+
+
 main();

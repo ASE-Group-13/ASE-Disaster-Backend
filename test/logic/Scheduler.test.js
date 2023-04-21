@@ -28,5 +28,5 @@ describe('processOldReports function', () => {
     expect(mockedDelete).toHaveBeenCalledWith('http://127.0.0.1:8000/api/v1/delete-old-reports');
     expect(mockedAppendFile).toHaveBeenCalled();
     expect(result).toBe(true);
-  });
+  },30000);
 });

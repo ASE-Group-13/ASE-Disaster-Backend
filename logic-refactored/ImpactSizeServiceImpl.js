@@ -215,3 +215,4 @@ class ImpactSizeServiceImpl extends ImpactSizeService {
 }
 
 module.exports = ImpactSizeServiceImpl;
+

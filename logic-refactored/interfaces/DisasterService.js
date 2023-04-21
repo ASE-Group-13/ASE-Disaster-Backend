@@ -6,3 +6,4 @@ class DisasterService {
   }
   
   module.exports = DisasterService;
+  
