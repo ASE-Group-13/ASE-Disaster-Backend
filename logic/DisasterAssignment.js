@@ -3,33 +3,33 @@ const express = require("express");
 const router = express.Router();
 require("dotenv").config();
 const {
-    calculateDistance
+  calculateDistance
 } = require("./MappingService");
 
-const checkDisasterLocation = async(type, longitude, latitude) => {
-    const disasters = await DisasterData.find({
-        status: {
-            $in: ['pending', 'active']
-        }
-    }).populate('reports');
-
-    for (let i = 0; i < disasters.length; i++) {
-        const disaster = disasters[i];
-        const distance = calculateDistance(latitude, longitude, disaster.latitude, disaster.longitude);
-        if (distance < 500 && disaster.type === type) {
-            console.log(`The location is within 500m of a ${type} disaster (${disaster.title}).`);
-            return disaster._id;
-        }
+const checkDisasterLocation = async (type, longitude, latitude) => {
+  const disasters = await DisasterData.find({
+    status: {
+      $in: ['pending', 'active']
     }
+  }).populate('reports');
 
-    console.log(`The location is not within 500m of any ${type} disasters.`);
-    return null;
+  for (let i = 0; i < disasters.length; i++) {
+    const disaster = disasters[i];
+    const distance = calculateDistance(latitude, longitude, disaster.latitude, disaster.longitude);
+    if (distance < 500 && disaster.type === type) {
+      console.log(`The location is within 500m of a ${type} disaster (${disaster.title}).`);
+      return disaster._id;
+    }
+  }
+
+  console.log(`The location is not within 500m of any ${type} disasters.`);
+  return null;
 }
 
 
 const assignToDisaster = async (report) => {
   var disasterId = await checkDisasterLocation(report.type, report.longitude, report.latitude);
-  if (!disasterId) 
+  if (!disasterId) {
     const title = `${report.site} ${report.type} (${report._id})`;
     const newData = new DisasterData({
       "latitude": report.latitude,
@@ -54,20 +54,20 @@ const assignToDisaster = async (report) => {
   return report;
 }
 
-const updateDisasterWithReport = async(report) => {
+const updateDisasterWithReport = async (report) => {
   console.log("starting disaster update");
   console.log(report);
   const disaster = await DisasterData.findByIdAndUpdate(
     report.disaster, {
     $push: {
-        reports: report._id,
+      reports: report._id,
     },
     $set: {
-        type: report.type,
-        site: report.site,
+      type: report.type,
+      site: report.site,
     }
   }, {
-      new: true
+    new: true
   });
   const description = disaster.disasterDescription;
   console.log("first updated disaster", disaster);
@@ -75,10 +75,10 @@ const updateDisasterWithReport = async(report) => {
   let maxRadius = 0;
   for (const r of disaster.reports) {
     if (!isNaN(r.size)) {
-        maxSize = Math.max(maxSize, parseInt(r.size));
+      maxSize = Math.max(maxSize, parseInt(r.size));
     }
     if (!isNaN(r.radius)) {
-        maxRadius = Math.max(maxRadius, parseInt(r.radius));
+      maxRadius = Math.max(maxRadius, parseInt(r.radius));
     }
   }
   if (maxSize === 0) {
@@ -90,9 +90,9 @@ const updateDisasterWithReport = async(report) => {
   const updatedDisaster = await DisasterData.findByIdAndUpdate(
     report.disaster, {
     $set: {
-        radius: maxRadius,
-        size: maxSize,
-        disasterDescription: `${description}\n${report.detail}`
+      radius: maxRadius,
+      size: maxSize,
+      disasterDescription: `${description}\n${report.detail}`
     }
   }, {
     new: true
@@ -101,6 +101,6 @@ const updateDisasterWithReport = async(report) => {
 }
 
 module.exports = {
-    updateDisasterWithReport: updateDisasterWithReport,
-    assignToDisaster: assignToDisaster
+  updateDisasterWithReport: updateDisasterWithReport,
+  assignToDisaster: assignToDisaster
 };
