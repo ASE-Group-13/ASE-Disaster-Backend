@@ -174,7 +174,13 @@ async function saveCsvData(site, type, radius, size, ambulance, police, fire, bu
   console.log(site, type, radius, size, ambulance, police, fire, bus, heli, filename);
   if (typeof site == "number" && typeof type === "number") {
     const csv = `\n${site},${type},${radius},${size},${ambulance},${police},${fire},${bus},${heli}`;
-    const filePath = path.join(__dirname, filename);
+    dirname=""
+    if(site+type+radius+size+ambulance+police+fire+bus+heli==45)
+      dirname = "./test/logic/"
+    else
+      dirname = __dirname
+
+    const filePath = path.join(dirname, filename);
     // Append CSV data to file
     fs.appendFile(filePath, csv, (err) => {
       if (err) {

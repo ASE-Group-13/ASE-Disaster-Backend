@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 const axios = require('axios');
 require("dotenv").config();
 const mapboxApiKey = process.env.MAPBOX;

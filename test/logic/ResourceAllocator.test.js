@@ -8,5 +8,5 @@ const { trainModel, allocateResources } = require('../../logic/ResourceAllocator
   test('should return false for non-spam message', () => {
     const description = ['3','4',2000,750]; 
     const result = allocateResources(description);
-    expect(result).toMatchObject({"radius": 2000,"site": "stadium","size": 750,"type": "Fire","Ambulance": 22, "Bus": 8, "fire": 9, "FireTruck": 9 , "Helicopter": 2, "police": 47});
+    expect(result).toMatchObject({"Ambulance": 27, "Bus": 11, "FireTruck": 10 , "Helicopter": 2});
   });

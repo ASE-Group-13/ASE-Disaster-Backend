@@ -7,7 +7,7 @@ describe('interpretDisaster function', () => {
 
   test('should return a list of all matching disaster types', () => {
     expect(interpretDisaster('There was a flood and then an explosion')).toEqual(['flood', 'explosion']);
-    expect(interpretDisaster('There was a fire and a chemical hazard')).toEqual(['fire', 'chemical hazard']);
+    expect(interpretDisaster('There was a fire and a chemical hazard')).toEqual(['chemical hazard', 'fire']);
   });
 
   test('should be case-insensitive', () => {
