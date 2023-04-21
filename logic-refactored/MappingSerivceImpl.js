@@ -53,3 +53,4 @@ calculateDurations(startLocations, disaster) {
 
 }
 module.exports = MappingServiceImpl;
+

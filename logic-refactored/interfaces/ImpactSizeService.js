@@ -4,3 +4,4 @@ class ImpactSizeService {
   }
   
   module.exports = ImpactSizeService;
+  
