@@ -83,10 +83,22 @@ async function processOldReports() {
         } else {
             console.log(`No old reports found`);
         }
-        return true;
+        console.log(`Data appended to ${filePath}`);
+      });
+
+      // Close the old reports
+      const reportIds = oldReports.map(report => report._id);
+      await ReportData.updateMany(
+        { _id: { $in: reportIds } },
+        { status: 'closed' }
+      );
+      console.log(`Closed ${oldReports.length} old reports`);
+    } else {
+      console.log(`No old reports found`);
+      return true;
     } catch (err) {
-        console.error(`Error processing old reports: ${err.message}`);
-        return false;
+      console.error(`Error processing old reports: ${err.message}`);
+      return false;
     }
 }
 
