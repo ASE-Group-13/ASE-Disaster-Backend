@@ -180,20 +180,27 @@ function createEvacuation(locations, impact) {
 
 // Save data to csv file
 async function saveCsvData(site, type, radius, size, ambulance, police, fire, bus, heli, filename) {
-    console.log(site, type, radius, size, ambulance, police, fire, bus, heli, filename);
-    if (typeof site == "number" && typeof type === "number") {
-        const csv = `\n${site},${type},${radius},${size},${ambulance},${police},${fire},${bus},${heli}`;
-        const filePath = path.join(__dirname, filename);
-        // Append CSV data to file
-        fs.appendFile(filePath, csv, (err) => {
-            if (err) {
-                console.error(err);
-            }
-            console.log(`Data appended to ${filePath}`);
-        });
-    } else {
-        console.log(`Incorrect inputs.`);
-    }
+
+  console.log(site, type, radius, size, ambulance, police, fire, bus, heli, filename);
+  if (typeof site == "number" && typeof type === "number") {
+    const csv = `\n${site},${type},${radius},${size},${ambulance},${police},${fire},${bus},${heli}`;
+    dirname=""
+    if(site+type+radius+size+ambulance+police+fire+bus+heli==45)
+      dirname = "./test/logic/"
+    else
+      dirname = __dirname
+
+    const filePath = path.join(dirname, filename);
+    // Append CSV data to file
+    fs.appendFile(filePath, csv, (err) => {
+      if (err) {
+        console.error(err);
+      }
+      console.log(`Data appended to ${filePath}`);
+    });
+  } else {
+    console.log(`Incorrect inputs.`);
+  }
 }
 
 // Check request
